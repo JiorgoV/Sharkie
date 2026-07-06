@@ -1,44 +1,37 @@
 class World {
     character = new Character();
-    enemies = [
-        new PufferFish(),
-        new PufferFish(),
-        new PufferFish()
-    ];
-
-    lights = [
-        new Light('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/1. Light/1.png', 0),
-        new Light('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/1. Light/2.png', 360)
-    ]
-    backgroundObjects = [
-        new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/D1.png', 0),
-        new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/D2.png', 0),
-        new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/3.Fondo 1/L1.png', 0),
-        new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/2. Floor/D1.png', 0)
-    ]
+    level = level1;
     canvas;
     ctx;
+    keyboard;
+    camera_x = 0;
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
     }
 
 
+    setWorld() {
+        this.character.world = this;
+    }
 
     draw() {
 
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.lights);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.enemies);
 
-
-
+        this.ctx.translate(-this.camera_x, 0);
 
         // draw() wird immer wieder aufgerufen
         let self = this;
@@ -54,7 +47,15 @@ class World {
     }
 
     addToMap(mo) {
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.height, mo.width);
+        if (mo.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(mo.x + mo.height, 0);
+            this.ctx.scale(-1, 1);
+            this.ctx.drawImage(mo.img, 0, mo.y, mo.height, mo.width);
+            this.ctx.restore();
+        } else {
+            this.ctx.drawImage(mo.img, mo.x, mo.y, mo.height, mo.width);
+        }
     }
 
 
