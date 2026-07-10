@@ -31,11 +31,8 @@ class Endboss extends MovableObject {
 
 
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_FLOATING.length;
-            let path = this.IMAGES_FLOATING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 100);
+            this.playAnimation(this.IMAGES_FLOATING);
+        }, 200);
 
     }
 

@@ -48,15 +48,24 @@ class World {
 
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.x + mo.height, 0);
-            this.ctx.scale(-1, 1);
-            this.ctx.drawImage(mo.img, 0, mo.y, mo.height, mo.width);
-            this.ctx.restore();
+            this.flipImage(mo);
+            mo.draw(this.ctx);
         } else {
-            this.ctx.drawImage(mo.img, mo.x, mo.y, mo.height, mo.width);
+            mo.draw(this.ctx);
+            mo.drawFrame(this.ctx);
+            this.flipImageBack(mo);
+
         }
     }
 
+    flipImage() {
+        this.ctx.save();
+        this.ctx.translate(mo.x + mo.height, 0);
+        this.ctx.scale(-1, 1);
+    }
+
+    flipImageBack() {
+        this.ctx.restore();
+    }
 
 }

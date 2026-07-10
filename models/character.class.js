@@ -3,7 +3,7 @@ class Character extends MovableObject {
     height = 320;
     width = 280;
     x = 0;
-    y = 190;
+    y = 90;
     speed = 10;
     IMAGES_IDLE = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png',
@@ -43,7 +43,7 @@ class Character extends MovableObject {
         this.loadImage('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SWIM);
-
+        this.applyGravity();
         this.animate();
     }
 
@@ -60,15 +60,27 @@ class Character extends MovableObject {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
+
+            if (this.world.keyboard.UP && !this.isAboveGround()) {
+                this.jump();
+            }
+
             this.world.camera_x = -this.x + 40;
         }, 1000 / 60);
 
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+
+            if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_SWIM);
             } else {
-                this.playAnimation(this.IMAGES_IDLE);
+
+
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.playAnimation(this.IMAGES_SWIM);
+                } else {
+                    this.playAnimation(this.IMAGES_IDLE);
+                }
             }
 
         }, 50);
@@ -76,6 +88,6 @@ class Character extends MovableObject {
     }
 
     jump() {
-
+        this.speedY = 20;
     }
 }
