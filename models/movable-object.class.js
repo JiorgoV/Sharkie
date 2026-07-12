@@ -26,6 +26,16 @@ class MovableObject {
         return this.y < 180;
     }
 
+    // character.isColliding(chicken);
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x + mo.width &&
+            this.y < mo.y + mo.height;
+    }
+
+
+
     // loadImage('img/test.png');
     loadImage(path) {
         this.img = new Image(); // same as this.img = document.getElemtbyId('image') <img id='image'
@@ -48,12 +58,14 @@ class MovableObject {
         ctx.drawImage(this.img, this.x, this.y, this.height, this.width);
     }
 
-    drawFrame(ctx) {
-        ctx.lineWidth = '5';
-        ctx.strokeStyle = 'blue';
-        ctx.beginPath();
-        ctx.rect(this.x, this.y, this.height, this.width);
-        ctx.stroke();
+    drawFrame(ctx, x = this.x) {
+        if (this instanceof Character || this instanceof PufferFish || this instanceof Endboss) {
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.beginPath();
+            ctx.rect(x, this.y, this.height, this.width);
+            ctx.stroke();
+        }
     }
 
     playAnimation(images) {
