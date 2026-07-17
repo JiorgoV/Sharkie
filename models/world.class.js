@@ -1,5 +1,8 @@
 class World {
     character = new Character();
+    statusBar = new StatusBar();
+    poisonBar = new PoisonBar();
+    coinBar = new CoinBar();
     level = level1;
     canvas;
     ctx;
@@ -25,7 +28,7 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
-                    console.log('Collision with Character, energy:', this.character.energy);
+                    this.statusBar.setPercantage(this.character.energy);
 
                 }
             })
@@ -40,6 +43,14 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0); // Back
+        // -------- space for fixed objects ---------
+        this.addToMap(this.statusBar);
+        this.addToMap(this.poisonBar);
+        this.addToMap(this.coinBar);
+        this.ctx.translate(this.camera_x, 0); // Forward
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);

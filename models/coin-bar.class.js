@@ -1,11 +1,11 @@
-class StatusBar extends DrawableObject {
+class CoinBar extends DrawableObject {
     IMAGES = [
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_0.png', // 0
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_20.png',
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_40.png',
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_60.png',
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_80.png',
-        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/energybar_100.png', // 5
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_0.png', // 0
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_20.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_40.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_60.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_80.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_100.png' // 5
     ];
 
     percentage = 100;
@@ -15,7 +15,7 @@ class StatusBar extends DrawableObject {
         this.loadImages(this.IMAGES);
         this.setPercantage(100);
         this.x = 20;
-        this.y = 5;
+        this.y = 50;
         this.width = 200;
         this.height = 60;
 
