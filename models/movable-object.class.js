@@ -1,11 +1,8 @@
 class MovableObject extends DrawableObject {
     x = 120;
     y = 280;
-    img;
     height = 200;
     width = 200;
-    imageCache = {};
-    currentImage = 0;
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -72,5 +69,9 @@ class MovableObject extends DrawableObject {
         setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);
+    }
+
+    jump() {
+        this.speedY = 20;
     }
 }
