@@ -126,3 +126,18 @@ canvas {
 .hidden {
     display: none !important;
 }
+
+#btn-fullscreen-ingame {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    opacity: 0.7;
+    z-index: 5;
+}
+
+#btn-fullscreen-ingame:hover {
+    opacity: 1;
+}

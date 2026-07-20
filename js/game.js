@@ -11,6 +11,7 @@ function startGame() {
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
+    document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
     world = new World(canvas, keyboard);
 }
 
@@ -25,6 +26,7 @@ function restartGame() {
 function goHome() {
     if (world) world.stopGame();
     document.getElementById('canvas').classList.add('hidden');
+    document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('startscreen').classList.remove('hidden');
