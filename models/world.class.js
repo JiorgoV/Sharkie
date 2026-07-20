@@ -9,6 +9,7 @@ class World {
     keyboard;
     camera_x = 0;
     throwableObjects = [];
+    endbossBar = new EndbossBar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -56,6 +57,20 @@ class World {
             }
             return true;
         });
+
+        this.throwableObjects.forEach((bubble) => {
+            this.level.enemies = this.level.enemies.filter(enemy => {
+                if (bubble.isColliding(enemy)) {
+                    if (enemy instanceof Endboss) {
+                        enemy.hit();
+                        this.endbossBar.setPercantage(enemy.energy);
+                    } else {
+                        return false; // normaler Gegner stirbt sofort
+                    }
+                }
+                return true;
+            });
+        });
     }
 
     checkThrowObjects() {
@@ -91,6 +106,9 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.poisonBar);
         this.addToMap(this.coinBar);
+        if (this.character.x > 1600) {
+            this.addToMap(this.endbossBar);
+        }
         this.ctx.translate(this.camera_x, 0); // Forward
 
         this.addToMap(this.character);
