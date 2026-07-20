@@ -71,6 +71,12 @@ class World {
                 return true;
             });
         });
+
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss && this.character.x > 2000) {
+                enemy.hadFirstContact = true;
+            }
+        });
     }
 
     checkThrowObjects() {
