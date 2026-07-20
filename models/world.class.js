@@ -1,25 +1,29 @@
 class World {
     character = new Character();
-    statusBar = new StatusBar();
-    poisonBar = new PoisonBar();
-    coinBar = new CoinBar();
+    endbossBar = new EndbossBar();
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     throwableObjects = [];
-    endbossBar = new EndbossBar();
+    coinCount = 0;
+    poisonCount = 0;
+    heartIcon = new Image();
+    coinIcon = new Image();
+    poisonIcon = new Image();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
+        this.heartIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_  copia 3.png';
+        this.coinIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_ copia 6.png';
+        this.poisonIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_ copia 5.png';
         this.setWorld();
+        this.draw();
         this.run();
     }
-
 
     setWorld() {
         this.character.world = this;
@@ -27,7 +31,6 @@ class World {
 
     run() {
         setInterval(() => {
-
             this.checkCollisions();
             this.checkThrowObjects();
         }, 200);
@@ -44,7 +47,6 @@ class World {
                     this.character.deadCause = 'poisoned';
                 }
                 this.character.hit();
-                this.statusBar.setPercantage(this.character.energy);
             }
 
             if (enemy instanceof Endboss && this.character.x > 2000) {
@@ -54,7 +56,7 @@ class World {
 
         this.level.coins = this.level.coins.filter(coin => {
             if (this.character.isColliding(coin)) {
-                this.coinBar.setPercantage(this.coinBar.percentage + 20);
+                this.coinCount = Math.min(this.coinCount + 1, 5);
                 return false;
             }
             return true;
@@ -62,24 +64,28 @@ class World {
 
         this.level.poisons = this.level.poisons.filter(poison => {
             if (this.character.isColliding(poison)) {
-                this.poisonBar.setPercantage(this.poisonBar.percentage + 20);
+                this.poisonCount = Math.min(this.poisonCount + 1, 5);
                 return false;
             }
             return true;
         });
 
-        this.throwableObjects.forEach((bubble) => {
+        this.throwableObjects = this.throwableObjects.filter(bubble => {
+            let hit = false;
             this.level.enemies = this.level.enemies.filter(enemy => {
-                if (bubble.isColliding(enemy)) {
+                if (bubble.isColliding(enemy) && !hit) {
+                    hit = true;
                     if (enemy instanceof Endboss) {
                         enemy.hit();
                         this.endbossBar.setPercantage(enemy.energy);
+                        return true;
                     } else {
                         return false;
                     }
                 }
                 return true;
             });
+            return !hit; // bubble entfernen wenn sie getroffen hat
         });
     }
 
@@ -90,10 +96,10 @@ class World {
             this.lastThrow = true;
         }
 
-        if (this.keyboard.SPACE && !this.lastThrow && this.poisonBar.percentage > 0) {
+        if (this.keyboard.SPACE && !this.lastThrow && this.poisonCount > 0) {
             let poisonBubble = new PoisonBubble(this.character.x + 220, this.character.y + 170);
             this.throwableObjects.push(poisonBubble);
-            this.poisonBar.setPercantage(this.poisonBar.percentage - 20);
+            this.poisonCount = Math.max(this.poisonCount - 1, 0);
             this.lastThrow = true;
         }
 
@@ -102,35 +108,45 @@ class World {
         }
     }
 
+    drawStatusIcons() {
+        this.ctx.font = 'bold 24px Arial';
+        this.ctx.fillStyle = 'white';
+
+        // Herz
+        this.ctx.drawImage(this.heartIcon, 20, 20, 40, 40);
+        this.ctx.fillText(`x ${this.character.energy}`, 65, 48);
+
+        // Coin
+        this.ctx.drawImage(this.coinIcon, 160, 20, 40, 40);
+        this.ctx.fillText(`x ${this.coinCount}`, 205, 48);
+
+        // Poison
+        this.ctx.drawImage(this.poisonIcon, 300, 20, 40, 40);
+        this.ctx.fillText(`x ${this.poisonCount}`, 345, 48);
+    }
+
     draw() {
-
-
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.ctx.translate(-this.camera_x, 0);
 
-        this.ctx.translate(-this.camera_x, 0); // Back
-        // -------- space for fixed objects ---------
-        this.addToMap(this.statusBar);
-        this.addToMap(this.poisonBar);
-        this.addToMap(this.coinBar);
+        // feste UI-Elemente
+        this.drawStatusIcons();
         if (this.character.x > 1600) {
             this.addToMap(this.endbossBar);
         }
-        this.ctx.translate(this.camera_x, 0); // Forward
 
+        this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poisons);
         this.addObjectsToMap(this.throwableObjects);
-
         this.ctx.translate(-this.camera_x, 0);
 
-        // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function() {
             self.draw();
@@ -140,7 +156,7 @@ class World {
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
-        })
+        });
     }
 
     addToMap(mo) {
@@ -164,5 +180,4 @@ class World {
     flipImageBack() {
         this.ctx.restore();
     }
-
 }
