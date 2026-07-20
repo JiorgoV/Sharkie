@@ -1,9 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 720px;
+    height: 480px;
+    position: relative;
+}
+
+#game-container:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+#game-container:fullscreen canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#startscreen,
+#gameover-screen,
+#youwin-screen {
+    position: absolute;
+    width: 720px;
+    height: 480px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background-image: url('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Dark/3.png');
+    background-size: cover;
+    gap: 20px;
+}
+
+#btn-start,
+#btn-instructions,
+#btn-fullscreen,
+.btn-action {
+    cursor: pointer;
+    height: 60px;
+}
+
+#btn-start:hover,
+#btn-instructions:hover,
+#btn-fullscreen:hover,
+.btn-action:hover {
+    opacity: 0.8;
+}
+
+#gameover-title,
+#youwin-title {
+    height: 120px;
+}
+
+
+/* Instructions Dialog */
+
+#instructions-dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+#instructions-content {
+    background-color: #1a1a2e;
+    padding: 40px;
+    border-radius: 12px;
+    border: 2px solid white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.instructions-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.instructions-row img {
+    height: 50px;
+}
+
+#close-instructions {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+#close-instructions:hover {
+    color: #aaa;
 }
 
 canvas {
     background-color: black;
+}
+
+.hidden {
+    display: none !important;
 }

@@ -25,16 +25,53 @@
     <script src="./levels/level1.js"></script>
     <script src="./models/world.class.js"></script>
     <script src="./js/game.js"></script>
-
 </head>
 
 <body onload="init()">
 
-    <h1>Sharkie</h1>
+    <div id="game-container">
 
-    <canvas id="canvas" width="720" height="480">
+        <!-- Startscreen -->
+        <div id="startscreen">
+            <img id="btn-start" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="startGame()">
+            <img id="btn-instructions" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Instructions 1.png" onclick="openInstructions()">
+            <img id="btn-fullscreen" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Full Screen/Mesa de trabajo 8.png" onclick="toggleFullscreen()">
+        </div>
 
-    </canvas>
+        <!-- Instructions Dialog -->
+        <div id="instructions-dialog" class="hidden">
+            <div id="instructions-content">
+                <span id="close-instructions" onclick="closeInstructions()">✕</span>
+                <div class="instructions-row">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Move title.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png">
+                </div>
+                <div class="instructions-row">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Attack tittle.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/D key.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/Space Bar key.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameover-screen" class="hidden">
+            <img id="gameover-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Game Over/Recurso 10.png">
+            <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Try again/Recurso 17.png" onclick="restartGame()">
+            <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="goHome()">
+        </div>
+
+        <!-- You Win Screen -->
+        <div id="youwin-screen" class="hidden">
+            <img id="youwin-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/You win/Recurso 22.png">
+            <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Try again/Recurso 17.png" onclick="restartGame()">
+            <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="goHome()">
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="canvas" width="720" height="480" class="hidden"></canvas>
+
+    </div>
 
 </body>
 

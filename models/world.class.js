@@ -30,10 +30,16 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        this.runInterval = setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkGameOver();
+            this.checkYouWin();
         }, 200);
+    }
+
+    stopGame() {
+        clearInterval(this.runInterval);
     }
 
     checkCollisions() {
@@ -179,5 +185,26 @@ class World {
 
     flipImageBack() {
         this.ctx.restore();
+    }
+
+    checkGameOver() {
+        if (this.character.isDead() && !this.gameOver) {
+            this.gameOver = true;
+            setTimeout(() => {
+                document.getElementById('canvas').classList.add('hidden');
+                document.getElementById('gameover-screen').classList.remove('hidden');
+            }, 1000);
+        }
+    }
+
+    checkYouWin() {
+        let endboss = this.level.enemies.find(e => e instanceof Endboss);
+        if (endboss && endboss.isDead() && !this.youWin) {
+            this.youWin = true;
+            setTimeout(() => {
+                document.getElementById('canvas').classList.add('hidden');
+                document.getElementById('youwin-screen').classList.remove('hidden');
+            }, 1000);
+        }
     }
 }
