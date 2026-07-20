@@ -36,16 +36,26 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
+                if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
+                    this.character.hurtCause = 'electro';
+                    this.character.deadCause = 'electro';
+                } else {
+                    this.character.hurtCause = 'poisoned';
+                    this.character.deadCause = 'poisoned';
+                }
                 this.character.hit();
                 this.statusBar.setPercantage(this.character.energy);
+            }
+
+            if (enemy instanceof Endboss && this.character.x > 2000) {
+                enemy.hadFirstContact = true;
             }
         });
 
         this.level.coins = this.level.coins.filter(coin => {
             if (this.character.isColliding(coin)) {
                 this.coinBar.setPercantage(this.coinBar.percentage + 20);
-                console.log('Coin collected, percentage:', this.coinBar.percentage);
-                return false; // coin entfernen
+                return false;
             }
             return true;
         });
@@ -53,7 +63,7 @@ class World {
         this.level.poisons = this.level.poisons.filter(poison => {
             if (this.character.isColliding(poison)) {
                 this.poisonBar.setPercantage(this.poisonBar.percentage + 20);
-                return false; // poison entfernen
+                return false;
             }
             return true;
         });
@@ -65,17 +75,11 @@ class World {
                         enemy.hit();
                         this.endbossBar.setPercantage(enemy.energy);
                     } else {
-                        return false; // normaler Gegner stirbt sofort
+                        return false;
                     }
                 }
                 return true;
             });
-        });
-
-        this.level.enemies.forEach(enemy => {
-            if (enemy instanceof Endboss && this.character.x > 2000) {
-                enemy.hadFirstContact = true;
-            }
         });
     }
 
