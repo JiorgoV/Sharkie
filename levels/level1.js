@@ -3,6 +3,10 @@ const level1 = new Level(
         new PufferFish(),
         new PufferFish(),
         new PufferFish(),
+        new Jellyfish(),
+        new Jellyfish(),
+        new DangerousJellyfish(),
+        new DangerousJellyfish(),
         new Endboss()
     ], [
         new Light('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/1. Light/1.png', 0),
