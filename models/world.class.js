@@ -37,15 +37,43 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercantage(this.character.energy);
-
             }
-        })
+        });
+
+        this.level.coins = this.level.coins.filter(coin => {
+            if (this.character.isColliding(coin)) {
+                this.coinBar.setPercantage(this.coinBar.percentage + 20);
+                console.log('Coin collected, percentage:', this.coinBar.percentage);
+                return false; // coin entfernen
+            }
+            return true;
+        });
+
+        this.level.poisons = this.level.poisons.filter(poison => {
+            if (this.character.isColliding(poison)) {
+                this.poisonBar.setPercantage(this.poisonBar.percentage + 20);
+                return false; // poison entfernen
+            }
+            return true;
+        });
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && !this.lastThrow) {
             let bubble = new ThrowableObject(this.character.x + 220, this.character.y + 170);
             this.throwableObjects.push(bubble);
+            this.lastThrow = true;
+        }
+
+        if (this.keyboard.SPACE && !this.lastThrow && this.poisonBar.percentage > 0) {
+            let poisonBubble = new PoisonBubble(this.character.x + 220, this.character.y + 170);
+            this.throwableObjects.push(poisonBubble);
+            this.poisonBar.setPercantage(this.poisonBar.percentage - 20);
+            this.lastThrow = true;
+        }
+
+        if (!this.keyboard.D && !this.keyboard.SPACE) {
+            this.lastThrow = false;
         }
     }
 
@@ -68,6 +96,8 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.poisons);
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);

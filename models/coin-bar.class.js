@@ -8,12 +8,12 @@ class CoinBar extends DrawableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_100.png' // 5
     ];
 
-    percentage = 100;
+    percentage = 0;
 
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.setPercantage(100);
+        this.setPercantage(0);
         this.x = 20;
         this.y = 50;
         this.width = 200;

@@ -31,5 +31,17 @@ const level1 = new Level(
         new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/D2.png', 720 * 3),
         new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/3.Fondo 1/D2.png', 720 * 3),
         new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/2. Floor/D2.png', 720 * 3)
+    ], [
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+    ], [
+        new Poison(),
+        new Poison(),
+        new Poison(),
+        new Poison(),
+        new Poison(),
     ]
 );
