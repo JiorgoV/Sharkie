@@ -29,19 +29,42 @@
 
 <body onload="init()">
 
+    <h1>Sharkie</h1>
+
+    <!-- Start Buttons -->
+    <div id="start-buttons">
+        <div class="start-btn-item" onclick="openSettings()">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/icons8-settings-144.svg">
+            <span>Settings</span>
+        </div>
+        <div class="start-btn-item" onclick="openInstructions()">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/help.png">
+            <span>Help</span>
+        </div>
+        <div class="start-btn-item" onclick="startGame()">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png">
+            <span>Start</span>
+        </div>
+    </div>
+
     <div id="game-container">
 
-        <!-- Startscreen -->
-        <div id="startscreen">
-            <img id="btn-start" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="startGame()">
-            <img id="btn-instructions" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Instructions 1.png" onclick="openInstructions()">
-            <img id="btn-fullscreen" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Full Screen/Mesa de trabajo 8.png" onclick="toggleFullscreen()">
+        <!-- Settings Dialog -->
+        <div id="settings-dialog" class="hidden">
+            <div id="settings-content">
+                <span class="close-btn" onclick="closeSettings()">✕</span>
+                <h2>Settings</h2>
+                <div class="settings-row">
+                    <span>Sound</span>
+                    <button id="mute-btn" onclick="toggleMute()">🔊 On</button>
+                </div>
+            </div>
         </div>
 
         <!-- Instructions Dialog -->
         <div id="instructions-dialog" class="hidden">
             <div id="instructions-content">
-                <span id="close-instructions" onclick="closeInstructions()">✕</span>
+                <span class="close-btn" onclick="closeInstructions()">✕</span>
                 <div class="instructions-row">
                     <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Move title.png">
                     <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png">
@@ -70,7 +93,8 @@
 
         <!-- Canvas -->
         <canvas id="canvas" width="720" height="480" class="hidden"></canvas>
-        <img id="btn-fullscreen-ingame" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Full Screen/Mesa de trabajo 8.png" onclick="toggleFullscreen()" class="hidden">
+        <div id="btn-fullscreen-ingame" onclick="toggleFullscreen()" class="hidden">⛶</div>
+
     </div>
 
 </body>

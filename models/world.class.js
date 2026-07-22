@@ -127,8 +127,8 @@ class World {
         this.ctx.fillText(`x ${this.coinCount}`, 205, 48);
 
         // Poison
-        this.ctx.drawImage(this.poisonIcon, 300, 20, 40, 40);
-        this.ctx.fillText(`x ${this.poisonCount}`, 345, 48);
+        this.ctx.drawImage(this.poisonIcon, 260, 20, 40, 40);
+        this.ctx.fillText(`x ${this.poisonCount}`, 300, 48);
     }
 
     draw() {

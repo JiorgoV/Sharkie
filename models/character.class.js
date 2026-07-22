@@ -102,6 +102,13 @@ class Character extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/5.Hurt/2.Electric shock/3.png',
     ];
 
+    offset = {
+        top: 150,
+        bottom: 60,
+        left: 50,
+        right: 50
+    };
+
     world;
 
 

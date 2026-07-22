@@ -7,11 +7,10 @@ function init() {
 }
 
 function startGame() {
-    document.getElementById('startscreen').classList.add('hidden');
-    document.getElementById('gameover-screen').classList.add('hidden');
-    document.getElementById('youwin-screen').classList.add('hidden');
+    document.getElementById('start-buttons').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
+    document.getElementById('game-container').classList.add('active');
     world = new World(canvas, keyboard);
 }
 
@@ -29,7 +28,8 @@ function goHome() {
     document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
-    document.getElementById('startscreen').classList.remove('hidden');
+    document.getElementById('start-buttons').classList.remove('hidden');
+    document.getElementById('game-container').classList.remove('active');
 }
 
 function openInstructions() {
@@ -66,3 +66,15 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 32) keyboard.SPACE = false;
     if (e.keyCode == 68) keyboard.D = false;
 });
+
+function openSettings() {
+    document.getElementById('settings-dialog').classList.remove('hidden');
+}
+
+function closeSettings() {
+    document.getElementById('settings-dialog').classList.add('hidden');
+}
+
+function toggleMute() {
+
+}
