@@ -272,3 +272,46 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#start-buttons {
+    background-color: rgba(6, 6, 197, 0.5);
+    padding: 30px 50px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+h1 {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-110vh) translateX(20px);
+        opacity: 0;
+    }
+}
+
+.bubble {
+    position: fixed;
+    bottom: -50px;
+    border-radius: 50%;
+    border: 2px solid rgba(150, 220, 255, 0.6);
+    animation: rise linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
