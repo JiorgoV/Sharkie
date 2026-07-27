@@ -315,3 +315,21 @@ h1 {
     pointer-events: none;
     z-index: 0;
 }
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        width: 100vh;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #game-container {
+        width: 100%;
+    }
+}

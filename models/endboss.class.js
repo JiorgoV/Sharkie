@@ -3,7 +3,9 @@ class Endboss extends MovableObject {
     height = 400;
     width = 400;
     y = 60;
-    hadFirstContact = false;
+    hadFirstContact = false; // wird true wenn Sharkie nah genug ist
+    introPlayed = false; // wird true wenn Introduce komplett durchgelaufen ist
+    introFrame = 0; // zählt wie viele Introduce-Frames schon gespielt wurden
 
     IMAGES_INTRODUCE = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png',
@@ -78,10 +80,14 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.hadFirstContact) {
-                this.playAnimation(this.IMAGES_FLOATING);
-            } else {
+            } else if (this.hadFirstContact && !this.introPlayed) {
                 this.playAnimation(this.IMAGES_INTRODUCE);
+                this.introFrame++;
+                if (this.introFrame >= this.IMAGES_INTRODUCE.length) {
+                    this.introPlayed = true;
+                }
+            } else if (this.hadFirstContact && this.introPlayed) {
+                this.playAnimation(this.IMAGES_FLOATING);
             }
         }, 200);
     }

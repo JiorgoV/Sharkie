@@ -7,6 +7,7 @@ function init() {
 }
 
 function startGame() {
+    initLevel();
     document.getElementById('start-buttons').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
@@ -16,6 +17,7 @@ function startGame() {
 
 function restartGame() {
     if (world) world.stopGame();
+    initLevel();
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');

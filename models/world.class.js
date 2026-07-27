@@ -12,6 +12,7 @@ class World {
     heartIcon = new Image();
     coinIcon = new Image();
     poisonIcon = new Image();
+    lastThrowTime = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -96,21 +97,19 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && !this.lastThrow) {
+        let now = new Date().getTime();
+
+        if (this.keyboard.D && now - this.lastThrowTime > 100) { //  Cooldown
             let bubble = new ThrowableObject(this.character.x + 220, this.character.y + 170);
             this.throwableObjects.push(bubble);
-            this.lastThrow = true;
+            this.lastThrowTime = now;
         }
 
-        if (this.keyboard.SPACE && !this.lastThrow && this.poisonCount > 0) {
+        if (this.keyboard.SPACE && now - this.lastThrowTime > 100 && this.poisonCount > 0) {
             let poisonBubble = new PoisonBubble(this.character.x + 220, this.character.y + 170);
             this.throwableObjects.push(poisonBubble);
             this.poisonCount = Math.max(this.poisonCount - 1, 0);
-            this.lastThrow = true;
-        }
-
-        if (!this.keyboard.D && !this.keyboard.SPACE) {
-            this.lastThrow = false;
+            this.lastThrowTime = now;
         }
     }
 
