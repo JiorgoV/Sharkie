@@ -27,81 +27,48 @@ body {
     background-size: cover;
 }
 
+
+/* ---- Titel ---- */
+
 h1 {
     position: absolute;
     top: 40px;
     left: 50%;
-    transform: translateX(-50%);
     font-size: 96px;
     letter-spacing: 4px;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
     color: white;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    animation: float 3s ease-in-out infinite;
 }
 
-#game-container {
-    width: 720px;
-    height: 480px;
+@keyframes float {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+
+/* ---- Start Buttons ---- */
+
+#start-buttons {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 4px;
-    pointer-events: none;
-    box-sizing: content-box;
-    /* ← Border zählt nicht zur Größe */
-}
-
-#game-container.active {
-    border: 4px solid #0a3d6b;
-    pointer-events: all;
-}
-
-#game-container:fullscreen {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-}
-
-#game-container:fullscreen canvas {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-
-/* Screens */
-
-#startscreen,
-#gameover-screen,
-#youwin-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Dark/3.png');
-    background-size: cover;
-    gap: 20px;
-}
-
-
-/* Startscreen Buttons */
-
-#startscreen-buttons {
     display: flex;
     flex-direction: row;
     gap: 40px;
     align-items: center;
     justify-content: center;
+    background-color: rgba(6, 6, 197, 0.5);
+    padding: 30px 50px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
 }
 
 .start-btn-item {
@@ -128,7 +95,65 @@ h1 {
 }
 
 
-/* Game Over / You Win */
+/* ---- Game Container ---- */
+
+#game-container {
+    width: 720px;
+    height: 480px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+#game-container.active {
+    border: 4px solid #0a3d6b;
+    pointer-events: all;
+}
+
+#game-container:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+#game-container:fullscreen canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+/* ---- Canvas ---- */
+
+canvas {
+    background-color: black;
+    display: block;
+}
+
+
+/* ---- Game Over / You Win ---- */
+
+#gameover-screen,
+#youwin-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Dark/3.png');
+    background-size: cover;
+    gap: 20px;
+}
 
 #gameover-title,
 #youwin-title {
@@ -145,7 +170,7 @@ h1 {
 }
 
 
-/* Dialogs */
+/* ---- Dialogs ---- */
 
 #settings-dialog,
 #instructions-dialog {
@@ -226,16 +251,7 @@ h1 {
 }
 
 
-/* Canvas */
-
-canvas {
-    background-color: black;
-    display: block;
-}
-
-.hidden {
-    display: none !important;
-}
+/* ---- Fullscreen Button ---- */
 
 #btn-fullscreen-ingame {
     position: absolute;
@@ -260,40 +276,103 @@ canvas {
     opacity: 1;
 }
 
-#start-buttons {
+
+/* ---- Mobile Controls ---- */
+
+#mobile-controls {
+    display: none;
+    position: absolute;
+    bottom: 66px;
+    left: 0;
+    right: 0;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 10;
+    pointer-events: all;
+}
+
+#dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+#dpad-middle {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 5px;
+}
+
+#action-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.touch-btn {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    opacity: 0.8;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.touch-btn:active {
+    opacity: 1;
+    transform: scale(0.95);
+}
+
+.touch-btn-arrow {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png');
+    background-size: 114px 87px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#btn-up {
+    background-position: -41px 0px;
+}
+
+#btn-left {
+    background-position: 0px -45px;
+}
+
+#btn-down {
+    background-position: -39px -45px;
+}
+
+#btn-right {
+    background-position: -189px -47px;
+}
+
+
+/* ---- Rotate Hint ---- */
+
+#rotate-hint {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: white;
+    font-size: 24px;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    z-index: 100;
 }
 
-#start-buttons {
-    background-color: rgba(6, 6, 197, 0.5);
-    padding: 30px 50px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-}
 
-h1 {
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-}
+/* ---- Bubbles ---- */
 
 @keyframes rise {
     0% {
@@ -316,20 +395,44 @@ h1 {
     z-index: 0;
 }
 
-@media only screen and (max-width: 720px) {
-    canvas {
-        width: 100%;
-    }
+
+/* ---- Hidden ---- */
+
+.hidden {
+    display: none !important;
 }
 
-@media only screen and (max-height: 480px) {
-    canvas {
-        width: 100vh;
-    }
-}
 
-@media only screen and (max-width: 720px) {
+/* ---- Media Queries ---- */
+
+@media only screen and (max-width: 760px) and (orientation: landscape) {
+    #mobile-controls.show {
+        display: flex;
+    }
+    .touch-btn,
+    .touch-btn-arrow {
+        width: 40px;
+        height: 40px;
+    }
     #game-container {
         width: 100%;
+        height: auto;
+    }
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+    h1 {
+        top: 13px;
+        font-size: 54px;
+    }
+    #start-buttons {
+        top: 58%;
+    }
+}
+
+@media only screen and (max-width: 760px) and (orientation: portrait) {
+    #rotate-hint {
+        display: flex;
     }
 }

@@ -12,6 +12,7 @@ function startGame() {
     document.getElementById('canvas').classList.remove('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
     document.getElementById('game-container').classList.add('active');
+    document.getElementById('mobile-controls').classList.add('show'); // ← neu
     world = new World(canvas, keyboard);
 }
 
@@ -32,6 +33,7 @@ function goHome() {
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('start-buttons').classList.remove('hidden');
     document.getElementById('game-container').classList.remove('active');
+    document.getElementById('mobile-controls').classList.remove('show');
 }
 
 function openInstructions() {

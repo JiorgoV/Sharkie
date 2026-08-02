@@ -95,6 +95,26 @@
         <canvas id="canvas" width="720" height="480" class="hidden"></canvas>
         <div id="btn-fullscreen-ingame" onclick="toggleFullscreen()" class="hidden">⛶</div>
 
+        <!-- Mobile Touch Buttons -->
+        <div id="mobile-controls">
+            <div id="dpad">
+                <div class="touch-btn-arrow" id="btn-up" ontouchstart="keyboard.UP = true" ontouchend="keyboard.UP = false"></div>
+                <div id="dpad-middle">
+                    <div class="touch-btn-arrow" id="btn-left" ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false"></div>
+                    <div class="touch-btn-arrow" id="btn-down" ontouchstart="keyboard.DOWN = true" ontouchend="keyboard.DOWN = false"></div>
+                    <div class="touch-btn-arrow" id="btn-right" ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false"></div>
+                </div>
+            </div>
+            <div id="action-buttons">
+                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png" class="touch-btn" id="btn-bubble" ontouchstart="keyboard.D = true" ontouchend="keyboard.D = false">
+                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png" class="touch-btn" id="btn-poison" ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false">
+            </div>
+        </div>
+
+        <div id="rotate-hint">
+            <p>🔄 Please rotate your device to play</p>
+        </div>
+
     </div>
 
     <div class="bubble" style="width:8px; height:8px; left:8%; animation-duration:4s;"></div>
