@@ -13,6 +13,7 @@ class World {
     coinIcon = new Image();
     poisonIcon = new Image();
     lastThrowTime = 0;
+    paused = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,14 +29,17 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(enemy => enemy.world = this);
     }
 
     run() {
         this.runInterval = setInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-            this.checkGameOver();
-            this.checkYouWin();
+            if (!this.paused) {
+                this.checkCollisions();
+                this.checkThrowObjects();
+                this.checkGameOver();
+                this.checkYouWin();
+            }
         }, 200);
     }
 

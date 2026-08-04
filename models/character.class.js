@@ -131,6 +131,7 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+            if (this.isPaused()) return;
             if (this.isDead()) return;
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -152,6 +153,7 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
+            if (this.isPaused()) return;
             if (this.isDead()) {
                 let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
                 this.playAnimation(deadImages);

@@ -14,6 +14,7 @@ function startGame() {
     document.getElementById('game-container').classList.add('active');
     document.getElementById('mobile-controls').classList.add('show'); // ← neu
     world = new World(canvas, keyboard);
+    document.getElementById('btn-pause').classList.remove('hidden');
 }
 
 function restartGame() {
@@ -29,11 +30,13 @@ function goHome() {
     if (world) world.stopGame();
     document.getElementById('canvas').classList.add('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
+    document.getElementById('btn-pause').classList.add('hidden');
+    document.getElementById('pause-menu').classList.add('hidden'); // ← neu
+    document.getElementById('mobile-controls').classList.remove('show');
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
-    document.getElementById('start-buttons').classList.remove('hidden');
     document.getElementById('game-container').classList.remove('active');
-    document.getElementById('mobile-controls').classList.remove('show');
+    document.getElementById('start-buttons').classList.remove('hidden');
 }
 
 function openInstructions() {
@@ -60,6 +63,9 @@ window.addEventListener('keydown', (e) => {
     if (e.keyCode == 40) keyboard.DOWN = true;
     if (e.keyCode == 32) keyboard.SPACE = true;
     if (e.keyCode == 68) keyboard.D = true;
+    if (e.keyCode == 27) {
+        if (world) togglePause();
+    }
 });
 
 window.addEventListener('keyup', (e) => {
@@ -77,6 +83,12 @@ function openSettings() {
 
 function closeSettings() {
     document.getElementById('settings-dialog').classList.add('hidden');
+}
+
+function togglePause() {
+    let pauseMenu = document.getElementById('pause-menu');
+    pauseMenu.classList.toggle('hidden');
+    world.paused = !world.paused;
 }
 
 function toggleMute() {

@@ -76,12 +76,17 @@ class MovableObject extends DrawableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
+        this.moveLeftInterval = setInterval(() => {
+            if (this.isPaused()) return;
             this.x -= this.speed;
         }, 1000 / 60);
     }
 
     jump() {
         this.speedY = 20;
+    }
+
+    isPaused() {
+        return this.world && this.world.paused;
     }
 }

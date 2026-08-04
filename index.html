@@ -94,6 +94,7 @@
         <!-- Canvas -->
         <canvas id="canvas" width="720" height="480" class="hidden"></canvas>
         <div id="btn-fullscreen-ingame" onclick="toggleFullscreen()" class="hidden">⛶</div>
+        <img id="btn-pause" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/Grey/icon_cross.svg" onclick="togglePause()" class="hidden">
 
         <!-- Mobile Touch Buttons -->
         <div id="mobile-controls">
@@ -113,6 +114,15 @@
 
         <div id="rotate-hint">
             <p>🔄 Please rotate your device to play</p>
+        </div>
+
+        <div id="pause-menu" class="hidden">
+            <div id="pause-content">
+                <h2>Pause</h2>
+                <div class="pause-btn" onclick="togglePause()">▶ Weiter</div>
+                <div class="pause-btn" onclick="toggleMute()">🔊 Sound</div>
+                <div class="pause-btn" onclick="goHome()">🏠 Home</div>
+            </div>
         </div>
 
     </div>

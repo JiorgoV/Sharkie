@@ -21,4 +21,12 @@ class DangerousJellyfish extends Jellyfish {
         this.loadImages(this.IMAGES_SWIM);
         this.speed = 0.3 + Math.random() * 0.3; // schneller
     }
+
+    animate() {
+        this.moveLeft();
+        setInterval(() => {
+            if (this.isPaused()) return;
+            this.playAnimation(this.IMAGES_SWIM);
+        }, 150);
+    }
 }

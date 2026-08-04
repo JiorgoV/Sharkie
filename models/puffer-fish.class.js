@@ -22,11 +22,10 @@ class PufferFish extends MovableObject {
 
     animate() {
         this.moveLeft();
-
         setInterval(() => {
+            if (this.isPaused()) return;
             this.playAnimation(this.IMAGES_SWIM);
-        }, 100);
-
+        }, 150);
     }
 
 }
