@@ -102,15 +102,25 @@ class World {
 
     checkThrowObjects() {
         let now = new Date().getTime();
+        let isLeft = this.character.otherDirection; // ← direkt aus Keyboard lesen
+        let offsetX = isLeft ? 20 : 220;
 
-        if (this.keyboard.D && now - this.lastThrowTime > 100) { //  Cooldown
-            let bubble = new ThrowableObject(this.character.x + 220, this.character.y + 170);
+        if (this.keyboard.D && now - this.lastThrowTime > 200) {
+            let bubble = new ThrowableObject(
+                this.character.x + offsetX,
+                this.character.y + 170,
+                isLeft
+            );
             this.throwableObjects.push(bubble);
             this.lastThrowTime = now;
         }
 
-        if (this.keyboard.SPACE && now - this.lastThrowTime > 100 && this.poisonCount > 0) {
-            let poisonBubble = new PoisonBubble(this.character.x + 220, this.character.y + 170);
+        if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
+            let poisonBubble = new PoisonBubble(
+                this.character.x + offsetX,
+                this.character.y + 170,
+                isLeft
+            );
             this.throwableObjects.push(poisonBubble);
             this.poisonCount = Math.max(this.poisonCount - 1, 0);
             this.lastThrowTime = now;
