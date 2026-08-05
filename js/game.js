@@ -92,5 +92,7 @@ function togglePause() {
 }
 
 function toggleMute() {
-
+    world.soundManager.toggleMute();
+    let btn = document.getElementById('mute-btn');
+    btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
 }

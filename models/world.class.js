@@ -14,6 +14,7 @@ class World {
     poisonIcon = new Image();
     lastThrowTime = 0;
     paused = false;
+    soundManager = new SoundManager();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -22,6 +23,8 @@ class World {
         this.heartIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_  copia 3.png';
         this.coinIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_ copia 6.png';
         this.poisonIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_ copia 5.png';
+        this.soundManager.loadMuteState();
+        this.soundManager.play('startTheme');
         this.setWorld();
         this.draw();
         this.run();
@@ -58,16 +61,19 @@ class World {
                     this.character.deadCause = 'poisoned';
                 }
                 this.character.hit();
+                this.soundManager.play('damageHit');
             }
 
             if (enemy instanceof Endboss && this.character.x > 2000) {
                 enemy.hadFirstContact = true;
+                this.soundManager.play('endbossEntry');
             }
         });
 
         this.level.coins = this.level.coins.filter(coin => {
             if (this.character.isColliding(coin)) {
                 this.coinCount = Math.min(this.coinCount + 1, 5);
+                this.soundManager.play('coinPickup');
                 return false;
             }
             return true;
@@ -76,6 +82,7 @@ class World {
         this.level.poisons = this.level.poisons.filter(poison => {
             if (this.character.isColliding(poison)) {
                 this.poisonCount = Math.min(this.poisonCount + 1, 5);
+                this.soundManager.play('bubblePickup');
                 return false;
             }
             return true;
@@ -106,6 +113,7 @@ class World {
         let offsetX = isLeft ? 20 : 220;
 
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
+            this.soundManager.play('bubbleShot');
             let bubble = new ThrowableObject(
                 this.character.x + offsetX,
                 this.character.y + 170,
@@ -203,6 +211,7 @@ class World {
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
+            this.soundManager.play('gameOver');
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('gameover-screen').classList.remove('hidden');
