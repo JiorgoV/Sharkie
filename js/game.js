@@ -1,20 +1,32 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let menuMusic = new Audio('audio/start-theme.wav');
+menuMusic.loop = true
 
 function init() {
+    startMenuMusic();
     canvas = document.getElementById('canvas');
+
 }
 
 function startGame() {
+    menuMusic.pause(); // ← Menü-Musik stoppen
+    menuMusic.currentTime = 0;
     initLevel();
     document.getElementById('start-buttons').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
     document.getElementById('game-container').classList.add('active');
-    document.getElementById('mobile-controls').classList.add('show'); // ← neu
-    world = new World(canvas, keyboard);
+    document.getElementById('mobile-controls').classList.add('show');
     document.getElementById('btn-pause').classList.remove('hidden');
+    world = new World(canvas, keyboard);
+    let volume = parseFloat(localStorage.getItem('volume')) || 0.5;
+    world.soundManager.setVolume(volume);
+    world.soundManager.loadMuteState();
+    world.soundManager.play('startTheme');
+    let btn = document.getElementById('mute-btn');
+    if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
 }
 
 function restartGame() {
@@ -24,6 +36,8 @@ function restartGame() {
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
     world = new World(canvas, keyboard);
+    let volume = parseFloat(localStorage.getItem('volume')) || 0.5;
+    world.soundManager.setVolume(volume);
 }
 
 function goHome() {
@@ -40,6 +54,7 @@ function goHome() {
 }
 
 function openInstructions() {
+    startMenuMusic();
     document.getElementById('instructions-dialog').classList.remove('hidden');
 }
 
@@ -78,11 +93,18 @@ window.addEventListener('keyup', (e) => {
 });
 
 function openSettings() {
+    startMenuMusic();
     document.getElementById('settings-dialog').classList.remove('hidden');
+    document.getElementById('pause-menu').classList.add('hidden');
+    let volume = localStorage.getItem('volume') || 0.5;
+    document.getElementById('volume-slider').value = volume;
 }
 
 function closeSettings() {
     document.getElementById('settings-dialog').classList.add('hidden');
+    if (world && world.paused) {
+        document.getElementById('pause-menu').classList.remove('hidden');
+    }
 }
 
 function togglePause() {
@@ -95,4 +117,13 @@ function toggleMute() {
     world.soundManager.toggleMute();
     let btn = document.getElementById('mute-btn');
     btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
+}
+
+function changeVolume(value) {
+    localStorage.setItem('volume', value);
+    if (world) world.soundManager.setVolume(parseFloat(value));
+}
+
+function startMenuMusic() {
+    menuMusic.play().catch(e => {});
 }

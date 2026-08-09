@@ -57,7 +57,7 @@
                 <h2>Settings</h2>
                 <div class="settings-row">
                     <span>Sound</span>
-                    <button id="mute-btn" onclick="toggleMute()">🔊 On</button>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume(this.value)">
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
             <div id="pause-content">
                 <h2>Pause</h2>
                 <div class="pause-btn" onclick="togglePause()">▶ Weiter</div>
-                <div class="pause-btn" onclick="toggleMute()">🔊 Sound</div>
+                <div class="pause-btn" onclick="openSettings()">🔊 Sound</div>
                 <div class="pause-btn" onclick="goHome()">🏠 Home</div>
             </div>
         </div>

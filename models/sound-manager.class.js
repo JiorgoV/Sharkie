@@ -15,12 +15,14 @@ class SoundManager {
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
+        this.loadVolume();
     }
 
     play(soundName) {
+        console.log('play called:', soundName, 'muted:', this.muted, 'sound:', this.sounds[soundName]);
         if (!this.muted && this.sounds[soundName]) {
             this.sounds[soundName].currentTime = 0;
-            this.sounds[soundName].play();
+            this.sounds[soundName].play().catch(e => {});
         }
     }
 
@@ -36,5 +38,15 @@ class SoundManager {
 
     loadMuteState() {
         this.muted = localStorage.getItem('muted') === 'true';
+    }
+
+    setVolume(volume) {
+        Object.values(this.sounds).forEach(s => s.volume = volume);
+        localStorage.setItem('volume', volume);
+    }
+
+    loadVolume() {
+        let volume = parseFloat(localStorage.getItem('volume')) || 0.5;
+        this.setVolume(volume);
     }
 }
