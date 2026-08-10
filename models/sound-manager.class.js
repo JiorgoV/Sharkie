@@ -15,7 +15,6 @@ class SoundManager {
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
-        console.log('backgroundFx src:', this.sounds.backgroundFx.src);
         this.loadVolume();
     }
 
