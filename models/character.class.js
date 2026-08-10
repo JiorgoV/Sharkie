@@ -102,12 +102,29 @@ class Character extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/5.Hurt/2.Electric shock/3.png',
     ];
 
+    IMAGES_SLEEP = [
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i1.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i2.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i3.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i4.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i5.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i6.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i7.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i8.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i9.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i10.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i11.png',
+        'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/i12.png'
+    ]
+
     offset = {
         top: 150,
         bottom: 60,
         left: 50,
         right: 50
     };
+
+    lastActivity = new Date().getTime();
 
     world;
 
@@ -123,6 +140,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT_ELECTRO);
         this.loadImages(this.IMAGES_DEAD_POISONED);
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
+        this.loadImages(this.IMAGES_SLEEP);
         this.applyGravity();
         this.animate();
     }
@@ -137,15 +155,18 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
+                this.lastActivity = new Date().getTime();
             }
 
             if (this.world.keyboard.LEFT && this.x > -640) {
                 this.x -= this.speed;
                 this.otherDirection = true;
+                this.lastActivity = new Date().getTime();
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.lastActivity = new Date().getTime();
             }
 
             this.world.camera_x = -this.x + 40;
@@ -160,6 +181,8 @@ class Character extends MovableObject {
             } else if (this.isHurt()) {
                 let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
                 this.playAnimation(hurtImages);
+            } else if (this.isSleeping()) {
+                this.playAnimation(this.IMAGES_SLEEP);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_SWIM);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -167,7 +190,12 @@ class Character extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 50);
+        }, 110);
+    }
+
+    isSleeping() {
+        let timepassed = new Date().getTime() - this.lastActivity;
+        return timepassed > 15000;
     }
 
 }
