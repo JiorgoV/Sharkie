@@ -1,5 +1,6 @@
 /** Central game world for rendering, collisions, input, and game state. */
 class World {
+    intervallIds = [];
     character = new Character();
     endbossBar = new EndbossBar();
     level = level1;
@@ -35,6 +36,23 @@ class World {
         this.run();
     }
 
+    setStoppableInterval(fn, time) {
+        let id = setInterval(fn, time);
+        this.intervallIds.push(id);
+    }
+
+    stopAnimations() {
+        this.intervallIds.forEach(clearInterval);
+    }
+
+    stopGame() {
+        this.stopAnimations();
+        this.character.stopAnimations();
+        this.level.enemies.forEach(enemy => enemy.stopAnimations());
+        this.throwableObjects.forEach(obj => obj.stopAnimations());
+        this.level.lights.forEach(light => light.stopAnimations());
+    }
+
     /** Links the player and enemies to this world. @returns {void} */
     setWorld() {
         this.character.world = this;
@@ -43,7 +61,7 @@ class World {
 
     /** Starts the recurring game and collision checks. @returns {void} */
     run() {
-        this.runInterval = setInterval(() => {
+        this.runInterval = this.setStoppableInterval(() => {
             if (!this.paused) {
                 this.checkCollisions();
                 this.checkThrowObjects();
@@ -55,7 +73,11 @@ class World {
 
     /** Stops the recurring game checks. @returns {void} */
     stopGame() {
-        clearInterval(this.runInterval);
+        this.stopAnimations();
+        this.character.stopAnimations();
+        this.level.enemies.forEach(enemy => enemy.stopAnimations());
+        this.throwableObjects.forEach(obj => obj.stopAnimations());
+        this.level.lights.forEach(light => light.stopAnimations());
     }
 
     /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */

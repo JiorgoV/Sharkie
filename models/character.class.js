@@ -151,7 +151,7 @@ class Character extends MovableObject {
     /** Processes input and selects the appropriate Sharkie animation. @returns {void} */
     animate() {
 
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isPaused()) return;
             if (this.isDead()) return;
 
@@ -176,7 +176,7 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
 
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isPaused()) return;
             if (this.isDead()) {
                 let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;

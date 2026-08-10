@@ -27,7 +27,7 @@ class DangerousJellyfish extends Jellyfish {
     /** Starts the dangerous jellyfish movement and swimming animation. @returns {void} */
     animate() {
         this.moveLeft();
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isPaused()) return;
             this.playAnimation(this.IMAGES_SWIM);
         }, 150);

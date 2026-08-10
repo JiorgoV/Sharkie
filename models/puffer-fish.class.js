@@ -25,7 +25,7 @@ class PufferFish extends MovableObject {
     /** Starts the puffer fish movement and swimming animation. @returns {void} */
     animate() {
         this.moveLeft();
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isPaused()) return;
             this.playAnimation(this.IMAGES_SWIM);
         }, 150);

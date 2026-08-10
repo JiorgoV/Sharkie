@@ -23,7 +23,7 @@ class Light extends MovableObject {
 
     /** Starts the sinusoidal movement of the light object. @returns {void} */
     animate() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             this.angle += 0.05;
             this.x = this.startX + Math.sin(this.angle) * 20;
         }, 100);

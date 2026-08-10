@@ -22,7 +22,7 @@ class ThrowableObject extends MovableObject {
      * @returns {void}
      */
     throw (otherDirection) {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             this.x += otherDirection ? -10 : 10;
         }, 25);
     }

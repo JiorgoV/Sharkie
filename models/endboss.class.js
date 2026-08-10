@@ -78,7 +78,7 @@ class Endboss extends MovableObject {
 
     /** Controls the final enemy animation cycle based on its state. @returns {void} */
     animate() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isPaused()) return;
 
             if (this.isDead()) {

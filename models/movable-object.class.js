@@ -20,6 +20,17 @@ class MovableObject extends DrawableObject {
         right: 0
     };
 
+    intervallIds = [];
+
+
+    setStoppableInterval(fn, time) {
+        let id = setInterval(fn, time);
+        this.intervallIds.push(id);
+    }
+
+    stopAnimations() {
+        this.intervallIds.forEach(clearInterval);
+    }
 
 
     /** Starts the repeated gravity calculation. @returns {void} */
