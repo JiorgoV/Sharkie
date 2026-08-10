@@ -14,6 +14,7 @@ menuFx.loop = true;
 /** Connects the global canvas reference to the DOM element. @returns {void} */
 function init() {
     canvas = document.getElementById('canvas');
+    checkOrientation();
 }
 
 /** Starts menu music with the stored volume settings. @returns {void} */
@@ -198,3 +199,22 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 32) keyboard.SPACE = false;
     if (e.keyCode == 68) keyboard.D = false;
 });
+
+function checkOrientation() {
+    if (window.matchMedia("(orientation: landscape)").matches) {
+        if (window.innerHeight < 480) {
+            let newHeight = window.innerHeight;
+            document.getElementById('canvas').style.height = `${newHeight}px`;
+        }
+    } else {
+        document.getElementById('canvas').style.height = `100%`;
+    }
+}
+
+
+
+
+
+
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
