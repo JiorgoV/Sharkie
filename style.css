@@ -500,11 +500,12 @@ canvas {
     width: 160px;
     height: 48px;
     font-size: 32px;
+    cursor: pointer;
 }
 
 #impressum-link {
     position: fixed;
-    bottom: 10px;
+    bottom: 24px;
     right: 50%;
     color: rgba(255, 255, 255, 0.9);
     font-size: 24px;
@@ -547,4 +548,27 @@ canvas {
 
 #impressum-container a:hover {
     color: white;
+}
+
+#btn-mute-ingame {
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    opacity: 0.7;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+}
+
+#btn-mute-ingame:hover {
+    opacity: 1;
 }

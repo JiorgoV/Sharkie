@@ -50,6 +50,7 @@ function startGame() {
     world.soundManager.play('backgroundFx');
     let btn = document.getElementById('mute-btn');
     if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
+    document.getElementById('btn-mute-ingame').classList.remove('hidden');
 }
 
 /** Resets the current level and restarts the game. @returns {void} */
@@ -84,6 +85,7 @@ function goHome() {
     document.getElementById('start-buttons').classList.remove('hidden');
     document.querySelector('h1').classList.remove('hidden');
     document.getElementById('main-title').classList.remove('hidden');
+    document.getElementById('btn-mute-ingame').classList.add('hidden');
     startMenuMusic();
 }
 
@@ -138,7 +140,9 @@ function togglePause() {
 function toggleMute() {
     world.soundManager.toggleMute();
     let btn = document.getElementById('mute-btn');
+    let btnIngame = document.getElementById('btn-mute-ingame');
     if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
+    if (btnIngame) btnIngame.textContent = world.soundManager.muted ? '🔇' : '🔊';
 }
 
 /**
