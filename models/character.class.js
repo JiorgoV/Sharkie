@@ -1,3 +1,4 @@
+/** Player-controlled Sharkie with movement and state animations. @extends MovableObject */
 class Character extends MovableObject {
 
     height = 320;
@@ -129,6 +130,7 @@ class Character extends MovableObject {
     world;
 
 
+    /** Creates Sharkie, loads all animations, and starts gravity and animation. */
     constructor() {
         super();
         this.loadImage('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png');
@@ -146,6 +148,7 @@ class Character extends MovableObject {
     }
 
 
+    /** Processes input and selects the appropriate Sharkie animation. @returns {void} */
     animate() {
 
         setInterval(() => {
@@ -193,6 +196,10 @@ class Character extends MovableObject {
         }, 110);
     }
 
+    /**
+     * Checks whether Sharkie has received no input for at least 15 seconds.
+     * @returns {boolean} `true` when the sleep animation should be played.
+     */
     isSleeping() {
         let timepassed = new Date().getTime() - this.lastActivity;
         return timepassed > 15000;

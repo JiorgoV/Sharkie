@@ -1,3 +1,4 @@
+/** Central game world for rendering, collisions, input, and game state. */
 class World {
     character = new Character();
     endbossBar = new EndbossBar();
@@ -16,6 +17,10 @@ class World {
     paused = false;
     soundManager = new SoundManager();
 
+    /**
+     * @param {HTMLCanvasElement} canvas Canvas used for game output.
+     * @param {Keyboard} keyboard Current state of the game keys.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -30,11 +35,13 @@ class World {
         this.run();
     }
 
+    /** Links the player and enemies to this world. @returns {void} */
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => enemy.world = this);
     }
 
+    /** Starts the recurring game and collision checks. @returns {void} */
     run() {
         this.runInterval = setInterval(() => {
             if (!this.paused) {
@@ -46,10 +53,12 @@ class World {
         }, 200);
     }
 
+    /** Stops the recurring game checks. @returns {void} */
     stopGame() {
         clearInterval(this.runInterval);
     }
 
+    /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
@@ -107,6 +116,7 @@ class World {
         });
     }
 
+    /** Creates attack bubbles from input with a cooldown. @returns {void} */
     checkThrowObjects() {
         let now = new Date().getTime();
         let isLeft = this.character.otherDirection; // ← direkt aus Keyboard lesen
@@ -135,6 +145,7 @@ class World {
         }
     }
 
+    /** Draws health, coin, and poison bubble counters in the fixed HUD layer. @returns {void} */
     drawStatusIcons() {
         this.ctx.font = 'bold 24px Arial';
         this.ctx.fillStyle = 'white';
@@ -152,6 +163,7 @@ class World {
         this.ctx.fillText(`x ${this.poisonCount}`, 300, 48);
     }
 
+    /** Draws all game objects and schedules the next animation frame. @returns {void} */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -180,12 +192,20 @@ class World {
         });
     }
 
+    /** Adds a list of objects to the rendered map.
+     * @param {DrawableObject[]} objects Objects to draw.
+     * @returns {void}
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /** Draws an object while respecting its facing direction.
+     * @param {DrawableObject} mo Object to draw.
+     * @returns {void}
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -198,16 +218,22 @@ class World {
         }
     }
 
+    /** Enables horizontal mirroring for an object.
+     * @param {DrawableObject} mo Object to mirror.
+     * @returns {void}
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.x + mo.height, 0);
         this.ctx.scale(-1, 1);
     }
 
+    /** Restores the previous canvas state after mirroring. @returns {void} */
     flipImageBack() {
         this.ctx.restore();
     }
 
+    /** Displays the game-over screen after the player dies. @returns {void} */
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
@@ -219,6 +245,7 @@ class World {
         }
     }
 
+    /** Displays the win screen after defeating the final enemy. @returns {void} */
     checkYouWin() {
         let endboss = this.level.enemies.find(e => e instanceof Endboss);
         if (endboss && endboss.isDead() && !this.youWin) {

@@ -1,5 +1,10 @@
+/** @type {Level} Currently initialized level. */
 let level1;
 
+/**
+ * Creates level 1 with enemies, lighting, backgrounds, coins, and poison bubbles.
+ * @returns {void}
+ */
 function initLevel() {
 
     level1 = new Level(

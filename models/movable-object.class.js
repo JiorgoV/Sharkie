@@ -1,3 +1,7 @@
+/**
+ * Visible object with movement, gravity, and health.
+ * @extends DrawableObject
+ */
 class MovableObject extends DrawableObject {
     x = 120;
     y = 280;
@@ -18,6 +22,7 @@ class MovableObject extends DrawableObject {
 
 
 
+    /** Starts the repeated gravity calculation. @returns {void} */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -27,6 +32,10 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * Checks whether the object is above the ground level.
+     * @returns {boolean} `true` when the object is airborne.
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -35,7 +44,11 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    // character.isColliding(chicken);
+    /**
+     * Checks rectangular collision with another object.
+     * @param {MovableObject} mo Object to check.
+     * @returns {boolean} `true` when the collision frames overlap.
+     */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -43,6 +56,7 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    /** Reduces health by five points and updates the hit timestamp. @returns {void} */
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -52,10 +66,12 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /** @returns {boolean} `true` when no health remains. */
     isDead() {
         return this.energy == 0;
     }
 
+    /** @returns {boolean} `true` when the last hit occurred less than 0.5 seconds ago. */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Differnce in s
@@ -63,6 +79,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Sets the next image in an animation sequence.
+     * @param {string[]} images Image paths in the animation sequence.
+     * @returns {void}
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -70,11 +91,13 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    /** Moves the object one step to the right. @returns {void} */
     moveRight() {
         this.x += this.speed;
 
     }
 
+    /** Starts continuous movement to the left. @returns {void} */
     moveLeft() {
         this.moveLeftInterval = setInterval(() => {
             if (this.isPaused()) return;
@@ -82,10 +105,12 @@ class MovableObject extends DrawableObject {
         }, 1000 / 60);
     }
 
+    /** Sets the vertical velocity for a jump. @returns {void} */
     jump() {
         this.speedY = 20;
     }
 
+    /** @returns {boolean|undefined} World pause state, when a world is assigned. */
     isPaused() {
         return this.world && this.world.paused;
     }

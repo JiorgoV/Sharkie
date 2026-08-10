@@ -1,3 +1,4 @@
+/** HUD bar for the final enemy's health. @extends DrawableObject */
 class EndbossBar extends DrawableObject {
     IMAGES = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/orange/0_  copia.png',
@@ -10,6 +11,7 @@ class EndbossBar extends DrawableObject {
 
     percentage = 100;
 
+    /** Creates the final enemy bar at full health. */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -20,12 +22,18 @@ class EndbossBar extends DrawableObject {
         this.height = 60;
     }
 
+    /**
+     * Updates the final enemy health percentage.
+     * @param {number} percentage Percentage between 0 and 100.
+     * @returns {void}
+     */
     setPercantage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /** @returns {number} Image index between 0 and 5. */
     resolveImageIndex() {
         if (this.percentage == 100) return 5;
         else if (this.percentage > 80) return 4;

@@ -1,3 +1,4 @@
+/** Animated puffer fish enemy. @extends MovableObject */
 class PufferFish extends MovableObject {
 
     width = 160;
@@ -11,6 +12,7 @@ class PufferFish extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim5.png'
     ];
 
+    /** Creates a puffer fish at a random position. */
     constructor() {
         super();
         this.loadImage('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png');
@@ -20,6 +22,7 @@ class PufferFish extends MovableObject {
         this.animate();
     }
 
+    /** Starts the puffer fish movement and swimming animation. @returns {void} */
     animate() {
         this.moveLeft();
         setInterval(() => {

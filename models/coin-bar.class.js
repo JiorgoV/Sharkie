@@ -1,3 +1,4 @@
+/** HUD bar for the current coin progress. @extends DrawableObject */
 class CoinBar extends DrawableObject {
     IMAGES = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_0.png', // 0
@@ -10,6 +11,7 @@ class CoinBar extends DrawableObject {
 
     percentage = 0;
 
+    /** Creates the coin bar and sets its initial value to zero percent. */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -21,13 +23,21 @@ class CoinBar extends DrawableObject {
 
     }
 
-    //setPercentage(50);
+    /**
+     * Updates the percentage and the corresponding bar image.
+     * @param {number} percentage Percentage between 0 and 100.
+     * @returns {void}
+     */
     setPercantage(percentage) {
         this.percentage = percentage; // => 0....5
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Resolves the bar image index from the percentage.
+     * @returns {number} Image index between 0 and 5.
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

@@ -1,3 +1,4 @@
+/** Final enemy with introduction, attack, hurt, and death animations. @extends MovableObject */
 class Endboss extends MovableObject {
 
     height = 400;
@@ -62,6 +63,7 @@ class Endboss extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
     ];
 
+    /** Creates the final enemy, loads its animations, and starts the animation cycle. */
     constructor() {
         super();
         this.loadImage(this.IMAGES_INTRODUCE[0]);
@@ -74,6 +76,7 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /** Controls the final enemy animation cycle based on its state. @returns {void} */
     animate() {
         setInterval(() => {
             if (this.isPaused()) return;
