@@ -120,13 +120,32 @@ function closeInstructions() {
     document.getElementById('instructions-dialog').classList.add('hidden');
 }
 
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+
+
 /** Toggles fullscreen mode for the game container. @returns {void} */
 function toggleFullscreen() {
     let container = document.getElementById('game-container');
     if (!document.fullscreenElement) {
-        container.requestFullscreen();
+        enterFullscreen(container);
     } else {
-        document.exitFullscreen();
+        exitFullscreen();
     }
 }
 
