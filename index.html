@@ -30,10 +30,15 @@
 
 <body onload="init()">
 
-    <h1>Sharkie</h1>
+    <div id="splash-screen">
+        <h1>Sharkie</h1>
+        <button class="enter-btn" onclick="showMainMenu()">Enter</button>
+    </div>
+
+    <h1 class="hidden">Sharkie</h1>
 
     <!-- Start Buttons -->
-    <div id="start-buttons">
+    <div class="hidden" id="start-buttons">
         <div class="start-btn-item" onclick="openSettings()">
             <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/icons8-settings-144.svg">
             <span>Settings</span>
@@ -48,7 +53,7 @@
         </div>
     </div>
 
-    <div id="game-container">
+    <div class="hidden" id="game-container">
 
         <!-- Settings Dialog -->
         <div id="settings-dialog" class="hidden">

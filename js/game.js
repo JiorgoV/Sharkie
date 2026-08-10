@@ -11,10 +11,11 @@ function init() {
 }
 
 function startGame() {
-    menuMusic.pause(); // ← Menü-Musik stoppen
+    menuMusic.pause();
     menuMusic.currentTime = 0;
     initLevel();
     document.getElementById('start-buttons').classList.add('hidden');
+    document.getElementById('game-container').classList.remove('hidden'); // ← neu
     document.getElementById('canvas').classList.remove('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.remove('hidden');
     document.getElementById('game-container').classList.add('active');
@@ -51,6 +52,7 @@ function goHome() {
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('game-container').classList.remove('active');
     document.getElementById('start-buttons').classList.remove('hidden');
+    document.getElementById('game-container').classList.add('hidden');
 }
 
 function openInstructions() {
@@ -126,4 +128,11 @@ function changeVolume(value) {
 
 function startMenuMusic() {
     menuMusic.play().catch(e => {});
+}
+
+function showMainMenu() {
+    document.getElementById('splash-screen').classList.add('hidden');
+    document.getElementById('start-buttons').classList.remove('hidden');
+    document.querySelector('h1').classList.remove('hidden');
+    startMenuMusic();
 }
