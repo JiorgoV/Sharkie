@@ -175,7 +175,7 @@ canvas {
 #settings-dialog,
 #instructions-dialog {
     pointer-events: all;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;

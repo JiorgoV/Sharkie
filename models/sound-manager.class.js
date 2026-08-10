@@ -15,14 +15,14 @@ class SoundManager {
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
+        console.log('backgroundFx src:', this.sounds.backgroundFx.src);
         this.loadVolume();
     }
 
     play(soundName) {
-        console.log('play called:', soundName, 'muted:', this.muted, 'sound:', this.sounds[soundName]);
         if (!this.muted && this.sounds[soundName]) {
             this.sounds[soundName].currentTime = 0;
-            this.sounds[soundName].play().catch(e => {});
+            this.sounds[soundName].play().catch(e => console.log('error:', e)); // ← catch wieder rein
         }
     }
 
@@ -48,5 +48,21 @@ class SoundManager {
     loadVolume() {
         let volume = parseFloat(localStorage.getItem('volume')) || 0.5;
         this.setVolume(volume);
+    }
+
+    setMusicVolume(volume) {
+        this.sounds.startTheme.volume = volume;
+        this.sounds.backgroundFx.volume = volume;
+        localStorage.setItem('musicVolume', volume);
+    }
+
+    setFxVolume(volume) {
+        this.sounds.coinPickup.volume = volume;
+        this.sounds.bubblePickup.volume = volume;
+        this.sounds.bubbleShot.volume = volume;
+        this.sounds.damageHit.volume = volume;
+        this.sounds.endbossEntry.volume = volume;
+        this.sounds.gameOver.volume = volume;
+        localStorage.setItem('fxVolume', volume);
     }
 }
