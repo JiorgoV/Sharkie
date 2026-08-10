@@ -72,6 +72,8 @@ function goHome() {
     document.getElementById('game-container').classList.remove('active');
     document.getElementById('game-container').classList.add('hidden');
     document.getElementById('start-buttons').classList.remove('hidden');
+    document.querySelector('h1').classList.remove('hidden');
+    document.getElementById('main-title').classList.remove('hidden');
     startMenuMusic();
 }
 
@@ -138,6 +140,7 @@ function showMainMenu() {
     document.getElementById('splash-screen').classList.add('hidden');
     document.querySelector('h1').classList.remove('hidden');
     document.getElementById('start-buttons').classList.remove('hidden');
+    document.getElementById('main-title').classList.remove('hidden');
     startMenuMusic();
 }
 
