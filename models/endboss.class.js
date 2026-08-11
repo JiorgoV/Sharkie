@@ -72,7 +72,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 2300;
+        this.x = 720 * 5 - 100;
         this.animate();
     }
 

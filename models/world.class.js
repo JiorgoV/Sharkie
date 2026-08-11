@@ -95,7 +95,7 @@ class World {
                 this.soundManager.play('damageHit');
             }
 
-            if (enemy instanceof Endboss && this.character.x > 2000) {
+            if (enemy instanceof Endboss && this.character.x > 3000) {
                 enemy.hadFirstContact = true;
                 this.soundManager.play('endbossEntry');
             }
@@ -195,7 +195,7 @@ class World {
 
         // feste UI-Elemente
         this.drawStatusIcons();
-        if (this.character.x > 1600) {
+        if (this.character.x > 3000) {
             this.addToMap(this.endbossBar);
         }
 
