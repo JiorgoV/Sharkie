@@ -85,7 +85,11 @@ function goHome() {
     document.getElementById('game-container').classList.remove('active');
     document.getElementById('game-container').classList.add('hidden');
     document.getElementById('start-buttons').classList.remove('hidden');
-    document.querySelector('h1').classList.remove('hidden');
+    if (window.innerWidth > 760) {
+        document.getElementById('main-title').classList.remove('hidden');
+    } else {
+        document.getElementById('main-title').classList.add('hidden');
+    }
     document.getElementById('main-title').classList.remove('hidden');
     document.getElementById('btn-mute-ingame').classList.add('hidden');
     document.getElementById('impressum-link').classList.remove('hidden');
@@ -129,6 +133,9 @@ function enterFullscreen(element) {
         element.webkitRequestFullscreen();
     } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
+    }
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(e => {});
     }
 }
 
@@ -192,9 +199,10 @@ function changeFxVolume(value) {
 /** Hides the splash screen and displays the main menu. @returns {void} */
 function showMainMenu() {
     document.getElementById('splash-screen').classList.add('hidden');
-    document.querySelector('h1').classList.remove('hidden');
+    if (window.innerWidth > 760) {
+        document.getElementById('main-title').classList.remove('hidden');
+    }
     document.getElementById('start-buttons').classList.remove('hidden');
-    document.getElementById('main-title').classList.remove('hidden');
     startMenuMusic();
 }
 
