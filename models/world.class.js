@@ -96,8 +96,17 @@ class World {
             }
 
             if (enemy instanceof Endboss && this.character.x > 3000) {
-                enemy.hadFirstContact = true;
-                this.soundManager.play('endbossEntry');
+                if (!enemy.hadFirstContact) {
+                    enemy.hadFirstContact = true;
+                    console.log('hadFirstContact gesetzt, musik wechsel'); // ← hier
+                    this.soundManager.sounds.startTheme.pause();
+                    this.soundManager.sounds.startTheme.currentTime = 0;
+                    this.soundManager.sounds.backgroundFx.pause();
+                    this.soundManager.sounds.backgroundFx.currentTime = 0;
+                    this.soundManager.sounds.endbossEntry.currentTime = 0;
+                    this.soundManager.play('endbossEntry');
+                    this.soundManager.sounds.endbossEntry.loop = true;
+                }
             }
         });
 
@@ -259,6 +268,9 @@ class World {
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
+            this.soundManager.sounds.endbossEntry.pause();
+            this.soundManager.sounds.startTheme.pause();
+            this.soundManager.sounds.backgroundFx.pause();
             this.soundManager.play('gameOver');
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
@@ -272,6 +284,8 @@ class World {
         let endboss = this.level.enemies.find(e => e instanceof Endboss);
         if (endboss && endboss.isDead() && !this.youWin) {
             this.youWin = true;
+            this.soundManager.sounds.endbossEntry.pause();
+            this.soundManager.play('gameOver');
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('youwin-screen').classList.remove('hidden');

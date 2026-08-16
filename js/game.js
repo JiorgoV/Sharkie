@@ -98,7 +98,7 @@ function goHome() {
 
 /** Opens the settings dialog and applies the stored volume settings. @returns {void} */
 function openSettings() {
-    startMenuMusic();
+    if (!world) startMenuMusic();
     document.getElementById('settings-dialog').classList.remove('hidden');
     document.getElementById('pause-menu').classList.add('hidden');
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
@@ -163,11 +163,38 @@ function togglePause() {
     let pauseMenu = document.getElementById('pause-menu');
     pauseMenu.classList.toggle('hidden');
     world.paused = !world.paused;
+
+    if (world.paused) {
+        world.soundManager.sounds.startTheme.pause();
+        world.soundManager.sounds.backgroundFx.pause();
+        world.soundManager.sounds.endbossEntry.pause();
+    } else {
+        if (!world.soundManager.muted) { // ← nur wenn nicht gemutet
+            let endboss = world.level.enemies.find(e => e instanceof Endboss);
+            if (endboss && endboss.hadFirstContact) {
+                world.soundManager.sounds.endbossEntry.play();
+            } else {
+                world.soundManager.sounds.startTheme.play();
+                world.soundManager.sounds.backgroundFx.play();
+            }
+        }
+    }
 }
 
 /** Mutes or unmutes the sound of the current game world. @returns {void} */
 function toggleMute() {
     world.soundManager.toggleMute();
+
+    if (!world.soundManager.muted) {
+        let endboss = world.level.enemies.find(e => e instanceof Endboss);
+        if (endboss && endboss.hadFirstContact) {
+            world.soundManager.sounds.endbossEntry.play();
+        } else {
+            world.soundManager.sounds.startTheme.play();
+            world.soundManager.sounds.backgroundFx.play();
+        }
+    }
+
     let btn = document.getElementById('mute-btn');
     let btnIngame = document.getElementById('btn-mute-ingame');
     if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';

@@ -17,6 +17,7 @@ class SoundManager {
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
+        this.sounds.endbossEntry.load();
         this.loadVolume();
     }
 
@@ -37,8 +38,6 @@ class SoundManager {
         this.muted = !this.muted;
         if (this.muted) {
             Object.values(this.sounds).forEach(s => s.pause());
-        } else {
-            this.sounds.startTheme.play();
         }
         localStorage.setItem('muted', this.muted);
     }
