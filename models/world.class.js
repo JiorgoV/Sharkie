@@ -17,6 +17,7 @@ class World {
     lastThrowTime = 0;
     paused = false;
     soundManager = new SoundManager();
+    endbossBarVisible = false;
 
     /**
      * @param {HTMLCanvasElement} canvas Canvas used for game output.
@@ -204,7 +205,10 @@ class World {
 
         // feste UI-Elemente
         this.drawStatusIcons();
-        if (this.character.x > 3000) {
+        if (this.character.x > 3000) { // ← neu
+            this.endbossBarVisible = true;
+        }
+        if (this.endbossBarVisible) { // ← neu
             this.addToMap(this.endbossBar);
         }
 

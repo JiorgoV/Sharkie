@@ -75,6 +75,10 @@ function restartGame() {
 /** Ends the current round and displays the main menu. @returns {void} */
 function goHome() {
     if (world) world.stopGame();
+    world.soundManager.sounds.gameOver.pause();
+    world.soundManager.sounds.gameOver.currentTime = 0;
+    world.soundManager.sounds.endbossEntry.pause();
+    world.soundManager.sounds.endbossEntry.currentTime = 0;
     document.getElementById('canvas').classList.add('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
     document.getElementById('btn-pause').classList.add('hidden');

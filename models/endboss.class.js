@@ -73,7 +73,9 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 720 * 5 - 100;
+        this.speed = 3;
         this.animate();
+        this.move();
     }
 
     /** Controls the final enemy animation cycle based on its state. @returns {void} */
@@ -97,4 +99,21 @@ class Endboss extends MovableObject {
             }
         }, 200);
     }
+
+    move() {
+        this.setStoppableInterval(() => {
+            if (this.isPaused()) return;
+            if (!this.introPlayed || this.isDead()) return;
+            if (this.isHurt()) return;
+
+            if (this.world.character.x < this.x) {
+                this.x -= this.speed;
+                this.otherDirection = false;
+            } else {
+                this.x += this.speed;
+                this.otherDirection = true;
+            }
+        }, 1000 / 60);
+    }
+
 }
