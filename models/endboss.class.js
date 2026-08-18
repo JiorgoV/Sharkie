@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     hadFirstContact = false; // wird true wenn Sharkie nah genug ist
     introPlayed = false; // wird true wenn Introduce komplett durchgelaufen ist
     introFrame = 0; // zählt wie viele Introduce-Frames schon gespielt wurden
+    isAttacking = false;
 
     IMAGES_INTRODUCE = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png',
@@ -95,7 +96,11 @@ class Endboss extends MovableObject {
                     this.introPlayed = true;
                 }
             } else if (this.hadFirstContact && this.introPlayed) {
-                this.playAnimation(this.IMAGES_FLOATING);
+                if (this.isAttacking) {
+                    this.playAnimation(this.IMAGES_ATTACK);
+                } else {
+                    this.playAnimation(this.IMAGES_FLOATING);
+                }
             }
         }, 200);
     }
@@ -105,6 +110,14 @@ class Endboss extends MovableObject {
             if (this.isPaused()) return;
             if (!this.introPlayed || this.isDead()) return;
             if (this.isHurt()) return;
+
+            let distanceToCharacter = Math.abs(this.x - this.world.character.x);
+
+            if (distanceToCharacter < 400) {
+                this.isAttacking = true; // ← Angriffs-Animation starten
+            } else {
+                this.isAttacking = false;
+            }
 
             if (this.world.character.x < this.x) {
                 this.x -= this.speed;

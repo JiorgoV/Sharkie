@@ -85,6 +85,10 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
+                if (enemy instanceof Endboss) {
+                    enemy.isAttacking = true;
+                    setTimeout(() => enemy.isAttacking = false, 1000);
+                }
                 if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
                     this.character.hurtCause = 'electro';
                     this.character.deadCause = 'electro';
@@ -99,7 +103,6 @@ class World {
             if (enemy instanceof Endboss && this.character.x > 3000) {
                 if (!enemy.hadFirstContact) {
                     enemy.hadFirstContact = true;
-                    console.log('hadFirstContact gesetzt, musik wechsel'); // ← hier
                     this.soundManager.sounds.startTheme.pause();
                     this.soundManager.sounds.startTheme.currentTime = 0;
                     this.soundManager.sounds.backgroundFx.pause();
@@ -272,6 +275,8 @@ class World {
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
+            this.soundManager.sounds.damageHit.pause();
+            this.soundManager.sounds.damageHit.currentTime = 0;
             this.soundManager.sounds.endbossEntry.pause();
             this.soundManager.sounds.startTheme.pause();
             this.soundManager.sounds.backgroundFx.pause();
@@ -279,6 +284,7 @@ class World {
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('gameover-screen').classList.remove('hidden');
+                document.getElementById('mobile-controls').classList.remove('show'); // ← neu
             }, 1000);
         }
     }
@@ -293,6 +299,7 @@ class World {
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('youwin-screen').classList.remove('hidden');
+                document.getElementById('mobile-controls').classList.remove('show');
             }, 1000);
         }
     }

@@ -147,6 +147,7 @@ canvas {
 
 #gameover-screen,
 #youwin-screen {
+    pointer-events: all;
     position: absolute;
     top: 0;
     left: 0;
@@ -163,7 +164,7 @@ canvas {
 
 #gameover-title,
 #youwin-title {
-    height: 120px;
+    height: 88px;
 }
 
 .btn-action {
