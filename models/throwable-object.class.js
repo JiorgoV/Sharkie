@@ -11,6 +11,7 @@ class ThrowableObject extends MovableObject {
         this.loadImage('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
         this.x = x;
         this.y = y;
+        this.startX = x
         this.height = 50;
         this.width = 50;
         this.throw(otherDirection);

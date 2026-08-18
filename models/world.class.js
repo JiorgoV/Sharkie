@@ -154,7 +154,7 @@ class World {
     /** Creates attack bubbles from input with a cooldown. @returns {void} */
     checkThrowObjects() {
         let now = new Date().getTime();
-        let isLeft = this.character.otherDirection; // ← direkt aus Keyboard lesen
+        let isLeft = this.character.otherDirection;
         let offsetX = isLeft ? 20 : 220;
 
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
@@ -178,6 +178,10 @@ class World {
             this.poisonCount = Math.max(this.poisonCount - 1, 0);
             this.lastThrowTime = now;
         }
+
+        this.throwableObjects = this.throwableObjects.filter(bubble => {
+            return Math.abs(bubble.x - bubble.startX) < 300;
+        });
     }
 
     /** Draws health, coin, and poison bubble counters in the fixed HUD layer. @returns {void} */
