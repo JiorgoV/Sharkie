@@ -83,41 +83,61 @@ class World {
 
     /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */
     checkCollisions() {
+        this.checkEnemyCollisions();
+        this.checkCoinCollisions();
+        this.checkPoisonCollisions();
+        this.checkBubbleCollisions();
+    }
+
+    checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
                 } else {
-                    if (enemy instanceof Endboss) {
-                        enemy.isAttacking = true;
-                        setTimeout(() => enemy.isAttacking = false, 1000);
-                    }
-                    if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
-                        this.character.hurtCause = 'electro';
-                        this.character.deadCause = 'electro';
-                    } else {
-                        this.character.hurtCause = 'poisoned';
-                        this.character.deadCause = 'poisoned';
-                    }
-                    this.character.hit();
-                    this.soundManager.play('damageHit');
+                    this.handleEnemyHit(enemy);
                 }
             }
-
-            if (enemy instanceof Endboss && this.character.x > 3000) {
-                if (!enemy.hadFirstContact) {
-                    enemy.hadFirstContact = true;
-                    this.soundManager.sounds.startTheme.pause();
-                    this.soundManager.sounds.startTheme.currentTime = 0;
-                    this.soundManager.sounds.backgroundFx.pause();
-                    this.soundManager.sounds.backgroundFx.currentTime = 0;
-                    this.soundManager.sounds.endbossEntry.currentTime = 0;
-                    this.soundManager.play('endbossEntry');
-                    this.soundManager.sounds.endbossEntry.loop = true;
-                }
-            }
+            this.checkEndbossFirstContact(enemy);
         });
+    }
 
+    handleEnemyHit(enemy) {
+        if (enemy instanceof Endboss) {
+            enemy.isAttacking = true;
+            setTimeout(() => enemy.isAttacking = false, 1000);
+        }
+        if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
+            this.character.hurtCause = 'electro';
+            this.character.deadCause = 'electro';
+        } else {
+            this.character.hurtCause = 'poisoned';
+            this.character.deadCause = 'poisoned';
+        }
+        this.character.hit();
+        this.soundManager.play('damageHit');
+    }
+
+    checkEndbossFirstContact(enemy) {
+        if (enemy instanceof Endboss && this.character.x > 3000) {
+            if (!enemy.hadFirstContact) {
+                enemy.hadFirstContact = true;
+                this.startEndbossMusic();
+            }
+        }
+    }
+
+    startEndbossMusic() {
+        this.soundManager.sounds.startTheme.pause();
+        this.soundManager.sounds.startTheme.currentTime = 0;
+        this.soundManager.sounds.backgroundFx.pause();
+        this.soundManager.sounds.backgroundFx.currentTime = 0;
+        this.soundManager.sounds.endbossEntry.currentTime = 0;
+        this.soundManager.play('endbossEntry');
+        this.soundManager.sounds.endbossEntry.loop = true;
+    }
+
+    checkCoinCollisions() {
         this.level.coins = this.level.coins.filter(coin => {
             if (this.character.isColliding(coin)) {
                 this.coinCount = Math.min(this.coinCount + 1, 5);
@@ -126,7 +146,9 @@ class World {
             }
             return true;
         });
+    }
 
+    checkPoisonCollisions() {
         this.level.poisons = this.level.poisons.filter(poison => {
             if (this.character.isColliding(poison)) {
                 this.poisonCount = Math.min(this.poisonCount + 1, 5);
@@ -135,7 +157,9 @@ class World {
             }
             return true;
         });
+    }
 
+    checkBubbleCollisions() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             let hit = false;
             this.level.enemies = this.level.enemies.filter(enemy => {
