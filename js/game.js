@@ -188,7 +188,6 @@ function togglePause() {
 /** Mutes or unmutes the sound of the current game world. @returns {void} */
 function toggleMute() {
     world.soundManager.toggleMute();
-
     if (!world.soundManager.muted) {
         let endboss = world.level.enemies.find(e => e instanceof Endboss);
         if (endboss && endboss.hadFirstContact) {
@@ -198,7 +197,6 @@ function toggleMute() {
             world.soundManager.sounds.backgroundFx.play();
         }
     }
-
     let btn = document.getElementById('mute-btn');
     let btnIngame = document.getElementById('btn-mute-ingame');
     if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
@@ -270,11 +268,6 @@ function checkOrientation() {
         document.getElementById('canvas').style.height = `100%`;
     }
 }
-
-
-
-
-
 
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);

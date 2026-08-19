@@ -361,6 +361,13 @@ canvas {
     background-position: -189px -47px;
 }
 
+.touch-btn,
+.touch-btn-arrow {
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 
 /* ---- Rotate Hint ---- */
 
