@@ -85,19 +85,23 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (enemy instanceof Endboss) {
-                    enemy.isAttacking = true;
-                    setTimeout(() => enemy.isAttacking = false, 1000);
-                }
-                if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
-                    this.character.hurtCause = 'electro';
-                    this.character.deadCause = 'electro';
+                if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
+                    this.level.enemies = this.level.enemies.filter(e => e !== enemy);
                 } else {
-                    this.character.hurtCause = 'poisoned';
-                    this.character.deadCause = 'poisoned';
+                    if (enemy instanceof Endboss) {
+                        enemy.isAttacking = true;
+                        setTimeout(() => enemy.isAttacking = false, 1000);
+                    }
+                    if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
+                        this.character.hurtCause = 'electro';
+                        this.character.deadCause = 'electro';
+                    } else {
+                        this.character.hurtCause = 'poisoned';
+                        this.character.deadCause = 'poisoned';
+                    }
+                    this.character.hit();
+                    this.soundManager.play('damageHit');
                 }
-                this.character.hit();
-                this.soundManager.play('damageHit');
             }
 
             if (enemy instanceof Endboss && this.character.x > 3000) {
@@ -147,7 +151,7 @@ class World {
                 }
                 return true;
             });
-            return !hit; // bubble entfernen wenn sie getroffen hat
+            return !hit;
         });
     }
 
@@ -306,5 +310,11 @@ class World {
                 document.getElementById('mobile-controls').classList.remove('show');
             }, 1000);
         }
+    }
+
+    isJumpingOn(enemy) {
+        return this.character.y + this.character.height > enemy.y &&
+            this.character.y < enemy.y &&
+            this.character.speedY < 0;
     }
 }
