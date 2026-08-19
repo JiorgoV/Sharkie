@@ -83,26 +83,37 @@ class Endboss extends MovableObject {
     animate() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
-
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.hadFirstContact && !this.introPlayed) {
-                this.img = this.imageCache[this.IMAGES_INTRODUCE[this.introFrame]];
-                if (this.introFrame < this.IMAGES_INTRODUCE.length - 1) {
-                    this.introFrame++;
-                } else {
-                    this.introPlayed = true;
-                }
-            } else if (this.hadFirstContact && this.introPlayed) {
-                if (this.isAttacking) {
-                    this.playAnimation(this.IMAGES_ATTACK);
-                } else {
-                    this.playAnimation(this.IMAGES_FLOATING);
-                }
-            }
+            this.handleAnimation();
         }, 200);
+    }
+
+    handleAnimation() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.hadFirstContact && !this.introPlayed) {
+            this.playIntroAnimation();
+        } else if (this.hadFirstContact && this.introPlayed) {
+            this.playBattleAnimation();
+        }
+    }
+
+    playIntroAnimation() {
+        this.img = this.imageCache[this.IMAGES_INTRODUCE[this.introFrame]];
+        if (this.introFrame < this.IMAGES_INTRODUCE.length - 1) {
+            this.introFrame++;
+        } else {
+            this.introPlayed = true;
+        }
+    }
+
+    playBattleAnimation() {
+        if (this.isAttacking) {
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else {
+            this.playAnimation(this.IMAGES_FLOATING);
+        }
     }
 
     move() {
@@ -110,23 +121,23 @@ class Endboss extends MovableObject {
             if (this.isPaused()) return;
             if (!this.introPlayed || this.isDead()) return;
             if (this.isHurt()) return;
-
-            let distanceToCharacter = Math.abs(this.x - this.world.character.x);
-
-            if (distanceToCharacter < 400) {
-                this.isAttacking = true; // ← Angriffs-Animation starten
-            } else {
-                this.isAttacking = false;
-            }
-
-            if (this.world.character.x < this.x) {
-                this.x -= this.speed;
-                this.otherDirection = false;
-            } else {
-                this.x += this.speed;
-                this.otherDirection = true;
-            }
+            this.updateAttackState();
+            this.moveTowardsCharacter();
         }, 1000 / 60);
     }
 
+    updateAttackState() {
+        let distanceToCharacter = Math.abs(this.x - this.world.character.x);
+        this.isAttacking = distanceToCharacter < 400;
+    }
+
+    moveTowardsCharacter() {
+        if (this.world.character.x < this.x) {
+            this.x -= this.speed;
+            this.otherDirection = false;
+        } else {
+            this.x += this.speed;
+            this.otherDirection = true;
+        }
+    }
 }
