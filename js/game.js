@@ -29,11 +29,21 @@ function startMenuMusic() {
 
 /** Stops menu music and starts a new game world. @returns {void} */
 function startGame() {
+    stopMenuMusic();
+    initLevel();
+    showGameUI();
+    initWorld();
+    updateMuteButton();
+}
+
+function stopMenuMusic() {
     menuMusic.pause();
     menuMusic.currentTime = 0;
     menuFx.pause();
     menuFx.currentTime = 0;
-    initLevel();
+}
+
+function showGameUI() {
     document.getElementById('start-buttons').classList.add('hidden');
     document.getElementById('game-container').classList.remove('hidden');
     document.getElementById('canvas').classList.remove('hidden');
@@ -41,6 +51,11 @@ function startGame() {
     document.getElementById('game-container').classList.add('active');
     document.getElementById('mobile-controls').classList.add('show');
     document.getElementById('btn-pause').classList.remove('hidden');
+    document.getElementById('btn-mute-ingame').classList.remove('hidden');
+    document.getElementById('impressum-link').classList.add('hidden');
+}
+
+function initWorld() {
     world = new World(canvas, keyboard);
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
     let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
@@ -49,10 +64,13 @@ function startGame() {
     world.soundManager.loadMuteState();
     world.soundManager.play('startTheme');
     world.soundManager.play('backgroundFx');
+}
+
+function updateMuteButton() {
     let btn = document.getElementById('mute-btn');
+    let btnIngame = document.getElementById('btn-mute-ingame');
     if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
-    document.getElementById('btn-mute-ingame').classList.remove('hidden');
-    document.getElementById('impressum-link').classList.add('hidden');
+    if (btnIngame) btnIngame.textContent = world.soundManager.muted ? '🔇' : '🔊';
 }
 
 /** Resets the current level and restarts the game. @returns {void} */
