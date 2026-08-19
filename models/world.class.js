@@ -243,20 +243,29 @@ class World {
     /** Draws all game objects and schedules the next animation frame. @returns {void} */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawBackground();
+        this.drawFixedUI();
+        this.drawGameObjects();
+        requestAnimationFrame(() => this.draw());
+    }
 
+    drawBackground() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
+    }
 
-        // feste UI-Elemente
+    drawFixedUI() {
         this.drawStatusIcons();
-        if (this.character.x > 3000) { // ← neu
+        if (this.character.x > 3000) {
             this.endbossBarVisible = true;
         }
-        if (this.endbossBarVisible) { // ← neu
+        if (this.endbossBarVisible) {
             this.addToMap(this.endbossBar);
         }
+    }
 
+    drawGameObjects() {
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.lights);
@@ -265,11 +274,6 @@ class World {
         this.addObjectsToMap(this.level.poisons);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
-
-        let self = this;
-        requestAnimationFrame(function() {
-            self.draw();
-        });
     }
 
     /** Adds a list of objects to the rendered map.
