@@ -92,11 +92,23 @@ function restartGame() {
 
 /** Ends the current round and displays the main menu. @returns {void} */
 function goHome() {
+    stopGameSounds();
+    hideGameUI();
+    showHomeUI();
+    startMenuMusic();
+}
+
+function stopGameSounds() {
     if (world) world.stopGame();
-    world.soundManager.sounds.gameOver.pause();
-    world.soundManager.sounds.gameOver.currentTime = 0;
-    world.soundManager.sounds.endbossEntry.pause();
-    world.soundManager.sounds.endbossEntry.currentTime = 0;
+    if (world) {
+        world.soundManager.sounds.gameOver.pause();
+        world.soundManager.sounds.gameOver.currentTime = 0;
+        world.soundManager.sounds.endbossEntry.pause();
+        world.soundManager.sounds.endbossEntry.currentTime = 0;
+    }
+}
+
+function hideGameUI() {
     document.getElementById('canvas').classList.add('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
     document.getElementById('btn-pause').classList.add('hidden');
@@ -106,16 +118,17 @@ function goHome() {
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('game-container').classList.remove('active');
     document.getElementById('game-container').classList.add('hidden');
+    document.getElementById('btn-mute-ingame').classList.add('hidden');
+    document.getElementById('impressum-link').classList.remove('hidden');
+}
+
+function showHomeUI() {
     document.getElementById('start-buttons').classList.remove('hidden');
     if (window.innerWidth > 760) {
         document.getElementById('main-title').classList.remove('hidden');
     } else {
         document.getElementById('main-title').classList.add('hidden');
     }
-    document.getElementById('main-title').classList.remove('hidden');
-    document.getElementById('btn-mute-ingame').classList.add('hidden');
-    document.getElementById('impressum-link').classList.remove('hidden');
-    startMenuMusic();
 }
 
 /** Opens the settings dialog and applies the stored volume settings. @returns {void} */
