@@ -185,6 +185,12 @@ class World {
         let isLeft = this.character.otherDirection;
         let offsetX = isLeft ? 20 : 220;
 
+        this.checkNormalBubble(now, isLeft, offsetX);
+        this.checkPoisonBubble(now, isLeft, offsetX);
+        this.removeFarBubbles();
+    }
+
+    checkNormalBubble(now, isLeft, offsetX) {
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
             this.soundManager.play('bubbleShot');
             let bubble = new ThrowableObject(
@@ -195,7 +201,9 @@ class World {
             this.throwableObjects.push(bubble);
             this.lastThrowTime = now;
         }
+    }
 
+    checkPoisonBubble(now, isLeft, offsetX) {
         if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
             let poisonBubble = new PoisonBubble(
                 this.character.x + offsetX,
@@ -206,7 +214,9 @@ class World {
             this.poisonCount = Math.max(this.poisonCount - 1, 0);
             this.lastThrowTime = now;
         }
+    }
 
+    removeFarBubbles() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             return Math.abs(bubble.x - bubble.startX) < 300;
         });
