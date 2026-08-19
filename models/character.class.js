@@ -150,50 +150,56 @@ class Character extends MovableObject {
 
     /** Processes input and selects the appropriate Sharkie animation. @returns {void} */
     animate() {
-
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
             if (this.isDead()) return;
-
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.x += this.speed;
-                this.otherDirection = false;
-                this.lastActivity = new Date().getTime();
-            }
-
-            if (this.world.keyboard.LEFT && this.x > -640) {
-                this.x -= this.speed;
-                this.otherDirection = true;
-                this.lastActivity = new Date().getTime();
-            }
-
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                this.lastActivity = new Date().getTime();
-            }
-
-            this.world.camera_x = -this.x + 40;
+            this.handleMovement();
+            this.updateCamera();
         }, 1000 / 60);
-
 
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
-            if (this.isDead()) {
-                let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
-                this.playAnimation(deadImages);
-            } else if (this.isHurt()) {
-                let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
-                this.playAnimation(hurtImages);
-            } else if (this.isSleeping()) {
-                this.playAnimation(this.IMAGES_SLEEP);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_SWIM);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_SWIM);
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
+            this.handleAnimation();
         }, 110);
+    }
+
+    handleMovement() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.x += this.speed;
+            this.otherDirection = false;
+            this.lastActivity = new Date().getTime();
+        }
+
+        if (this.world.keyboard.LEFT && this.x > -640) {
+            this.x -= this.speed;
+            this.otherDirection = true;
+            this.lastActivity = new Date().getTime();
+        }
+
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+            this.lastActivity = new Date().getTime();
+        }
+    }
+
+    updateCamera() {
+        this.world.camera_x = -this.x + 40;
+    }
+
+    handleAnimation() {
+        if (this.isDead()) {
+            let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
+            this.playAnimation(deadImages);
+        } else if (this.isHurt()) {
+            let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
+            this.playAnimation(hurtImages);
+        } else if (this.isSleeping()) {
+            this.playAnimation(this.IMAGES_SLEEP);
+        } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_SWIM);
+        } else {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
     }
 
     /**
