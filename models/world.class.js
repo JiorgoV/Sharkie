@@ -94,6 +94,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+                    this.character.bounce();
                 } else {
                     this.handleEnemyHit(enemy);
                 }

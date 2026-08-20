@@ -211,4 +211,8 @@ class Character extends MovableObject {
         return timepassed > 15000;
     }
 
+    bounce() {
+        this.speedY = 15; // ← nach oben springen
+    }
+
 }
