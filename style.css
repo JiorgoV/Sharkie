@@ -386,6 +386,37 @@ canvas {
     z-index: 100;
 }
 
+#rotate-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#rotate-icon {
+    font-size: 80px;
+    animation: rotate-phone 2.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes rotate-phone {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(90deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#rotate-hint p {
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
 
 /* ---- Bubbles ---- */
 
