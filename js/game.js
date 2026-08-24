@@ -75,7 +75,15 @@ function updateMuteButton() {
 
 /** Resets the current level and restarts the game. @returns {void} */
 function restartGame() {
-    if (world) world.stopGame();
+    if (world) {
+        world.stopGame();
+        world.soundManager.sounds.endbossDead.pause();
+        world.soundManager.sounds.endbossDead.currentTime = 0;
+        world.soundManager.sounds.gameOver.pause();
+        world.soundManager.sounds.gameOver.currentTime = 0;
+        world.soundManager.sounds.endbossEntry.pause();
+        world.soundManager.sounds.endbossEntry.currentTime = 0;
+    }
     initLevel();
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');

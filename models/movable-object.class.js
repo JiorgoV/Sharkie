@@ -119,6 +119,7 @@ class MovableObject extends DrawableObject {
     /** Sets the vertical velocity for a jump. @returns {void} */
     jump() {
         this.speedY = 20;
+        this.world.soundManager.play('jump');
     }
 
     /** @returns {boolean|undefined} World pause state, when a world is assigned. */

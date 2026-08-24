@@ -95,6 +95,7 @@ class World {
                 if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
                     this.character.bounce();
+                    this.soundManager.play('enemyDead');
                 } else {
                     this.handleEnemyHit(enemy);
                 }
@@ -109,6 +110,7 @@ class World {
             setTimeout(() => enemy.isAttacking = false, 1000);
         }
         if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
+            this.soundManager.play('jellyfishHit');
             this.character.hurtCause = 'electro';
             this.character.deadCause = 'electro';
         } else {
@@ -169,8 +171,10 @@ class World {
                     if (enemy instanceof Endboss) {
                         enemy.hit();
                         this.endbossBar.setPercantage(enemy.energy);
+                        this.soundManager.play('endbossHurt');
                         return true;
                     } else {
+                        this.soundManager.play('enemyDead');
                         return false;
                     }
                 }
@@ -342,12 +346,13 @@ class World {
         if (endboss && endboss.isDead() && !this.youWin) {
             this.youWin = true;
             this.soundManager.sounds.endbossEntry.pause();
-            this.soundManager.play('gameOver');
+            this.soundManager.play('endbossDead');
+            this.soundManager.play('youWin');
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('youwin-screen').classList.remove('hidden');
                 document.getElementById('mobile-controls').classList.remove('show');
-            }, 1000);
+            }, 5000);
         }
     }
 

@@ -11,6 +11,13 @@ class SoundManager {
         damageHit: new Audio('audio/damage-hit-voice-vocal.wav'),
         endbossEntry: new Audio('audio/endboss-fight.wav'),
         gameOver: new Audio('audio/dramatic-music.wav'),
+        snore: new Audio('audio/snore-03_44100.wav'),
+        jellyfishHit: new Audio('audio/female__ouch.mp3'),
+        endbossDead: new Audio('audio/dead-screaming-sound.mp3'),
+        endbossHurt: new Audio('audio/whale-grunting-in-pain.wav'),
+        enemyDead: new Audio('audio/pop-1.wav'),
+        jump: new Audio('audio/jump-sound-boing-2-of-2.wav'),
+        youWin: new Audio('audio/jingle_win_01.wav')
     };
 
     /** Initializes audio loops and loads the stored volume. */

@@ -195,6 +195,7 @@ class Character extends MovableObject {
             this.playAnimation(hurtImages);
         } else if (this.isSleeping()) {
             this.playAnimation(this.IMAGES_SLEEP);
+            this.world.soundManager.play('snore');
         } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.IMAGES_SWIM);
         } else {
