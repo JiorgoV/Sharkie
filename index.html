@@ -82,14 +82,33 @@
     <div id="instructions-dialog" class="hidden">
         <div id="instructions-content">
             <span class="close-btn" onclick="closeInstructions()">✕</span>
-            <div class="instructions-row">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Move title.png">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png">
+
+            <!-- Tabs -->
+            <div id="instructions-tabs">
+                <button class="tab-btn active" onclick="showTab('story')">Story</button>
+                <button class="tab-btn" onclick="showTab('controls')">Controls</button>
             </div>
-            <div class="instructions-row">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Attack tittle.png">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/D key.png">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/Space Bar key.png">
+
+            <!-- Story Tab -->
+            <div id="tab-story" class="tab-content">
+                <p>The depths of the ocean are terrorized by a mighty whale. He has poisoned the peaceful waters and filled the small sea creatures with fear.</p>
+                <br>
+                <p>You are Sharkie – the bravest shark in the ocean. Armed with your bubbles and poison bubbles, you must fight your way through pufferfish and dangerous jellyfish to defeat the evil whale and save the ocean!</p>
+                <br>
+                <p>Collect coins and poison bubbles to grow stronger. Good luck, Sharkie!</p>
+            </div>
+
+            <!-- Controls Tab -->
+            <div id="tab-controls" class="tab-content hidden">
+                <div class="instructions-row">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Move title.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png">
+                </div>
+                <div class="instructions-row">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Attack tittle.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/D key.png">
+                    <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/Space Bar key.png">
+                </div>
             </div>
         </div>
     </div>

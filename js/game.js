@@ -308,5 +308,12 @@ function checkOrientation() {
     }
 }
 
+function showTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.remove('hidden');
+    event.target.classList.add('active');
+}
+
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
