@@ -119,8 +119,8 @@ class Endboss extends MovableObject {
     move() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
-            if (!this.introPlayed || this.isDead()) return;
-            if (this.isHurt()) return;
+            if (!this.introPlayed) return;
+            if (this.isHurt() && !this.isDead()) return;
             this.updateAttackState();
             this.moveTowardsCharacter();
         }, 1000 / 60);
@@ -132,6 +132,10 @@ class Endboss extends MovableObject {
     }
 
     moveTowardsCharacter() {
+        if (this.isDead()) {
+            this.y += 1;
+            return;
+        }
         if (this.world.character.x < this.x) {
             this.x -= this.speed;
             this.otherDirection = false;

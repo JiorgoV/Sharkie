@@ -90,6 +90,7 @@ class World {
     }
 
     checkEnemyCollisions() {
+        if (this.youWin) return;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
