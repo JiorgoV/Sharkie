@@ -94,4 +94,8 @@ class SoundManager {
         this.sounds.gameOver.volume = volume;
         localStorage.setItem('fxVolume', volume);
     }
+
+    isPlaying(soundName) {
+        return !this.sounds[soundName].paused;
+    }
 }

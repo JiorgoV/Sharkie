@@ -193,12 +193,18 @@ class Character extends MovableObject {
         } else if (this.isHurt()) {
             let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
             this.playAnimation(hurtImages);
-        } else if (this.isSleeping()) {
+        } else if (this.isSleeping() && !this.world.youWin) {
             this.playAnimation(this.IMAGES_SLEEP);
-            this.world.soundManager.play('snore');
+            if (!this.world.soundManager.isPlaying('snore')) {
+                this.world.soundManager.play('snore');
+            }
         } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.world.soundManager.sounds.snore.pause();
+            this.world.soundManager.sounds.snore.currentTime = 0;
             this.playAnimation(this.IMAGES_SWIM);
         } else {
+            this.world.soundManager.sounds.snore.pause();
+            this.world.soundManager.sounds.snore.currentTime = 0;
             this.playAnimation(this.IMAGES_IDLE);
         }
     }

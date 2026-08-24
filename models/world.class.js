@@ -91,6 +91,7 @@ class World {
 
     checkEnemyCollisions() {
         if (this.youWin) return;
+        if (this.character.isDead()) return;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
@@ -111,7 +112,6 @@ class World {
             setTimeout(() => enemy.isAttacking = false, 1000);
         }
         if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
-            this.soundManager.play('jellyfishHit');
             this.character.hurtCause = 'electro';
             this.character.deadCause = 'electro';
         } else {
@@ -119,7 +119,9 @@ class World {
             this.character.deadCause = 'poisoned';
         }
         this.character.hit();
-        this.soundManager.play('damageHit');
+        if (!this.soundManager.isPlaying('damageHit')) {
+            this.soundManager.play('damageHit');
+        }
     }
 
     checkEndbossFirstContact(enemy) {
@@ -198,6 +200,7 @@ class World {
 
     checkNormalBubble(now, isLeft, offsetX) {
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
+            this.character.lastActivity = new Date().getTime();
             this.soundManager.play('bubbleShot');
             let bubble = new ThrowableObject(
                 this.character.x + offsetX,
@@ -211,6 +214,8 @@ class World {
 
     checkPoisonBubble(now, isLeft, offsetX) {
         if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
+            this.character.lastActivity = new Date().getTime();
+            this.soundManager.play('bubbleShot');
             let poisonBubble = new PoisonBubble(
                 this.character.x + offsetX,
                 this.character.y + 170,
