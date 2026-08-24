@@ -14,7 +14,15 @@ menuFx.loop = true;
 /** Connects the global canvas reference to the DOM element. @returns {void} */
 function init() {
     canvas = document.getElementById('canvas');
-    checkOrientation();
+    document.getElementById('settings-dialog').addEventListener('click', function(e) {
+        if (e.target === this) closeSettings();
+    });
+    document.getElementById('instructions-dialog').addEventListener('click', function(e) {
+        if (e.target === this) closeInstructions();
+    });
+    document.getElementById('pause-menu').addEventListener('click', function(e) {
+        if (e.target === this) togglePause();
+    });
 }
 
 /** Starts menu music with the stored volume settings. @returns {void} */
