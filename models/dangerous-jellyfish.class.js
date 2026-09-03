@@ -21,7 +21,8 @@ class DangerousJellyfish extends Jellyfish {
         super();
         this.loadImage(this.IMAGES_SWIM[0]);
         this.loadImages(this.IMAGES_SWIM);
-        this.speed = 0.3 + Math.random() * 0.3; // schneller
+        this.x = 500 + Math.random() * 720 * 4;
+        this.speed = 0.3 + Math.random() * 0.3;
     }
 
     /** Starts the dangerous jellyfish movement and swimming animation. @returns {void} */

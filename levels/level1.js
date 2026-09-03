@@ -51,17 +51,17 @@ function initLevel() {
             new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/3.Fondo 1/D2.png', 720 * 5),
             new BackgroundObject('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/2. Floor/D2.png', 720 * 5)
         ], [
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
+            new Coin(300, 200),
+            new Coin(800, 150),
+            new Coin(1200, 300),
+            new Coin(1800, 200),
+            new Coin(2400, 250),
         ], [
-            new Poison(),
-            new Poison(),
-            new Poison(),
-            new Poison(),
-            new Poison(),
+            new Poison(500, 250),
+            new Poison(1000, 180),
+            new Poison(1600, 300),
+            new Poison(2200, 200),
+            new Poison(2800, 250),
         ]
     );
 }

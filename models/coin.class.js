@@ -11,13 +11,16 @@ class Coin extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/1. Coins/4.png',
     ];
 
-    /** Creates a coin at a random position and starts its animation. */
-    constructor() {
+    /** Creates a coin at a given or random position and starts its animation.
+     * @param {number} [x] - X position. Random if not provided.
+     * @param {number} [y] - Y position. Random if not provided.
+     */
+    constructor(x, y) {
         super();
         this.loadImage(this.IMAGES[0]);
         this.loadImages(this.IMAGES);
-        this.x = 200 + Math.random() * 720 * 3;
-        this.y = 50 + Math.random() * 350;
+        this.x = x || 200 + Math.random() * 720 * 3;
+        this.y = y || 50 + Math.random() * 350;
         this.animate();
     }
 

@@ -25,7 +25,7 @@ class Jellyfish extends MovableObject {
         this.IMAGES_SWIM = Math.random() < 0.5 ? this.IMAGES_SWIM_YELLOW : this.IMAGES_SWIM_PURPLE;
         this.loadImage(this.IMAGES_SWIM[0]);
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 200 + Math.random() * 720 * 3;
+        this.x = 500 + Math.random() * 720 * 4;
         this.speed = 0.1 + Math.random() * 0.2;
         this.animate();
     }
