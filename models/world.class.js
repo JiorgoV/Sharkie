@@ -37,15 +37,18 @@ class World {
         this.run();
     }
 
+    /** Starts a recurring game loop that can be stopped later. @param {Function} fn Callback to run repeatedly. @param {number} time Interval in milliseconds. @returns {number} Timeout identifier. */
     setStoppableInterval(fn, time) {
         let id = setInterval(fn, time);
         this.intervallIds.push(id);
     }
 
+    /** Stops every interval created for the world. @returns {void} */
     stopAnimations() {
         this.intervallIds.forEach(clearInterval);
     }
 
+    /** Stops all active game loops and animations. @returns {void} */
     stopGame() {
         this.stopAnimations();
         this.character.stopAnimations();
@@ -72,15 +75,6 @@ class World {
         }, 200);
     }
 
-    /** Stops the recurring game checks. @returns {void} */
-    stopGame() {
-        this.stopAnimations();
-        this.character.stopAnimations();
-        this.level.enemies.forEach(enemy => enemy.stopAnimations());
-        this.throwableObjects.forEach(obj => obj.stopAnimations());
-        this.level.lights.forEach(light => light.stopAnimations());
-    }
-
     /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */
     checkCollisions() {
         this.checkEnemyCollisions();
@@ -89,6 +83,7 @@ class World {
         this.checkBubbleCollisions();
     }
 
+    /** Handles collisions against enemy objects and triggers damage or enemy defeat logic. @returns {void} */
     checkEnemyCollisions() {
         if (this.youWin) return;
         if (this.character.isDead()) return;
@@ -106,6 +101,7 @@ class World {
         });
     }
 
+    /** Applies damage to the player when an enemy contact is registered. @param {MovableObject} enemy Enemy that caused the hit. @returns {void} */
     handleEnemyHit(enemy) {
         if (enemy instanceof Endboss) {
             enemy.isAttacking = true;
@@ -124,6 +120,7 @@ class World {
         }
     }
 
+    /** Triggers the endboss intro when the player reaches the boss trigger zone. @param {MovableObject} enemy Enemy to inspect. @returns {void} */
     checkEndbossFirstContact(enemy) {
         if (enemy instanceof Endboss && this.character.x > 3000) {
             if (!enemy.hadFirstContact) {
@@ -133,6 +130,7 @@ class World {
         }
     }
 
+    /** Switches the music from the normal theme to the boss battle theme. @returns {void} */
     startEndbossMusic() {
         this.soundManager.sounds.startTheme.pause();
         this.soundManager.sounds.startTheme.currentTime = 0;
@@ -143,6 +141,7 @@ class World {
         this.soundManager.sounds.endbossEntry.loop = true;
     }
 
+    /** Collects nearby coins and updates the coin counter. @returns {void} */
     checkCoinCollisions() {
         this.level.coins = this.level.coins.filter(coin => {
             if (this.character.isColliding(coin)) {
@@ -154,6 +153,7 @@ class World {
         });
     }
 
+    /** Collects nearby poison pickups and updates the poison counter. @returns {void} */
     checkPoisonCollisions() {
         this.level.poisons = this.level.poisons.filter(poison => {
             if (this.character.isColliding(poison)) {
@@ -165,6 +165,7 @@ class World {
         });
     }
 
+    /** Removes bubbles that hit enemies and updates boss health if the target is the endboss. @returns {void} */
     checkBubbleCollisions() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             let hit = false;
@@ -198,6 +199,7 @@ class World {
         this.removeFarBubbles();
     }
 
+    /** Fires a regular projectile when the player presses the normal attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
     checkNormalBubble(now, isLeft, offsetX) {
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
             this.character.lastActivity = new Date().getTime();
@@ -212,6 +214,7 @@ class World {
         }
     }
 
+    /** Fires a poison projectile when the player has enough charges available. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
     checkPoisonBubble(now, isLeft, offsetX) {
         if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
             this.character.lastActivity = new Date().getTime();
@@ -227,6 +230,7 @@ class World {
         }
     }
 
+    /** Removes projectiles that travelled too far from their origin. @returns {void} */
     removeFarBubbles() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             return Math.abs(bubble.x - bubble.startX) < 300;
@@ -260,12 +264,14 @@ class World {
         requestAnimationFrame(() => this.draw());
     }
 
+    /** Draws the background layers with the current camera offset. @returns {void} */
     drawBackground() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /** Draws the fixed HUD and reveals the endboss bar when the boss stage starts. @returns {void} */
     drawFixedUI() {
         this.drawStatusIcons();
         if (this.character.x > 3000) {
@@ -276,6 +282,7 @@ class World {
         }
     }
 
+    /** Draws the moving world objects, including enemies, pickups, and projectiles. @returns {void} */
     drawGameObjects() {
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
@@ -362,6 +369,7 @@ class World {
         }
     }
 
+    /** Checks whether the player jumped onto an enemy from above. @param {MovableObject} enemy Enemy being evaluated. @returns {boolean} `true` when the player stomps the enemy from above. */
     isJumpingOn(enemy) {
         return this.character.y + this.character.height > enemy.y &&
             this.character.y < enemy.y &&

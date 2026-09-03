@@ -95,6 +95,7 @@ class SoundManager {
         localStorage.setItem('fxVolume', volume);
     }
 
+    /** Checks whether a sound is currently playing. @param {string} soundName Name of the sound to inspect. @returns {boolean} `true` when the sound is active. */
     isPlaying(soundName) {
         return !this.sounds[soundName].paused;
     }

@@ -1,12 +1,11 @@
-/** Final enemy with introduction, attack, hurt, and death animations. @extends MovableObject */
 class Endboss extends MovableObject {
 
     height = 400;
     width = 400;
     y = 60;
-    hadFirstContact = false; // wird true wenn Sharkie nah genug ist
-    introPlayed = false; // wird true wenn Introduce komplett durchgelaufen ist
-    introFrame = 0; // zählt wie viele Introduce-Frames schon gespielt wurden
+    hadFirstContact = false;
+    introPlayed = false;
+    introFrame = 0;
     isAttacking = false;
 
     IMAGES_INTRODUCE = [
@@ -87,6 +86,7 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+    /** Selects the correct animation for the boss depending on its state. @returns {void} */
     handleAnimation() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
@@ -99,6 +99,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    /** Advances the introduction sequence until the boss enters combat mode. @returns {void} */
     playIntroAnimation() {
         this.img = this.imageCache[this.IMAGES_INTRODUCE[this.introFrame]];
         if (this.introFrame < this.IMAGES_INTRODUCE.length - 1) {
@@ -108,6 +109,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    /** Switches between moving and attacking animations during battle. @returns {void} */
     playBattleAnimation() {
         if (this.isAttacking) {
             this.playAnimation(this.IMAGES_ATTACK);
@@ -116,6 +118,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    /** Runs the enemy's motion update loop for the boss phase. @returns {void} */
     move() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
@@ -126,11 +129,13 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
     }
 
+    /** Determines whether the boss is close enough to attack the player. @returns {void} */
     updateAttackState() {
         let distanceToCharacter = Math.abs(this.x - this.world.character.x);
         this.isAttacking = distanceToCharacter < 400;
     }
 
+    /** Moves the boss toward the player while respecting the defeat state. @returns {void} */
     moveTowardsCharacter() {
         if (this.isDead()) {
             this.y += 1;

@@ -23,11 +23,13 @@ class MovableObject extends DrawableObject {
     intervallIds = [];
 
 
+    /** Starts a timed callback that can be stopped later. @param {Function} fn Callback to run repeatedly. @param {number} time Interval in milliseconds. @returns {void} */
     setStoppableInterval(fn, time) {
         let id = setInterval(fn, time);
         this.intervallIds.push(id);
     }
 
+    /** Stops every active interval registered on this object. @returns {void} */
     stopAnimations() {
         this.intervallIds.forEach(clearInterval);
     }
@@ -122,7 +124,7 @@ class MovableObject extends DrawableObject {
         this.world.soundManager.play('jump');
     }
 
-    /** @returns {boolean|undefined} World pause state, when a world is assigned. */
+    /** Returns whether the owning world is currently paused. @returns {boolean|undefined} Pause state when a world is assigned. */
     isPaused() {
         return this.world && this.world.paused;
     }

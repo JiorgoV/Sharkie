@@ -44,6 +44,7 @@ function startGame() {
     updateMuteButton();
 }
 
+/** Stops the menu music and effects playback. @returns {void} */
 function stopMenuMusic() {
     menuMusic.pause();
     menuMusic.currentTime = 0;
@@ -51,6 +52,7 @@ function stopMenuMusic() {
     menuFx.currentTime = 0;
 }
 
+/** Shows the in-game HUD while hiding the start screen. @returns {void} */
 function showGameUI() {
     document.getElementById('start-buttons').classList.add('hidden');
     document.getElementById('game-container').classList.remove('hidden');
@@ -63,6 +65,7 @@ function showGameUI() {
     document.getElementById('impressum-link').classList.add('hidden');
 }
 
+/** Creates the active world and applies the stored audio settings. @returns {void} */
 function initWorld() {
     world = new World(canvas, keyboard);
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
@@ -74,6 +77,7 @@ function initWorld() {
     world.soundManager.play('backgroundFx');
 }
 
+/** Updates the mute buttons to reflect the current game audio state. @returns {void} */
 function updateMuteButton() {
     let btn = document.getElementById('mute-btn');
     let btnIngame = document.getElementById('btn-mute-ingame');
@@ -124,6 +128,7 @@ function stopGameSounds() {
     }
 }
 
+/** Hides the active game UI and returns to the menu state. @returns {void} */
 function hideGameUI() {
     document.getElementById('canvas').classList.add('hidden');
     document.getElementById('btn-fullscreen-ingame').classList.add('hidden');
@@ -138,6 +143,7 @@ function hideGameUI() {
     document.getElementById('impressum-link').classList.remove('hidden');
 }
 
+/** Displays the main menu overlay and adapts the title visibility. @returns {void} */
 function showHomeUI() {
     document.getElementById('start-buttons').classList.remove('hidden');
     if (window.innerWidth > 760) {
@@ -177,6 +183,7 @@ function closeInstructions() {
     document.getElementById('instructions-dialog').classList.add('hidden');
 }
 
+/** Requests browser fullscreen mode for a DOM element. @param {HTMLElement} element Element to display in fullscreen. @returns {void} */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -190,6 +197,7 @@ function enterFullscreen(element) {
     }
 }
 
+/** Exits the browser fullscreen mode if it is active. @returns {void} */
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -305,6 +313,7 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 68) keyboard.D = false;
 });
 
+/** Adapts the canvas height for portrait or landscape orientation. @returns {void} */
 function checkOrientation() {
     if (window.matchMedia("(orientation: landscape)").matches) {
         if (window.innerHeight < 480) {
@@ -316,6 +325,7 @@ function checkOrientation() {
     }
 }
 
+/** Shows a specific settings tab and activates its button. @param {string} tab Name of the tab to display. @returns {void} */
 function showTab(tab) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));

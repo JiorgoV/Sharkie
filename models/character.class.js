@@ -163,6 +163,7 @@ class Character extends MovableObject {
         }, 110);
     }
 
+    /** Processes keyboard input for walking and jumping. @returns {void} */
     handleMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
@@ -182,10 +183,12 @@ class Character extends MovableObject {
         }
     }
 
+    /** Keeps the camera centered on the player position. @returns {void} */
     updateCamera() {
         this.world.camera_x = -this.x + 40;
     }
 
+    /** Chooses the correct animation based on the player's current state. @returns {void} */
     handleAnimation() {
         if (this.isDead()) {
             let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
@@ -218,6 +221,7 @@ class Character extends MovableObject {
         return timepassed > 15000;
     }
 
+    /** Applies a quick upward impulse after defeating an enemy by jumping on it. @returns {void} */
     bounce() {
         this.speedY = 15; // ← nach oben springen
     }
