@@ -18,6 +18,8 @@ class World {
     paused = false;
     soundManager = new SoundManager();
     endbossBarVisible = false;
+    bubbleCount = 0;
+    bubbleCooldown = false;
 
     /**
      * @param {HTMLCanvasElement} canvas Canvas used for game output.
@@ -206,6 +208,7 @@ class World {
 
     /** Fires a regular projectile when the player presses the normal attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
     checkNormalBubble(now, isLeft, offsetX) {
+        if (this.bubbleCooldown) return;
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
             this.character.lastActivity = new Date().getTime();
             this.soundManager.play('bubbleShot');
@@ -216,11 +219,20 @@ class World {
             );
             this.throwableObjects.push(bubble);
             this.lastThrowTime = now;
+            this.bubbleCount++;
+            if (this.bubbleCount >= 5) {
+                this.bubbleCooldown = true;
+                setTimeout(() => {
+                    this.bubbleCooldown = false;
+                    this.bubbleCount = 0;
+                }, 2000);
+            }
         }
     }
 
-    /** Fires a poison projectile when the player has enough charges available. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
+    /** Fires a poison projectile when the player presses the poison attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
     checkPoisonBubble(now, isLeft, offsetX) {
+        if (this.bubbleCooldown) return;
         if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
             this.character.lastActivity = new Date().getTime();
             this.soundManager.play('bubbleShot');
@@ -232,6 +244,14 @@ class World {
             this.throwableObjects.push(poisonBubble);
             this.poisonCount = Math.max(this.poisonCount - 1, 0);
             this.lastThrowTime = now;
+            this.bubbleCount++;
+            if (this.bubbleCount >= 5) {
+                this.bubbleCooldown = true;
+                setTimeout(() => {
+                    this.bubbleCooldown = false;
+                    this.bubbleCount = 0;
+                }, 2000);
+            }
         }
     }
 
