@@ -90,8 +90,14 @@ class SoundManager {
         this.sounds.bubblePickup.volume = volume;
         this.sounds.bubbleShot.volume = volume;
         this.sounds.damageHit.volume = volume;
-        this.sounds.endbossEntry.volume = volume;
+        this.sounds.endbossHurt.volume = volume;
+        this.sounds.enemyDead.volume = volume;
+        this.sounds.jellyfishHit.volume = volume;
+        this.sounds.snore.volume = volume;
+        this.sounds.jump.volume = volume;
+        this.sounds.endbossDead.volume = volume;
         this.sounds.gameOver.volume = volume;
+        this.sounds.youWin.volume = volume;
         localStorage.setItem('fxVolume', volume);
     }
 

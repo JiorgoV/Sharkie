@@ -158,6 +158,7 @@ function openSettings() {
     if (!world) startMenuMusic();
     document.getElementById('settings-dialog').classList.remove('hidden');
     document.getElementById('pause-menu').classList.add('hidden');
+    document.getElementById('mobile-controls').style.pointerEvents = 'none'; // ← neu
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
     let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
     document.getElementById('music-slider').value = musicVolume;
@@ -167,6 +168,7 @@ function openSettings() {
 /** Closes the settings dialog and returns to the pause menu when applicable. @returns {void} */
 function closeSettings() {
     document.getElementById('settings-dialog').classList.add('hidden');
+    document.getElementById('mobile-controls').style.pointerEvents = 'all'; // ← neu
     if (world && world.paused) {
         document.getElementById('pause-menu').classList.remove('hidden');
     }
