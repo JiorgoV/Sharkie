@@ -17,7 +17,8 @@ class SoundManager {
         endbossHurt: new Audio('audio/whale-grunting-in-pain.wav'),
         enemyDead: new Audio('audio/pop-1.wav'),
         jump: new Audio('audio/jump-sound-boing-2-of-2.wav'),
-        youWin: new Audio('audio/jingle_win_01.wav')
+        youWin: new Audio('audio/jingle_win_01.wav'),
+        pufferFishHit: new Audio('audio/pain2.wav')
     };
 
     /** Initializes audio loops and loads the stored volume. */
@@ -92,12 +93,14 @@ class SoundManager {
         this.sounds.damageHit.volume = volume;
         this.sounds.endbossHurt.volume = volume;
         this.sounds.enemyDead.volume = volume;
-        this.sounds.jellyfishHit.volume = volume;
+        this.sounds.jellyfishHit.volume = volume * 0.8;
+        this.sounds.pufferFishHit.volume = volume * 0.8;
         this.sounds.snore.volume = volume;
         this.sounds.jump.volume = volume;
         this.sounds.endbossDead.volume = volume;
         this.sounds.gameOver.volume = volume;
         this.sounds.youWin.volume = volume;
+        this.sounds.pufferFishHit.volume = volume;
         localStorage.setItem('fxVolume', volume);
     }
 

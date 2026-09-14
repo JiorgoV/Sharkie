@@ -96,6 +96,7 @@ class World {
                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
                     this.character.bounce();
                     this.soundManager.play('enemyDead');
+                    this.soundManager.play('pufferFishHit');
                 } else {
                     this.handleEnemyHit(enemy);
                 }
@@ -185,6 +186,14 @@ class World {
                         this.endbossBar.setPercantage(enemy.energy);
                         this.soundManager.play('endbossHurt');
                         return true;
+                    } else if (enemy instanceof PufferFish) {
+                        this.soundManager.play('pufferFishHit');
+                        this.soundManager.play('enemyDead');
+                        return false;
+                    } else if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
+                        this.soundManager.play('jellyfishHit');
+                        this.soundManager.play('enemyDead');
+                        return false;
                     } else {
                         this.soundManager.play('enemyDead');
                         return false;
