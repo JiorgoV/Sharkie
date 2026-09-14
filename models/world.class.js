@@ -19,6 +19,7 @@ class World {
     soundManager = new SoundManager();
     endbossBarVisible = false;
     bubbleCount = 0;
+    bubbleTimes = []
     bubbleCooldown = false;
 
     /**
@@ -219,12 +220,14 @@ class World {
             );
             this.throwableObjects.push(bubble);
             this.lastThrowTime = now;
-            this.bubbleCount++;
-            if (this.bubbleCount >= 5) {
+
+            this.bubbleTimes.push(now);
+            this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000); // nur Schüsse der letzten 2 Sek
+            if (this.bubbleTimes.length >= 5) {
                 this.bubbleCooldown = true;
+                this.bubbleTimes = [];
                 setTimeout(() => {
                     this.bubbleCooldown = false;
-                    this.bubbleCount = 0;
                 }, 2000);
             }
         }
@@ -232,30 +235,31 @@ class World {
 
     /** Fires a poison projectile when the player presses the poison attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
     checkPoisonBubble(now, isLeft, offsetX) {
-        if (this.bubbleCooldown) return;
-        if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
-            this.character.lastActivity = new Date().getTime();
-            this.soundManager.play('bubbleShot');
-            let poisonBubble = new PoisonBubble(
-                this.character.x + offsetX,
-                this.character.y + 170,
-                isLeft
-            );
-            this.throwableObjects.push(poisonBubble);
-            this.poisonCount = Math.max(this.poisonCount - 1, 0);
-            this.lastThrowTime = now;
-            this.bubbleCount++;
-            if (this.bubbleCount >= 5) {
-                this.bubbleCooldown = true;
-                setTimeout(() => {
-                    this.bubbleCooldown = false;
-                    this.bubbleCount = 0;
-                }, 2000);
+            if (this.bubbleCooldown) return;
+            if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
+                this.character.lastActivity = new Date().getTime();
+                this.soundManager.play('bubbleShot');
+                let poisonBubble = new PoisonBubble(
+                    this.character.x + offsetX,
+                    this.character.y + 170,
+                    isLeft
+                );
+                this.throwableObjects.push(poisonBubble);
+                this.poisonCount = Math.max(this.poisonCount - 1, 0);
+                this.lastThrowTime = now;
+
+                this.bubbleTimes.push(now);
+                this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000);
+                if (this.bubbleTimes.length >= 5) {
+                    this.bubbleCooldown = true;
+                    this.bubbleTimes = [];
+                    setTimeout(() => {
+                        this.bubbleCooldown = false;
+                    }, 2000);
+                }
             }
         }
-    }
-
-    /** Removes projectiles that travelled too far from their origin. @returns {void} */
+        /** Removes projectiles that travelled too far from their origin. @returns {void} */
     removeFarBubbles() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             return Math.abs(bubble.x - bubble.startX) < 300;
