@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     introPlayed = false;
     introFrame = 0;
     isAttacking = false;
+    angle = 0;
 
     IMAGES_INTRODUCE = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png',
@@ -76,6 +77,7 @@ class Endboss extends MovableObject {
         this.speed = 3;
         this.animate();
         this.move();
+        this.swimUpDown();
     }
 
     /** Controls the final enemy animation cycle based on its state. @returns {void} */
@@ -149,5 +151,14 @@ class Endboss extends MovableObject {
             this.x += currentSpeed;
             this.otherDirection = true;
         }
+    }
+
+    swimUpDown() {
+        this.setStoppableInterval(() => {
+            if (this.isPaused()) return;
+            if (!this.introPlayed || this.isDead()) return;
+            this.y += Math.sin(this.angle) * 2;
+            this.angle += 0.05;
+        }, 1000 / 60);
     }
 }
