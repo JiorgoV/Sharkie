@@ -104,8 +104,14 @@ class World {
     /** Applies damage to the player when an enemy contact is registered. @param {MovableObject} enemy Enemy that caused the hit. @returns {void} */
     handleEnemyHit(enemy) {
         if (enemy instanceof Endboss) {
-            enemy.isAttacking = true;
-            setTimeout(() => enemy.isAttacking = false, 1000);
+            if (enemy.isAttacking) {
+                this.character.energy -= 15;
+            } else {
+                this.character.energy -= 10;
+            }
+            if (this.character.energy < 0) this.character.energy = 0;
+        } else {
+            this.character.hit();
         }
         if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
             this.character.hurtCause = 'electro';
@@ -114,7 +120,6 @@ class World {
             this.character.hurtCause = 'poisoned';
             this.character.deadCause = 'poisoned';
         }
-        this.character.hit();
         if (!this.soundManager.isPlaying('damageHit')) {
             this.soundManager.play('damageHit');
         }

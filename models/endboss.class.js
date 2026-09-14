@@ -138,14 +138,15 @@ class Endboss extends MovableObject {
     /** Moves the boss toward the player while respecting the defeat state. @returns {void} */
     moveTowardsCharacter() {
         if (this.isDead()) {
-            this.y += 1;
+            this.y += 2;
             return;
         }
+        let currentSpeed = this.energy < 30 ? this.speed * 2 : this.speed;
         if (this.world.character.x < this.x) {
-            this.x -= this.speed;
+            this.x -= currentSpeed;
             this.otherDirection = false;
         } else {
-            this.x += this.speed;
+            this.x += currentSpeed;
             this.otherDirection = true;
         }
     }
