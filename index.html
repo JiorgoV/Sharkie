@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/png" href="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png">
@@ -34,12 +33,12 @@
 
     <div id="splash-screen">
         <h1>Sharkie</h1>
-        <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" id="btn-enter" onclick="showMainMenu()">
-    </div>>
+        <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" id="btn-enter" class="btn-enter" onclick="showMainMenu()">
+    </div>
 
-    <div id="rotate-hint">
-        <div id="rotate-content">
-            <span id="rotate-icon">📱</span>
+    <div id="rotate-hint" class="rotate-hint">
+        <div id="rotate-content" class="rotate-content">
+            <span id="rotate-icon" class="rotate-icon">📱</span>
             <p>Please rotate your device to play</p>
         </div>
     </div>
@@ -47,7 +46,7 @@
     <h1 id="main-title" class="hidden">Sharkie</h1>
 
     <!-- Start Buttons -->
-    <div class="hidden" id="start-buttons">
+    <div class="hidden start-buttons" id="start-buttons">
         <div class="start-btn-item" onclick="openSettings()">
             <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/icons8-settings-144.svg">
             <span>Settings</span>
@@ -63,8 +62,8 @@
     </div>
 
     <!-- Settings Dialog -->
-    <div id="settings-dialog" class="hidden">
-        <div id="settings-content">
+    <div id="settings-dialog" class="hidden settings-dialog">
+        <div id="settings-content" class="settings-content">
             <span class="close-btn" onclick="closeSettings()">✕</span>
             <h2>Settings</h2>
             <div class="settings-row">
@@ -79,18 +78,18 @@
     </div>
 
     <!-- Instructions Dialog -->
-    <div id="instructions-dialog" class="hidden">
-        <div id="instructions-content">
+    <div id="instructions-dialog" class="hidden instructions-dialog">
+        <div id="instructions-content" class="instructions-content">
             <span class="close-btn" onclick="closeInstructions()">✕</span>
 
             <!-- Tabs -->
-            <div id="instructions-tabs">
+            <div id="instructions-tabs" class="instructions-tabs">
                 <button class="tab-btn active" onclick="showTab('story')">Story</button>
                 <button class="tab-btn" onclick="showTab('controls')">Controls</button>
             </div>
 
             <!-- Story Tab -->
-            <div id="tab-story" class="tab-content">
+            <div id="tab-story" class="tab-content tab-story ">
                 <p>The depths of the ocean are terrorized by a mighty whale. He has poisoned the peaceful waters and filled the small sea creatures with fear.</p>
                 <br>
                 <p>You are Sharkie – the bravest shark in the ocean. Armed with your bubbles and poison bubbles, you must fight your way through pufferfish and dangerous jellyfish to defeat the evil whale and save the ocean!</p>
@@ -113,47 +112,47 @@
         </div>
     </div>
 
-    <div class="hidden" id="game-container">
+    <div class="hidden game-container" id="game-container">
 
         <!-- Game Over Screen -->
-        <div id="gameover-screen" class="hidden">
-            <img id="gameover-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Game Over/Recurso 10.png">
+        <div id="gameover-screen" class="hidden gameover-screen">
+            <img id="gameover-title" class="gameover-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Game Over/Recurso 10.png">
             <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Try again/Recurso 17.png" onclick="restartGame()">
             <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="goHome()">
         </div>
 
         <!-- You Win Screen -->
-        <div id="youwin-screen" class="hidden">
-            <img id="youwin-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/You win/Recurso 22.png">
+        <div id="youwin-screen" class="hidden youwin-screen">
+            <img id="youwin-title" class="youwin-title" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/You win/Recurso 22.png">
             <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Try again/Recurso 17.png" onclick="restartGame()">
             <img class="btn-action" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Start/3.png" onclick="goHome()">
         </div>
 
         <!-- Canvas -->
         <canvas id="canvas" width="720" height="480" class="hidden"></canvas>
-        <div id="btn-fullscreen-ingame" onclick="toggleFullscreen()" class="hidden">⛶</div>
-        <div id="btn-mute-ingame" onclick="toggleMute()" class="hidden">🔊</div>
-        <img id="btn-pause" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/Grey/icon_cross.svg" onclick="togglePause()" class="hidden">
+        <div id="btn-fullscreen-ingame" onclick="toggleFullscreen()" class="hidden btn-fullscreen-ingame">⛶</div>
+        <div id="btn-mute-ingame" onclick="toggleMute()" class="hidden btn-mute-ingame">🔊</div>
+        <img id="btn-pause" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/Grey/icon_cross.svg" onclick="togglePause()" class="hidden btn-pause">
 
         <!-- Mobile Touch Buttons -->
-        <div id="mobile-controls">
-            <div id="dpad">
-                <div class="touch-btn-arrow" id="btn-up" ontouchstart="keyboard.UP = true" ontouchend="keyboard.UP = false"></div>
-                <div id="dpad-middle">
-                    <div class="touch-btn-arrow" id="btn-left" ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false"></div>
-                    <div class="touch-btn-arrow" id="btn-down" ontouchstart="keyboard.DOWN = true" ontouchend="keyboard.DOWN = false"></div>
-                    <div class="touch-btn-arrow" id="btn-right" ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false"></div>
+        <div id="mobile-controls" class="mobile-controls">
+            <div id="dpad" class="dpad">
+                <div class="touch-btn-arrow btn-up" id="btn-up" ontouchstart="keyboard.UP = true" ontouchend="keyboard.UP = false"></div>
+                <div id="dpad-middle" class="dpad-middle">
+                    <div class="touch-btn-arrow btn-left" id="btn-left" ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false"></div>
+                    <div class="touch-btn-arrow btn-down" id="btn-down" ontouchstart="keyboard.DOWN = true" ontouchend="keyboard.DOWN = false"></div>
+                    <div class="touch-btn-arrow btn-right" id="btn-right" ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false"></div>
                 </div>
             </div>
-            <div id="action-buttons">
+            <div id="action-buttons" class="action-buttons">
                 <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png" class="touch-btn" id="btn-bubble" ontouchstart="keyboard.D = true" ontouchend="keyboard.D = false">
                 <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png" class="touch-btn" id="btn-poison" ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false">
             </div>
         </div>
 
 
-        <div id="pause-menu" class="hidden">
-            <div id="pause-content">
+        <div id="pause-menu" class="hidden pause-menu">
+            <div id="pause-content" class="pause-content">
                 <h2>Pause</h2>
                 <div class="pause-btn" onclick="togglePause()">▶ Weiter</div>
                 <div class="pause-btn" onclick="openSettings()">🔊 Sound</div>
@@ -173,7 +172,7 @@
     <div class="bubble" style="width:5px; height:5px; left:85%; animation-duration:4s; animation-delay:2.5s;"></div>
     <div class="bubble" style="width:9px; height:9px; left:92%; animation-duration:5s; animation-delay:1.2s;"></div>
 
-    <a href="impressum.html" id="impressum-link">Impressum</a>
+    <a href="impressum.html" id="impressum-link" class="impressum-link">Impressum</a>
 </body>
 
 </html>
