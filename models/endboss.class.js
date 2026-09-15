@@ -115,7 +115,14 @@ class Endboss extends MovableObject {
     playBattleAnimation() {
         if (this.isAttacking) {
             this.playAnimation(this.IMAGES_ATTACK);
+            if (!this.world.soundManager.isPlaying('endbossAttack') && !this.world.gameOver && !this.world.youWin) {
+                this.world.soundManager.play('endbossAttack');
+            }
         } else {
+            if (this.world.gameOver || this.world.youWin) {
+                this.world.soundManager.sounds.endbossAttack.pause();
+                this.world.soundManager.sounds.endbossAttack.currentTime = 0;
+            }
             this.playAnimation(this.IMAGES_FLOATING);
         }
     }

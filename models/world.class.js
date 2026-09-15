@@ -377,8 +377,11 @@ class World {
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
+            this.soundManager.sounds.endbossAttack.pause();
             this.soundManager.sounds.damageHit.pause();
             this.soundManager.sounds.damageHit.currentTime = 0;
+            this.soundManager.sounds.endbossAttack.pause();
+            this.soundManager.sounds.endbossAttack.currentTime = 0;
             this.soundManager.sounds.endbossEntry.pause();
             this.soundManager.sounds.startTheme.pause();
             this.soundManager.sounds.backgroundFx.pause();
@@ -386,7 +389,7 @@ class World {
             setTimeout(() => {
                 document.getElementById('canvas').classList.add('hidden');
                 document.getElementById('gameover-screen').classList.remove('hidden');
-                document.getElementById('mobile-controls').classList.remove('show'); // ← neu
+                document.getElementById('mobile-controls').classList.remove('show');
             }, 1000);
         }
     }
