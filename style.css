@@ -490,6 +490,55 @@ canvas {
     }
 }
 
+@media only screen and (min-width: 761px) {
+    .desktop-panel {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 50, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        color: white;
+        width: 160px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        backdrop-filter: blur(4px);
+        z-index: 1;
+    }
+    .panel-left {
+        left: calc(50% - 360px - 180px);
+    }
+    .panel-right {
+        right: calc(50% - 360px - 180px);
+    }
+    .desktop-panel h2 {
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 10px;
+    }
+    .desktop-panel p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+    .control-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+    }
+    .control-item img {
+        height: 30px;
+    }
+    .sharkie-deco {
+        width: 100px;
+        margin: 0 auto;
+    }
+}
+
 .btn-pause {
     position: absolute;
     top: 10px;

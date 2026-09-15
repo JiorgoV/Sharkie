@@ -82,23 +82,17 @@
     <div id="instructions-dialog" class="hidden instructions-dialog">
         <div id="instructions-content" class="instructions-content">
             <span class="close-btn" onclick="closeInstructions()">✕</span>
-
-            <!-- Tabs -->
             <div id="instructions-tabs" class="instructions-tabs">
                 <button class="tab-btn active" onclick="showTab('story')">Story</button>
                 <button class="tab-btn" onclick="showTab('controls')">Controls</button>
             </div>
-
-            <!-- Story Tab -->
-            <div id="tab-story" class="tab-content tab-story ">
+            <div id="tab-story" class="tab-content tab-story">
                 <p>The depths of the ocean are terrorized by a mighty whale. He has poisoned the peaceful waters and filled the small sea creatures with fear.</p>
                 <br>
                 <p>You are Sharkie – the bravest shark in the ocean. Armed with your bubbles and poison bubbles, you must fight your way through pufferfish and dangerous jellyfish to defeat the evil whale and save the ocean!</p>
                 <br>
                 <p>Collect coins and poison bubbles to grow stronger. Good luck, Sharkie!</p>
             </div>
-
-            <!-- Controls Tab -->
             <div id="tab-controls" class="tab-content hidden">
                 <div class="instructions-row">
                     <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Tittles/Move title.png">
@@ -113,6 +107,24 @@
         </div>
     </div>
 
+    <!-- Desktop Panel Links -->
+    <div id="panel-left" class="desktop-panel panel-left hidden">
+        <h2>Controls</h2>
+        <div class="control-item">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png">
+            <span>Move</span>
+        </div>
+        <div class="control-item">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/D key.png">
+            <span>Bubble</span>
+        </div>
+        <div class="control-item">
+            <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/Space Bar key.png">
+            <span>Poison Bubble</span>
+        </div>
+    </div>
+
+    <!-- Game Container -->
     <div class="hidden game-container" id="game-container">
 
         <!-- Game Over Screen -->
@@ -151,7 +163,6 @@
             </div>
         </div>
 
-
         <div id="pause-menu" class="hidden pause-menu">
             <div id="pause-content" class="pause-content">
                 <h2>Pause</h2>
@@ -161,6 +172,17 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Desktop Panel Rechts -->
+    <div id="panel-right" class="desktop-panel panel-right hidden">
+        <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png" class="sharkie-deco">
+        <h2>Tips</h2>
+        <p>🪙 Collect coins</p>
+        <p>💚 Collect poison bubbles</p>
+        <p>🐡 Jump on pufferfish</p>
+        <p>⚡ Avoid jellyfish</p>
+        <p>🐋 Defeat the whale!</p>
     </div>
 
     <div class="bubble" style="width:8px; height:8px; left:8%; animation-duration:4s;"></div>

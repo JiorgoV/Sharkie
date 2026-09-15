@@ -63,6 +63,10 @@ function showGameUI() {
     document.getElementById('btn-pause').classList.remove('hidden');
     document.getElementById('btn-mute-ingame').classList.remove('hidden');
     document.getElementById('impressum-link').classList.add('hidden');
+    if (window.innerWidth > 760) {
+        document.getElementById('panel-left').classList.remove('hidden');
+        document.getElementById('panel-right').classList.remove('hidden');
+    }
 }
 
 /** Creates the active world and applies the stored audio settings. @returns {void} */
@@ -144,6 +148,8 @@ function hideGameUI() {
     document.getElementById('game-container').classList.add('hidden');
     document.getElementById('btn-mute-ingame').classList.add('hidden');
     document.getElementById('impressum-link').classList.remove('hidden');
+    document.getElementById('panel-left').classList.add('hidden');
+    document.getElementById('panel-right').classList.add('hidden')
 }
 
 /** Displays the main menu overlay and adapts the title visibility. @returns {void} */
