@@ -160,6 +160,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    /** Adds a gentle vertical bobbing motion while the boss is active in the arena. @returns {void} */
     swimUpDown() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;

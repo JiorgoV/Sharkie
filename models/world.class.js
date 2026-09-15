@@ -35,6 +35,7 @@ class World {
         this.poisonIcon.src = 'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/green/100_ copia 5.png';
         this.soundManager.loadMuteState();
         this.soundManager.play('startTheme');
+        this.collisionManager = new CollisionManager(this);
         this.setWorld();
         this.draw();
         this.run();
@@ -78,131 +79,8 @@ class World {
         }, 200);
     }
 
-    /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */
     checkCollisions() {
-        this.checkEnemyCollisions();
-        this.checkCoinCollisions();
-        this.checkPoisonCollisions();
-        this.checkBubbleCollisions();
-    }
-
-    /** Handles collisions against enemy objects and triggers damage or enemy defeat logic. @returns {void} */
-    checkEnemyCollisions() {
-        if (this.youWin) return;
-        if (this.character.isDead()) return;
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
-                    this.level.enemies = this.level.enemies.filter(e => e !== enemy);
-                    this.character.bounce();
-                    this.soundManager.play('enemyDead');
-                    this.soundManager.play('pufferFishHit');
-                } else {
-                    this.handleEnemyHit(enemy);
-                }
-            }
-            this.checkEndbossFirstContact(enemy);
-        });
-    }
-
-    /** Applies damage to the player when an enemy contact is registered. @param {MovableObject} enemy Enemy that caused the hit. @returns {void} */
-    handleEnemyHit(enemy) {
-        if (enemy instanceof Endboss) {
-            if (enemy.isAttacking) {
-                this.character.energy -= 15;
-            } else {
-                this.character.energy -= 10;
-            }
-            if (this.character.energy < 0) this.character.energy = 0;
-        } else {
-            this.character.hit();
-        }
-        if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
-            this.character.hurtCause = 'electro';
-            this.character.deadCause = 'electro';
-        } else {
-            this.character.hurtCause = 'poisoned';
-            this.character.deadCause = 'poisoned';
-        }
-        if (!this.soundManager.isPlaying('damageHit')) {
-            this.soundManager.play('damageHit');
-        }
-    }
-
-    /** Triggers the endboss intro when the player reaches the boss trigger zone. @param {MovableObject} enemy Enemy to inspect. @returns {void} */
-    checkEndbossFirstContact(enemy) {
-        if (enemy instanceof Endboss && this.character.x > 3000) {
-            if (!enemy.hadFirstContact) {
-                enemy.hadFirstContact = true;
-                this.startEndbossMusic();
-            }
-        }
-    }
-
-    /** Switches the music from the normal theme to the boss battle theme. @returns {void} */
-    startEndbossMusic() {
-        this.soundManager.sounds.startTheme.pause();
-        this.soundManager.sounds.startTheme.currentTime = 0;
-        this.soundManager.sounds.backgroundFx.pause();
-        this.soundManager.sounds.backgroundFx.currentTime = 0;
-        this.soundManager.sounds.endbossEntry.currentTime = 0;
-        this.soundManager.play('endbossEntry');
-        this.soundManager.sounds.endbossEntry.loop = true;
-    }
-
-    /** Collects nearby coins and updates the coin counter. @returns {void} */
-    checkCoinCollisions() {
-        this.level.coins = this.level.coins.filter(coin => {
-            if (this.character.isColliding(coin)) {
-                this.coinCount = Math.min(this.coinCount + 1, 5);
-                this.soundManager.play('coinPickup');
-                return false;
-            }
-            return true;
-        });
-    }
-
-    /** Collects nearby poison pickups and updates the poison counter. @returns {void} */
-    checkPoisonCollisions() {
-        this.level.poisons = this.level.poisons.filter(poison => {
-            if (this.character.isColliding(poison)) {
-                this.poisonCount = Math.min(this.poisonCount + 1, 5);
-                this.soundManager.play('bubblePickup');
-                return false;
-            }
-            return true;
-        });
-    }
-
-    /** Removes bubbles that hit enemies and updates boss health if the target is the endboss. @returns {void} */
-    checkBubbleCollisions() {
-        this.throwableObjects = this.throwableObjects.filter(bubble => {
-            let hit = false;
-            this.level.enemies = this.level.enemies.filter(enemy => {
-                if (bubble.isColliding(enemy) && !hit) {
-                    hit = true;
-                    if (enemy instanceof Endboss) {
-                        enemy.hit();
-                        this.endbossBar.setPercantage(enemy.energy);
-                        this.soundManager.play('endbossHurt');
-                        return true;
-                    } else if (enemy instanceof PufferFish) {
-                        this.soundManager.play('pufferFishHit');
-                        this.soundManager.play('enemyDead');
-                        return false;
-                    } else if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
-                        this.soundManager.play('jellyfishHit');
-                        this.soundManager.play('enemyDead');
-                        return false;
-                    } else {
-                        this.soundManager.play('enemyDead');
-                        return false;
-                    }
-                }
-                return true;
-            });
-            return !hit;
-        });
+        this.collisionManager.checkCollisions();
     }
 
     /** Creates attack bubbles from input with a cooldown. @returns {void} */
@@ -216,59 +94,65 @@ class World {
         this.removeFarBubbles();
     }
 
-    /** Fires a regular projectile when the player presses the normal attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
+    /** Fires a standard bubble when the player presses the attack key and cooldown rules allow it. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
     checkNormalBubble(now, isLeft, offsetX) {
         if (this.bubbleCooldown) return;
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
-            this.character.lastActivity = new Date().getTime();
-            this.soundManager.play('bubbleShot');
-            let bubble = new ThrowableObject(
-                this.character.x + offsetX,
-                this.character.y + 170,
-                isLeft
-            );
-            this.throwableObjects.push(bubble);
-            this.lastThrowTime = now;
-
-            this.bubbleTimes.push(now);
-            this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000); // nur Schüsse der letzten 2 Sek
-            if (this.bubbleTimes.length >= 5) {
-                this.bubbleCooldown = true;
-                this.bubbleTimes = [];
-                setTimeout(() => {
-                    this.bubbleCooldown = false;
-                }, 2000);
-            }
+            this.throwNormalBubble(now, isLeft, offsetX);
+            this.updateBubbleCooldown(now);
         }
     }
 
-    /** Fires a poison projectile when the player presses the poison attack key. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset depending on facing direction. @returns {void} */
-    checkPoisonBubble(now, isLeft, offsetX) {
-            if (this.bubbleCooldown) return;
-            if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
-                this.character.lastActivity = new Date().getTime();
-                this.soundManager.play('bubbleShot');
-                let poisonBubble = new PoisonBubble(
-                    this.character.x + offsetX,
-                    this.character.y + 170,
-                    isLeft
-                );
-                this.throwableObjects.push(poisonBubble);
-                this.poisonCount = Math.max(this.poisonCount - 1, 0);
-                this.lastThrowTime = now;
+    /** Spawns a normal projectile in the current facing direction. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    throwNormalBubble(now, isLeft, offsetX) {
+        this.character.lastActivity = new Date().getTime();
+        this.soundManager.play('bubbleShot');
+        let bubble = new ThrowableObject(
+            this.character.x + offsetX,
+            this.character.y + 170,
+            isLeft
+        );
+        this.throwableObjects.push(bubble);
+        this.lastThrowTime = now;
+    }
 
-                this.bubbleTimes.push(now);
-                this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000);
-                if (this.bubbleTimes.length >= 5) {
-                    this.bubbleCooldown = true;
-                    this.bubbleTimes = [];
-                    setTimeout(() => {
-                        this.bubbleCooldown = false;
-                    }, 2000);
-                }
-            }
+    /** Tracks recent bubble throws and temporarily disables rapid-fire attacks after repeated shots. @param {number} now Current timestamp in milliseconds. @returns {void} */
+    updateBubbleCooldown(now) {
+        this.bubbleTimes.push(now);
+        this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000);
+        if (this.bubbleTimes.length >= 5) {
+            this.bubbleCooldown = true;
+            this.bubbleTimes = [];
+            setTimeout(() => {
+                this.bubbleCooldown = false;
+            }, 2000);
         }
-        /** Removes projectiles that travelled too far from their origin. @returns {void} */
+    }
+
+    /** Fires a poison bubble when the player has charges and the attack cooldown is clear. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    checkPoisonBubble(now, isLeft, offsetX) {
+        if (this.bubbleCooldown) return;
+        if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
+            this.throwPoisonBubble(now, isLeft, offsetX);
+            this.updateBubbleCooldown(now);
+        }
+    }
+
+    /** Spawns a stronger poison projectile and consumes one charge. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    throwPoisonBubble(now, isLeft, offsetX) {
+        this.character.lastActivity = new Date().getTime();
+        this.soundManager.play('bubbleShot');
+        let poisonBubble = new PoisonBubble(
+            this.character.x + offsetX,
+            this.character.y + 170,
+            isLeft
+        );
+        this.throwableObjects.push(poisonBubble);
+        this.poisonCount = Math.max(this.poisonCount - 1, 0);
+        this.lastThrowTime = now;
+    }
+
+    /** Removes projectiles that travelled too far from their origin. @returns {void} */
     removeFarBubbles() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             return Math.abs(bubble.x - bubble.startX) < 300;
@@ -373,25 +257,32 @@ class World {
         this.ctx.restore();
     }
 
-    /** Displays the game-over screen after the player dies. @returns {void} */
+    /** Triggers the game-over flow when the player's health is exhausted. @returns {void} */
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
-            this.soundManager.sounds.endbossAttack.pause();
-            this.soundManager.sounds.damageHit.pause();
-            this.soundManager.sounds.damageHit.currentTime = 0;
-            this.soundManager.sounds.endbossAttack.pause();
-            this.soundManager.sounds.endbossAttack.currentTime = 0;
-            this.soundManager.sounds.endbossEntry.pause();
-            this.soundManager.sounds.startTheme.pause();
-            this.soundManager.sounds.backgroundFx.pause();
+            this.stopGameSounds();
             this.soundManager.play('gameOver');
-            setTimeout(() => {
-                document.getElementById('canvas').classList.add('hidden');
-                document.getElementById('gameover-screen').classList.remove('hidden');
-                document.getElementById('mobile-controls').classList.remove('show');
-            }, 1000);
+            setTimeout(() => this.showGameOverScreen(), 1000);
         }
+    }
+
+    /** Stops aggressive gameplay sounds before the game-over screen is shown. @returns {void} */
+    stopGameSounds() {
+        this.soundManager.sounds.endbossAttack.pause();
+        this.soundManager.sounds.endbossAttack.currentTime = 0;
+        this.soundManager.sounds.damageHit.pause();
+        this.soundManager.sounds.damageHit.currentTime = 0;
+        this.soundManager.sounds.endbossEntry.pause();
+        this.soundManager.sounds.startTheme.pause();
+        this.soundManager.sounds.backgroundFx.pause();
+    }
+
+    /** Shows the defeat screen and hides the active canvas. @returns {void} */
+    showGameOverScreen() {
+        document.getElementById('canvas').classList.add('hidden');
+        document.getElementById('gameover-screen').classList.remove('hidden');
+        document.getElementById('mobile-controls').classList.remove('show');
     }
 
     /** Displays the win screen after defeating the final enemy. @returns {void} */
@@ -410,10 +301,4 @@ class World {
         }
     }
 
-    /** Checks whether the player jumped onto an enemy from above. @param {MovableObject} enemy Enemy being evaluated. @returns {boolean} `true` when the player stomps the enemy from above. */
-    isJumpingOn(enemy) {
-        return this.character.y + this.character.height > enemy.y &&
-            this.character.y < enemy.y &&
-            this.character.speedY < 0;
-    }
 }

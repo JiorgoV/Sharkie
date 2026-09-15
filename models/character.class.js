@@ -188,28 +188,47 @@ class Character extends MovableObject {
         this.world.camera_x = -this.x + 40;
     }
 
-    /** Chooses the correct animation based on the player's current state. @returns {void} */
+    /** Selects the correct animation depending on the character state and context. @returns {void} */
     handleAnimation() {
         if (this.isDead()) {
-            let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
-            this.playAnimation(deadImages);
+            this.playDeadAnimation();
         } else if (this.isHurt()) {
-            let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
-            this.playAnimation(hurtImages);
+            this.playHurtAnimation();
         } else if (this.isSleeping() && !this.world.youWin) {
-            this.playAnimation(this.IMAGES_SLEEP);
-            if (!this.world.soundManager.isPlaying('snore')) {
-                this.world.soundManager.play('snore');
-            }
+            this.playSleepAnimation();
         } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.world.soundManager.sounds.snore.pause();
-            this.world.soundManager.sounds.snore.currentTime = 0;
+            this.stopSnore();
             this.playAnimation(this.IMAGES_SWIM);
         } else {
-            this.world.soundManager.sounds.snore.pause();
-            this.world.soundManager.sounds.snore.currentTime = 0;
+            this.stopSnore();
             this.playAnimation(this.IMAGES_IDLE);
         }
+    }
+
+    /** Plays the death animation matching the current death cause. @returns {void} */
+    playDeadAnimation() {
+        let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
+        this.playAnimation(deadImages);
+    }
+
+    /** Plays the hurt animation matching the current damage type. @returns {void} */
+    playHurtAnimation() {
+        let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
+        this.playAnimation(hurtImages);
+    }
+
+    /** Plays the sleep animation and ensures the snore sound loops only once. @returns {void} */
+    playSleepAnimation() {
+        this.playAnimation(this.IMAGES_SLEEP);
+        if (!this.world.soundManager.isPlaying('snore')) {
+            this.world.soundManager.play('snore');
+        }
+    }
+
+    /** Stops the snore sound effect immediately. @returns {void} */
+    stopSnore() {
+        this.world.soundManager.sounds.snore.pause();
+        this.world.soundManager.sounds.snore.currentTime = 0;
     }
 
     /**

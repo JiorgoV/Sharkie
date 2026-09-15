@@ -85,29 +85,31 @@ function updateMuteButton() {
     if (btnIngame) btnIngame.textContent = world.soundManager.muted ? '🔇' : '🔊';
 }
 
-/** Resets the current level and restarts the game. @returns {void} */
+/** Resets the current run and recreates the level from a clean state. @returns {void} */
 function restartGame() {
-    if (world) {
-        world.stopGame();
-        world.soundManager.sounds.endbossDead.pause();
-        world.soundManager.sounds.endbossDead.currentTime = 0;
-        world.soundManager.sounds.gameOver.pause();
-        world.soundManager.sounds.gameOver.currentTime = 0;
-        world.soundManager.sounds.endbossEntry.pause();
-        world.soundManager.sounds.endbossEntry.currentTime = 0;
-    }
+    stopPreviousGame();
     initLevel();
+    resetGameScreens();
+    initWorld();
+}
+
+/** Stops the currently running world and resets the relevant victory and failure sounds. @returns {void} */
+function stopPreviousGame() {
+    if (!world) return;
+    world.stopGame();
+    world.soundManager.sounds.endbossDead.pause();
+    world.soundManager.sounds.endbossDead.currentTime = 0;
+    world.soundManager.sounds.gameOver.pause();
+    world.soundManager.sounds.gameOver.currentTime = 0;
+    world.soundManager.sounds.endbossEntry.pause();
+    world.soundManager.sounds.endbossEntry.currentTime = 0;
+}
+
+/** Hides result overlays and restores the canvas visibility for a new game start. @returns {void} */
+function resetGameScreens() {
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
-    world = new World(canvas, keyboard);
-    let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
-    let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
-    world.soundManager.setMusicVolume(musicVolume);
-    world.soundManager.setFxVolume(fxVolume);
-    world.soundManager.loadMuteState();
-    world.soundManager.play('startTheme');
-    world.soundManager.play('backgroundFx');
 }
 
 /** Ends the current round and displays the main menu. @returns {void} */
@@ -118,6 +120,7 @@ function goHome() {
     startMenuMusic();
 }
 
+/** Stops game playback and clears the endboss/game-over sound state. @returns {void} */
 function stopGameSounds() {
     if (world) world.stopGame();
     if (world) {
@@ -219,26 +222,30 @@ function toggleFullscreen() {
     }
 }
 
-/** Toggles between paused and running game states. @returns {void} */
+/** Toggles the pause state and switches the active game audio accordingly. @returns {void} */
 function togglePause() {
     let pauseMenu = document.getElementById('pause-menu');
     pauseMenu.classList.toggle('hidden');
     world.paused = !world.paused;
+    world.paused ? pauseGameSounds() : resumeGameSounds();
+}
 
-    if (world.paused) {
-        world.soundManager.sounds.startTheme.pause();
-        world.soundManager.sounds.backgroundFx.pause();
-        world.soundManager.sounds.endbossEntry.pause();
+/** Pauses music and ambiance while the game is paused. @returns {void} */
+function pauseGameSounds() {
+    world.soundManager.sounds.startTheme.pause();
+    world.soundManager.sounds.backgroundFx.pause();
+    world.soundManager.sounds.endbossEntry.pause();
+}
+
+/** Resumes the correct background track when gameplay continues. @returns {void} */
+function resumeGameSounds() {
+    if (world.soundManager.muted) return;
+    let endboss = world.level.enemies.find(e => e instanceof Endboss);
+    if (endboss && endboss.hadFirstContact) {
+        world.soundManager.sounds.endbossEntry.play();
     } else {
-        if (!world.soundManager.muted) { // ← nur wenn nicht gemutet
-            let endboss = world.level.enemies.find(e => e instanceof Endboss);
-            if (endboss && endboss.hadFirstContact) {
-                world.soundManager.sounds.endbossEntry.play();
-            } else {
-                world.soundManager.sounds.startTheme.play();
-                world.soundManager.sounds.backgroundFx.play();
-            }
-        }
+        world.soundManager.sounds.startTheme.play();
+        world.soundManager.sounds.backgroundFx.play();
     }
 }
 
