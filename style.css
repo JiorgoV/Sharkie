@@ -490,7 +490,7 @@ canvas {
     }
 }
 
-@media only screen and (min-width: 761px) {
+@media only screen and (min-width: 1090px) {
     .desktop-panel {
         position: fixed;
         top: 50%;
@@ -725,19 +725,15 @@ canvas {
 
 .tab-content {
     height: 200px;
-    /* ← feste Höhe */
     overflow-y: auto;
-    /* ← scrollbar wenn nötig */
 }
 
 .instructions-row img {
     height: 40px;
-    /* ← Bilder kleiner */
 }
 
 .tab-story p {
     font-size: 14px;
-    /* ← Text kleiner */
     color: white;
     line-height: 1.6;
 }

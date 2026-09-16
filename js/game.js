@@ -63,7 +63,7 @@ function showGameUI() {
     document.getElementById('btn-pause').classList.remove('hidden');
     document.getElementById('btn-mute-ingame').classList.remove('hidden');
     document.getElementById('impressum-link').classList.add('hidden');
-    if (window.innerWidth > 760) {
+    if (window.innerWidth >= 1090) {
         document.getElementById('panel-left').classList.remove('hidden');
         document.getElementById('panel-right').classList.remove('hidden');
     }
@@ -350,3 +350,14 @@ function showTab(tab) {
 
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
+
+window.addEventListener('resize', () => {
+    if (!world) return;
+    if (window.innerWidth >= 1090) {
+        document.getElementById('panel-left').classList.remove('hidden');
+        document.getElementById('panel-right').classList.remove('hidden');
+    } else {
+        document.getElementById('panel-left').classList.add('hidden');
+        document.getElementById('panel-right').classList.add('hidden');
+    }
+});
