@@ -98,7 +98,7 @@ class CollisionManager {
     checkPoisonCollisions() {
         this.world.level.poisons = this.world.level.poisons.filter(poison => {
             if (this.world.character.isColliding(poison)) {
-                this.poisonCount = Math.min(this.poisonCount + 1, 5);
+                this.world.poisonCount = Math.min(this.world.poisonCount + 1, 5);
                 this.world.soundManager.play('bubblePickup');
                 return false;
             }
