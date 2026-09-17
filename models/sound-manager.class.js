@@ -67,8 +67,10 @@ class SoundManager {
 
     /** Loads the global volume from `localStorage`. @returns {void} */
     loadVolume() {
-        let volume = parseFloat(localStorage.getItem('volume')) || 0.5;
-        this.setVolume(volume);
+        let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
+        let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
+        this.setMusicVolume(musicVolume);
+        this.setFxVolume(fxVolume);
     }
 
     /**
@@ -79,6 +81,7 @@ class SoundManager {
     setMusicVolume(volume) {
         this.sounds.startTheme.volume = volume;
         this.sounds.backgroundFx.volume = volume;
+        this.sounds.endbossEntry.volume = volume;
         localStorage.setItem('musicVolume', volume);
     }
 

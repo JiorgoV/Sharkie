@@ -78,8 +78,12 @@ class CollisionManager {
         this.world.soundManager.sounds.backgroundFx.pause();
         this.world.soundManager.sounds.backgroundFx.currentTime = 0;
         this.world.soundManager.sounds.endbossEntry.currentTime = 0;
-        this.world.soundManager.play('endbossEntry');
         this.world.soundManager.sounds.endbossEntry.loop = true;
+        let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
+        this.world.soundManager.sounds.endbossEntry.volume = musicVolume;
+        if (!this.world.soundManager.muted && musicVolume > 0) {
+            this.world.soundManager.play('endbossEntry');
+        }
     }
 
     /** Collects nearby coins and updates the coin counter. @returns {void} */
