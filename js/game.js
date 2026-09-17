@@ -126,13 +126,18 @@ function goHome() {
 
 /** Stops game playback and clears the endboss/game-over sound state. @returns {void} */
 function stopGameSounds() {
-    if (world) world.stopGame();
-    if (world) {
-        world.soundManager.sounds.gameOver.pause();
-        world.soundManager.sounds.gameOver.currentTime = 0;
-        world.soundManager.sounds.endbossEntry.pause();
-        world.soundManager.sounds.endbossEntry.currentTime = 0;
-    }
+    if (!world) return;
+    world.stopGame();
+    world.soundManager.sounds.snore.pause();
+    world.soundManager.sounds.snore.currentTime = 0;
+    world.soundManager.sounds.endbossDead.pause();
+    world.soundManager.sounds.endbossDead.currentTime = 0;
+    world.soundManager.sounds.gameOver.pause();
+    world.soundManager.sounds.gameOver.currentTime = 0;
+    world.soundManager.sounds.endbossEntry.pause();
+    world.soundManager.sounds.endbossEntry.currentTime = 0;
+    world.soundManager.sounds.endbossAttack.pause();
+    world.soundManager.sounds.endbossAttack.currentTime = 0;
 }
 
 /** Hides the active game UI and returns to the menu state. @returns {void} */

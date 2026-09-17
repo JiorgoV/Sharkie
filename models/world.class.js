@@ -269,6 +269,8 @@ class World {
 
     /** Stops aggressive gameplay sounds before the game-over screen is shown. @returns {void} */
     stopGameSounds() {
+        this.soundManager.sounds.snore.pause();
+        this.soundManager.sounds.snore.currentTime = 0;
         this.soundManager.sounds.endbossAttack.pause();
         this.soundManager.sounds.endbossAttack.currentTime = 0;
         this.soundManager.sounds.damageHit.pause();
