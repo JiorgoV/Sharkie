@@ -38,7 +38,7 @@ class SoundManager {
     play(soundName) {
         if (!this.muted && this.sounds[soundName]) {
             this.sounds[soundName].currentTime = 0;
-            this.sounds[soundName].play().catch(e => console.log('error:', e)); // ← catch wieder rein
+            this.sounds[soundName].play().catch(e => {});
         }
     }
 
