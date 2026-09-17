@@ -68,12 +68,23 @@ function initLevel() {
             new Coin(1200, 300),
             new Coin(1800, 200),
             new Coin(2400, 250),
+            new Coin(2900, 200),
+            new Coin(3300, 150),
+            new Coin(3700, 300),
+            new Coin(3700, 150),
+            new Coin(4000, 250)
         ], [
             new Poison(500, 250),
             new Poison(1000, 180),
             new Poison(1600, 300),
             new Poison(2200, 200),
             new Poison(2800, 250),
+            new Poison(3000, 250),
+            new Poison(3300, 180),
+            new Poison(3550, 300),
+            new Poison(3900, 150),
+            new Poison(3900, 300),
+            new Poison(4200, 250)
         ]
     );
 }

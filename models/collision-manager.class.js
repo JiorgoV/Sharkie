@@ -90,7 +90,7 @@ class CollisionManager {
     checkCoinCollisions() {
         this.world.level.coins = this.world.level.coins.filter(coin => {
             if (this.world.character.isColliding(coin)) {
-                this.coinCount = Math.min(this.coinCount + 1, 5);
+                this.world.coinCount = Math.min(this.world.coinCount + 1, 10);
                 this.world.soundManager.play('coinPickup');
                 return false;
             }
@@ -102,7 +102,7 @@ class CollisionManager {
     checkPoisonCollisions() {
         this.world.level.poisons = this.world.level.poisons.filter(poison => {
             if (this.world.character.isColliding(poison)) {
-                this.world.poisonCount = Math.min(this.world.poisonCount + 1, 5);
+                this.world.poisonCount = Math.min(this.world.poisonCount + 1, 10);
                 this.world.soundManager.play('bubblePickup');
                 return false;
             }
