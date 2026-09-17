@@ -196,7 +196,7 @@ class World {
     /** Draws the fixed HUD and reveals the endboss bar when the boss stage starts. @returns {void} */
     drawFixedUI() {
         this.drawStatusIcons();
-        if (this.character.x > 3000) {
+        if (this.character.x > 4500) {
             this.endbossBarVisible = true;
         }
         if (this.endbossBarVisible) {

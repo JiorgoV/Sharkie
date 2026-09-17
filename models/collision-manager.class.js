@@ -63,7 +63,7 @@ class CollisionManager {
 
     /** Triggers the endboss intro when the player reaches the boss trigger zone. @param {MovableObject} enemy Enemy to inspect. @returns {void} */
     checkEndbossFirstContact(enemy) {
-        if (enemy instanceof Endboss && this.world.character.x > 3000) {
+        if (enemy instanceof Endboss && this.world.character.x > 4500) {
             if (!enemy.hadFirstContact) {
                 enemy.hadFirstContact = true;
                 this.startEndbossMusic();

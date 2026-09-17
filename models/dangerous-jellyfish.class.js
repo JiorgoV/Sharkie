@@ -21,7 +21,7 @@ class DangerousJellyfish extends Jellyfish {
         super();
         this.loadImage(this.IMAGES_SWIM[0]);
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 500 + Math.random() * 720 * 4;
+        this.x = 500 + Math.random() * 720 * 6;
         this.speed = 0.3 + Math.random() * 0.3;
     }
 

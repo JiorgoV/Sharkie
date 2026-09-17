@@ -5,7 +5,7 @@ class Level {
     backgroundObjects;
     coins;
     poisons;
-    level_end_x = 715 * 5;
+    level_end_x = 715 * 7;
 
     /**
      * @param {MovableObject[]} enemies Level enemies.

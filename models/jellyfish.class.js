@@ -3,7 +3,7 @@ class Jellyfish extends MovableObject {
 
     width = 100;
     height = 100;
-    y = 50 + Math.random() * 300;
+    y = 80 + Math.random() * 180;
 
     IMAGES_SWIM_PURPLE = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
@@ -25,7 +25,7 @@ class Jellyfish extends MovableObject {
         this.IMAGES_SWIM = Math.random() < 0.5 ? this.IMAGES_SWIM_YELLOW : this.IMAGES_SWIM_PURPLE;
         this.loadImage(this.IMAGES_SWIM[0]);
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 500 + Math.random() * 720 * 4;
+        this.x = 500 + Math.random() * 720 * 6;
         this.speed = 0.1 + Math.random() * 0.2;
         this.animate();
     }
