@@ -197,17 +197,27 @@ class Character extends MovableObject {
         } else if (this.isSleeping() && !this.world.youWin) {
             this.playSleepAnimation();
         } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.stopSnore();
-            if (!this.world.soundManager.isPlaying('swimming')) {
-                this.world.soundManager.play('swimming');
-            }
-            this.playAnimation(this.IMAGES_SWIM);
+            this.playSwimAnimation();
         } else {
-            this.stopSnore();
-            this.world.soundManager.sounds.swimming.pause();
-            this.world.soundManager.sounds.swimming.currentTime = 0;
-            this.playAnimation(this.IMAGES_IDLE);
+            this.playIdleAnimation();
         }
+    }
+
+    /** Plays the swim animation and triggers the swimming sound if not already playing. @returns {void} */
+    playSwimAnimation() {
+        this.stopSnore();
+        if (!this.world.soundManager.isPlaying('swimming')) {
+            this.world.soundManager.play('swimming');
+        }
+        this.playAnimation(this.IMAGES_SWIM);
+    }
+
+    /** Plays the idle animation and stops swimming and snore sounds. @returns {void} */
+    playIdleAnimation() {
+        this.stopSnore();
+        this.world.soundManager.sounds.swimming.pause();
+        this.world.soundManager.sounds.swimming.currentTime = 0;
+        this.playAnimation(this.IMAGES_IDLE);
     }
 
     /** Plays the death animation matching the current death cause. @returns {void} */
