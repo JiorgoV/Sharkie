@@ -125,7 +125,7 @@ class World {
             this.bubbleTimes = [];
             setTimeout(() => {
                 this.bubbleCooldown = false;
-            }, 2000);
+            }, 1000);
         }
     }
 

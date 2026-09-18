@@ -43,7 +43,7 @@ class CollisionManager {
     /** Reduces the player's health based on the enemy type and attack intensity. @param {MovableObject} enemy Enemy that inflicted the damage. @returns {void} */
     applyEnemyDamage(enemy) {
         if (enemy instanceof Endboss) {
-            this.world.character.energy -= enemy.isAttacking ? 15 : 10;
+            this.world.character.energy -= enemy.isAttacking ? 10 : 5;
             if (this.world.character.energy < 0) this.world.character.energy = 0;
         } else {
             this.world.character.hit();
