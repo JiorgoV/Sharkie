@@ -257,7 +257,8 @@ class Character extends MovableObject {
 
     /** Applies a quick upward impulse after defeating an enemy by jumping on it. @returns {void} */
     bounce() {
-        this.speedY = 15; // ← nach oben springen
+        this.speedY = 15;
+        this.lastHit = 0;
     }
 
 }

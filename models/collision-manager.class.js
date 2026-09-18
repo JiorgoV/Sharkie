@@ -23,7 +23,7 @@ class CollisionManager {
                     this.world.character.bounce();
                     this.world.soundManager.play('enemyDead');
                     this.world.soundManager.play('pufferFishHit');
-                } else {
+                } else if (!this.world.character.isHurt()) {
                     this.handleEnemyHit(enemy);
                 }
             }
@@ -152,6 +152,8 @@ class CollisionManager {
     isJumpingOn(enemy) {
         return this.world.character.y + this.world.character.height > enemy.y &&
             this.world.character.y < enemy.y &&
-            this.world.character.speedY < 0;
+            this.world.character.speedY < -8 &&
+            !this.world.keyboard.RIGHT &&
+            !this.world.keyboard.LEFT;
     }
 }
