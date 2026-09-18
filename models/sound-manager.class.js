@@ -19,13 +19,15 @@ class SoundManager {
         jump: new Audio('audio/jump-sound-boing-2-of-2.wav'),
         youWin: new Audio('audio/jingle_win_01.wav'),
         pufferFishHit: new Audio('audio/pain2.wav'),
-        endbossAttack: new Audio('audio/bark.wav')
+        endbossAttack: new Audio('audio/bark.wav'),
+        swimming: new Audio('audio/fish_swim2.mp3')
     };
 
     /** Initializes audio loops and loads the stored volume. */
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
+        this.sounds.swimming.loop = true;
         this.sounds.endbossEntry.load();
         this.loadVolume();
     }
@@ -101,6 +103,7 @@ class SoundManager {
         this.sounds.pufferFishHit.volume = volume * 0.8;
         this.sounds.snore.volume = volume;
         this.sounds.jump.volume = volume;
+        this.sounds.swimming.volume = volume;
         this.sounds.endbossDead.volume = volume;
         this.sounds.gameOver.volume = volume;
         this.sounds.youWin.volume = volume;

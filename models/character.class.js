@@ -198,9 +198,14 @@ class Character extends MovableObject {
             this.playSleepAnimation();
         } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.stopSnore();
+            if (!this.world.soundManager.isPlaying('swimming')) {
+                this.world.soundManager.play('swimming');
+            }
             this.playAnimation(this.IMAGES_SWIM);
         } else {
             this.stopSnore();
+            this.world.soundManager.sounds.swimming.pause();
+            this.world.soundManager.sounds.swimming.currentTime = 0;
             this.playAnimation(this.IMAGES_IDLE);
         }
     }
