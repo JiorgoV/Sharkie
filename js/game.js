@@ -246,6 +246,8 @@ function pauseGameSounds() {
     world.soundManager.sounds.startTheme.pause();
     world.soundManager.sounds.backgroundFx.pause();
     world.soundManager.sounds.endbossEntry.pause();
+    world.soundManager.sounds.swimming.pause();
+    world.soundManager.sounds.swimming.currentTime = 0;
 }
 
 /** Resumes the correct background track when gameplay continues. @returns {void} */
