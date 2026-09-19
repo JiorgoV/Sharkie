@@ -9,8 +9,11 @@ class MovableObject extends DrawableObject {
     width = 200;
     speed = 0.15;
     otherDirection = false;
+    speedX = 0;
     speedY = 0;
-    acceleration = 1;
+    acceleration = 0.5;
+    friction = 0.85;
+    maxSpeed = 8;
     energy = 100;
     lastHit = 0;
     offset = {
@@ -128,4 +131,5 @@ class MovableObject extends DrawableObject {
     isPaused() {
         return this.world && this.world.paused;
     }
+
 }

@@ -166,23 +166,29 @@ class Character extends MovableObject {
     /** Processes keyboard input for swimming. @returns {void} */
     handleMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-            this.x += this.speed;
+            this.speedX = Math.min(this.speedX + this.acceleration, this.maxSpeed);
             this.otherDirection = false;
             this.lastActivity = new Date().getTime();
-        }
-        if (this.world.keyboard.LEFT && this.x > -640) {
-            this.x -= this.speed;
+        } else if (this.world.keyboard.LEFT && this.x > -640) {
+            this.speedX = Math.max(this.speedX - this.acceleration, -this.maxSpeed);
             this.otherDirection = true;
             this.lastActivity = new Date().getTime();
+        } else {
+            this.speedX *= this.friction;
         }
+
         if (this.world.keyboard.UP && this.y > 0) {
-            this.y -= this.speed;
+            this.speedY = Math.max(this.speedY - this.acceleration, -this.maxSpeed);
             this.lastActivity = new Date().getTime();
-        }
-        if (this.world.keyboard.DOWN && this.y < 480 - this.height) {
-            this.y += this.speed;
+        } else if (this.world.keyboard.DOWN && this.y < 480 - this.height) {
+            this.speedY = Math.min(this.speedY + this.acceleration, this.maxSpeed);
             this.lastActivity = new Date().getTime();
+        } else {
+            this.speedY *= this.friction;
         }
+
+        this.x += this.speedX;
+        this.y += this.speedY;
         this.updateCamera();
     }
 
