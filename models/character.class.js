@@ -143,7 +143,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD_POISONED);
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
         this.loadImages(this.IMAGES_SLEEP);
-        this.applyGravity();
+        // this.applyGravity();
         this.animate();
     }
 
@@ -163,24 +163,27 @@ class Character extends MovableObject {
         }, 110);
     }
 
-    /** Processes keyboard input for walking and jumping. @returns {void} */
+    /** Processes keyboard input for swimming. @returns {void} */
     handleMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
             this.otherDirection = false;
             this.lastActivity = new Date().getTime();
         }
-
         if (this.world.keyboard.LEFT && this.x > -640) {
             this.x -= this.speed;
             this.otherDirection = true;
             this.lastActivity = new Date().getTime();
         }
-
-        if (this.world.keyboard.UP && !this.isAboveGround()) {
-            this.jump();
+        if (this.world.keyboard.UP && this.y > 0) {
+            this.y -= this.speed;
             this.lastActivity = new Date().getTime();
         }
+        if (this.world.keyboard.DOWN && this.y < 480 - this.height) {
+            this.y += this.speed;
+            this.lastActivity = new Date().getTime();
+        }
+        this.updateCamera();
     }
 
     /** Keeps the camera centered on the player position. @returns {void} */
@@ -196,7 +199,7 @@ class Character extends MovableObject {
             this.playHurtAnimation();
         } else if (this.isSleeping() && !this.world.youWin) {
             this.playSleepAnimation();
-        } else if (this.isAboveGround() || this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.playSwimAnimation();
         } else {
             this.playIdleAnimation();
@@ -256,9 +259,9 @@ class Character extends MovableObject {
     }
 
     /** Applies a quick upward impulse after defeating an enemy by jumping on it. @returns {void} */
-    bounce() {
-        this.speedY = 15;
-        this.lastHit = 0;
-    }
+    // bounce() {
+    //     this.speedY = 15;
+    //     this.lastHit = 0;
+    // }
 
 }

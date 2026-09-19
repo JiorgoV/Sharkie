@@ -18,12 +18,7 @@ class CollisionManager {
         if (this.world.character.isDead()) return;
         this.world.level.enemies.forEach((enemy) => {
             if (this.world.character.isColliding(enemy)) {
-                if (enemy instanceof PufferFish && this.isJumpingOn(enemy)) {
-                    this.world.level.enemies = this.world.level.enemies.filter(e => e !== enemy);
-                    this.world.character.bounce();
-                    this.world.soundManager.play('enemyDead');
-                    this.world.soundManager.play('pufferFishHit');
-                } else if (!this.world.character.isHurt()) {
+                if (!this.world.character.isHurt()) {
                     this.handleEnemyHit(enemy);
                 }
             }
@@ -149,11 +144,11 @@ class CollisionManager {
 
 
     /** Checks whether the player jumped onto an enemy from above. @param {MovableObject} enemy Enemy being evaluated. @returns {boolean} `true` when the player stomps the enemy from above. */
-    isJumpingOn(enemy) {
-        return this.world.character.y + this.world.character.height > enemy.y &&
-            this.world.character.y < enemy.y &&
-            this.world.character.speedY < -8 &&
-            !this.world.keyboard.RIGHT &&
-            !this.world.keyboard.LEFT;
-    }
+    // isJumpingOn(enemy) {
+    //     return this.world.character.y + this.world.character.height > enemy.y &&
+    //         this.world.character.y < enemy.y &&
+    //         this.world.character.speedY < -8 &&
+    //         !this.world.keyboard.RIGHT &&
+    //         !this.world.keyboard.LEFT;
+    // }
 }
