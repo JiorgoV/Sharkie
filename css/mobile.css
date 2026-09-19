@@ -106,4 +106,17 @@
         font-size: 48px;
         top: 20px;
     }
+    @media only screen and (max-width: 760px) and (orientation: landscape) {
+        .pause-content {
+            padding: 15px;
+            gap: 10px;
+        }
+        .pause-content h2 {
+            font-size: 20px;
+        }
+        .pause-btn {
+            padding: 6px 20px;
+            font-size: 16px;
+        }
+    }
 }
