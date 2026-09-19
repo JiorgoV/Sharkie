@@ -73,6 +73,7 @@ function showGameUI() {
 
 /** Creates the active world and applies the stored audio settings. @returns {void} */
 function initWorld() {
+    canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.soundManager.muted = globalMuted;
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;

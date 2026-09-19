@@ -29,7 +29,11 @@ class DrawableObject {
      * @returns {void}
      */
     draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if (this.img && this.img.complete && this.img.naturalWidth > 0) {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } else if (this.img && this.img.src) {
+            console.log('Broken image:', this.img.src);
+        }
     }
 
     /**
