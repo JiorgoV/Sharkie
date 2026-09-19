@@ -140,3 +140,25 @@ h1 {
 .impressum-link:hover {
     color: white;
 }
+
+.btn-mute-menu {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    z-index: 200;
+}
+
+.btn-mute-menu:hover {
+    opacity: 0.8;
+}

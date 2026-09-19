@@ -11,6 +11,8 @@ menuMusic.loop = true;
 let menuFx = new Audio('audio/background-fx.wav');
 menuFx.loop = true;
 
+let globalMuted = localStorage.getItem('muted') === 'true';
+
 /** Connects the global canvas reference to the DOM element. @returns {void} */
 function init() {
     canvas = document.getElementById('canvas');
@@ -72,6 +74,7 @@ function showGameUI() {
 /** Creates the active world and applies the stored audio settings. @returns {void} */
 function initWorld() {
     world = new World(canvas, keyboard);
+    world.soundManager.muted = globalMuted;
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
     let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
     world.soundManager.setMusicVolume(musicVolume);
@@ -264,20 +267,28 @@ function resumeGameSounds() {
 
 /** Mutes or unmutes the sound of the current game world. @returns {void} */
 function toggleMute() {
-    world.soundManager.toggleMute();
-    if (!world.soundManager.muted) {
-        let endboss = world.level.enemies.find(e => e instanceof Endboss);
-        if (endboss && endboss.hadFirstContact) {
-            world.soundManager.sounds.endbossEntry.play();
-        } else {
-            world.soundManager.sounds.startTheme.play();
-            world.soundManager.sounds.backgroundFx.play();
-        }
+    globalMuted = !globalMuted;
+    localStorage.setItem('muted', globalMuted);
+    if (globalMuted) {
+        menuMusic.pause();
+        menuFx.pause();
+        if (world) world.soundManager.muted = true;
+        if (world) Object.values(world.soundManager.sounds).forEach(s => s.pause());
+    } else {
+        menuMusic.play().catch(e => {});
+        menuFx.play().catch(e => {});
+        if (world) world.soundManager.muted = false;
     }
+    updateMuteButtons();
+}
+
+function updateMuteButtons() {
     let btn = document.getElementById('mute-btn');
     let btnIngame = document.getElementById('btn-mute-ingame');
-    if (btn) btn.textContent = world.soundManager.muted ? '🔇 Off' : '🔊 On';
-    if (btnIngame) btnIngame.textContent = world.soundManager.muted ? '🔇' : '🔊';
+    let btnMenu = document.getElementById('btn-mute-menu');
+    if (btn) btn.textContent = globalMuted ? '🔇 Off' : '🔊 On';
+    if (btnIngame) btnIngame.textContent = globalMuted ? '🔇' : '🔊';
+    if (btnMenu) btnMenu.textContent = globalMuted ? '🔇' : '🔊';
 }
 
 /**
