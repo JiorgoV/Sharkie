@@ -65,6 +65,7 @@ function showGameUI() {
     document.getElementById('btn-pause').classList.remove('hidden');
     document.getElementById('btn-mute-ingame').classList.remove('hidden');
     document.getElementById('impressum-link').classList.add('hidden');
+    document.getElementById('btn-mute-menu').classList.add('hidden');
     if (window.innerWidth >= 1090) {
         document.getElementById('panel-left').classList.remove('hidden');
         document.getElementById('panel-right').classList.remove('hidden');
@@ -158,7 +159,8 @@ function hideGameUI() {
     document.getElementById('btn-mute-ingame').classList.add('hidden');
     document.getElementById('impressum-link').classList.remove('hidden');
     document.getElementById('panel-left').classList.add('hidden');
-    document.getElementById('panel-right').classList.add('hidden')
+    document.getElementById('panel-right').classList.add('hidden');
+    document.getElementById('btn-mute-menu').classList.remove('hidden');
 }
 
 /** Displays the main menu overlay and adapts the title visibility. @returns {void} */
