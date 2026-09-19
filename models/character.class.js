@@ -163,8 +163,20 @@ class Character extends MovableObject {
         }, 110);
     }
 
-    /** Processes keyboard input for swimming. @returns {void} */
+    /**
+     * Updates movement: calculates velocity, applies position.
+     */
     handleMovement() {
+        this.handleHorizontalMovement();
+        this.handleVerticalMovement();
+        this.updatePosition();
+    }
+
+    /**
+     * Adjusts horizontal speed based on keyboard input.
+     * Accounts for acceleration, max speed and friction.
+     */
+    handleHorizontalMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.speedX = Math.min(this.speedX + this.acceleration, this.maxSpeed);
             this.otherDirection = false;
@@ -176,7 +188,13 @@ class Character extends MovableObject {
         } else {
             this.speedX *= this.friction;
         }
+    }
 
+    /**
+     * Adjusts vertical speed based on keyboard input.
+     * Accounts for acceleration, max speed and friction.
+     */
+    handleVerticalMovement() {
         if (this.world.keyboard.UP && this.y > 0) {
             this.speedY = Math.max(this.speedY - this.acceleration, -this.maxSpeed);
             this.lastActivity = new Date().getTime();
@@ -186,7 +204,13 @@ class Character extends MovableObject {
         } else {
             this.speedY *= this.friction;
         }
+    }
 
+    /**
+     * Applies the current speed to the position
+     * and updates the camera.
+     */
+    updatePosition() {
         this.x += this.speedX;
         this.y += this.speedY;
         this.updateCamera();
