@@ -136,28 +136,30 @@ html {
     width: 50px;
     height: 50px;
     background-image: url('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/6.Botones/Key/arrow keys.png');
-    background-size: 114px 87px;
+    background-size: 200px 160px;
     cursor: pointer;
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    opacity: 0.9;
     background-color: transparent;
     user-select: none;
     -webkit-user-select: none;
 }
 
 .btn-up {
-    background-position: -41px 0px;
+    background-position: -77px -15px;
 }
 
 .btn-left {
-    background-position: 0px -45px;
+    background-position: -7px -94px;
 }
 
 .btn-down {
-    background-position: -39px -45px;
+    background-position: -75px -92px;
 }
 
 .btn-right {
-    background-position: -189px -47px;
+    background-position: -342px -97px;
 }
 
 .touch-btn,

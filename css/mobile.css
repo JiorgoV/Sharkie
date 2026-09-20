@@ -1,31 +1,50 @@
-/* ---- Media Queries ---- */
+/* ---- Touch-Gerät: Controls anzeigen (ohne Orientierung) ---- */
 
-
-/* Touch-Gerät erkennen (Phone + iPad) — unabhängig von Bildschirmgröße */
-
-@media (hover: none) and (pointer: coarse) {
+@media (pointer: coarse) {
     .mobile-controls.show {
         display: flex;
     }
 }
 
-@media only screen and (max-width: 760px) and (orientation: landscape) {
-    /* display: flex wurde raus — steht jetzt oben im pointer-query */
-    .touch-btn,
-    .touch-btn-arrow {
-        width: 40px;
-        height: 40px;
-    }
+
+/* ---- Touch-Gerät Landscape: Canvas + Layout ---- */
+
+@media (pointer: coarse) and (orientation: landscape) and (max-width: 1089px) {
     .game-container {
-        width: 100vw;
-        height: 100svh;
+        position: fixed;
         top: 0;
         left: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100svh;
         transform: none;
+        border: none;
     }
     canvas {
-        width: 100%;
-        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100vh;
+        max-height: 100svh;
+        max-width: 100vw;
+        width: auto;
+        height: auto;
+    }
+    .mobile-controls {
+        position: fixed;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .btn-mute-ingame {
+        bottom: auto;
+        top: 10px;
+        right: 50px;
+    }
+    .btn-fullscreen-ingame {
+        bottom: auto;
+        top: 10px;
+        right: 10px;
     }
     h1 {
         top: 13px;
@@ -34,19 +53,50 @@
     .start-buttons {
         top: 50%;
     }
+    .pause-content {
+        padding: 15px;
+        gap: 10px;
+    }
+    .pause-content h2 {
+        font-size: 20px;
+    }
+    .pause-btn {
+        padding: 6px 20px;
+        font-size: 16px;
+    }
 }
 
-@media only screen and (max-width: 760px) and (orientation: portrait) {
+
+/* ---- Kleine Phones: kleinere Buttons ---- */
+
+@media (pointer: coarse) and (max-width: 760px) and (orientation: landscape) {
+    .touch-btn,
+    .touch-btn-arrow {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* ---- Rotate Hint: kleine Phones im Portrait ---- */
+
+@media (pointer: coarse) and (orientation: portrait) and (max-width: 760px) {
     .rotate-hint {
         display: flex;
     }
 }
+
+
+/* ---- Impressum Link auf Mobile ---- */
 
 @media only screen and (max-width: 760px) {
     .impressum-link {
         display: none;
     }
 }
+
+
+/* ---- Desktop Panels ---- */
 
 @media only screen and (min-width: 1090px) {
     .desktop-panel {
@@ -97,6 +147,9 @@
     }
 }
 
+
+/* ---- Kleine Startbuttons ---- */
+
 @media only screen and (max-width: 600px) {
     .start-buttons {
         flex-direction: row;
@@ -112,18 +165,5 @@
     h1 {
         font-size: 48px;
         top: 20px;
-    }
-    @media only screen and (max-width: 760px) and (orientation: landscape) {
-        .pause-content {
-            padding: 15px;
-            gap: 10px;
-        }
-        .pause-content h2 {
-            font-size: 20px;
-        }
-        .pause-btn {
-            padding: 6px 20px;
-            font-size: 16px;
-        }
     }
 }

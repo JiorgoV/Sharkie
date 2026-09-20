@@ -72,6 +72,7 @@ function showGameUI() {
         document.getElementById('panel-left').classList.remove('hidden');
         document.getElementById('panel-right').classList.remove('hidden');
     }
+    updateControlsPosition();
 }
 
 /** Creates the active world and applies the stored audio settings. @returns {void} */
@@ -361,6 +362,44 @@ function checkOrientation() {
     } else {
         document.getElementById('canvas').style.height = `100%`;
     }
+}
+
+/** Checks whether the fullscreen touch layout is currently active. @returns {boolean} */
+function isFullscreenTouchActive() {
+    return window.matchMedia(
+        '(pointer: coarse) and (orientation: landscape) and (max-width: 1089px)'
+    ).matches;
+}
+
+/** Clears all inline positioning styles from the mobile controls element.
+ * @param {HTMLElement} controls
+ * @returns {void} */
+function clearControlsPosition(controls) {
+    controls.style.width = controls.style.left = controls.style.bottom = controls.style.transform = '';
+}
+
+/** Calculates the rendered canvas position and size based on viewport and aspect ratio.
+ * @param {HTMLCanvasElement} canvas
+ * @returns {{ left: number, top: number, width: number }} */
+function getRenderedCanvasRect(canvas) {
+    const scale = Math.min(window.innerWidth / (canvas.width || 720), window.innerHeight / (canvas.height || 480));
+    const width = (canvas.width || 720) * scale;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - (canvas.height || 480) * scale) / 2;
+    return { left, top, width };
+}
+
+/** Positions the mobile controls overlay to match the canvas bounds. @returns {void} */
+function updateControlsPosition() {
+    const canvas = document.getElementById('canvas');
+    const controls = document.getElementById('mobile-controls');
+    if (!canvas || !controls || canvas.classList.contains('hidden')) return;
+    if (!isFullscreenTouchActive()) { clearControlsPosition(controls); return; }
+    const { left, top, width } = getRenderedCanvasRect(canvas);
+    controls.style.width = width + 'px';
+    controls.style.left = left + 'px';
+    controls.style.bottom = (top + 10) + 'px';
+    controls.style.transform = 'none';
 }
 
 /** Shows a specific settings tab and activates its button. @param {string} tab Name of the tab to display. @returns {void} */
