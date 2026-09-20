@@ -25,11 +25,13 @@ function init() {
     document.getElementById('pause-menu').addEventListener('click', function(e) {
         if (e.target === this) togglePause();
     });
+    updateMuteButtons();
 }
 
 /** Starts menu music with the stored volume settings. @returns {void} */
 function startMenuMusic() {
-    let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
+    if (globalMuted) return;
+    let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.3;
     let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
     menuMusic.volume = musicVolume;
     menuFx.volume = fxVolume;
@@ -175,7 +177,7 @@ function showHomeUI() {
 
 /** Opens the settings dialog and applies the stored volume settings. @returns {void} */
 function openSettings() {
-    if (!world) startMenuMusic();
+    if (!world && !globalMuted) startMenuMusic();
     document.getElementById('settings-dialog').classList.remove('hidden');
     document.getElementById('pause-menu').classList.add('hidden');
     document.getElementById('mobile-controls').style.pointerEvents = 'none'; // ← neu

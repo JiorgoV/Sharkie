@@ -1,9 +1,16 @@
 /* ---- Media Queries ---- */
 
-@media only screen and (max-width: 760px) and (orientation: landscape) {
+
+/* Touch-Gerät erkennen (Phone + iPad) — unabhängig von Bildschirmgröße */
+
+@media (hover: none) and (pointer: coarse) {
     .mobile-controls.show {
         display: flex;
     }
+}
+
+@media only screen and (max-width: 760px) and (orientation: landscape) {
+    /* display: flex wurde raus — steht jetzt oben im pointer-query */
     .touch-btn,
     .touch-btn-arrow {
         width: 40px;

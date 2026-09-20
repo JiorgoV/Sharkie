@@ -153,18 +153,19 @@
         <img id="btn-pause" src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/7.Icons/Grey/icon_cross.svg" onclick="togglePause()" class="hidden btn-pause">
 
         <!-- Mobile Touch Buttons -->
-        <div id="mobile-controls" class="mobile-controls">
+        <!-- Mobile Touch Buttons -->
+        <div id="mobile-controls" class="mobile-controls" oncontextmenu="return false">
             <div id="dpad" class="dpad">
-                <div class="touch-btn-arrow btn-up" id="btn-up" ontouchstart="keyboard.UP = true" ontouchend="keyboard.UP = false"></div>
+                <div class="touch-btn-arrow btn-up" id="btn-up" ontouchstart="keyboard.UP = true" ontouchend="keyboard.UP = false" ontouchcancel="keyboard.UP = false"></div>
                 <div id="dpad-middle" class="dpad-middle">
-                    <div class="touch-btn-arrow btn-left" id="btn-left" ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false"></div>
-                    <div class="touch-btn-arrow btn-down" id="btn-down" ontouchstart="keyboard.DOWN = true" ontouchend="keyboard.DOWN = false"></div>
-                    <div class="touch-btn-arrow btn-right" id="btn-right" ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false"></div>
+                    <div class="touch-btn-arrow btn-left" id="btn-left" ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false" ontouchcancel="keyboard.LEFT = false"></div>
+                    <div class="touch-btn-arrow btn-down" id="btn-down" ontouchstart="keyboard.DOWN = true" ontouchend="keyboard.DOWN = false" ontouchcancel="keyboard.DOWN = false"></div>
+                    <div class="touch-btn-arrow btn-right" id="btn-right" ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false" ontouchcancel="keyboard.RIGHT = false"></div>
                 </div>
             </div>
             <div id="action-buttons" class="action-buttons">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png" class="touch-btn" id="btn-bubble" ontouchstart="keyboard.D = true" ontouchend="keyboard.D = false">
-                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png" class="touch-btn" id="btn-poison" ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false">
+                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png" class="touch-btn" id="btn-bubble" ontouchstart="keyboard.D = true" ontouchend="keyboard.D = false" ontouchcancel="keyboard.D = false">
+                <img src="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png" class="touch-btn" id="btn-poison" ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false" ontouchcancel="keyboard.SPACE = false">
             </div>
         </div>
 
