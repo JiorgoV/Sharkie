@@ -85,11 +85,12 @@
 
 /* ---- Impressum Link auf Mobile ---- */
 
-@media only screen and (max-width: 760px) {
+
+/* @media only screen and (max-width: 760px) {
     .impressum-link {
         display: none;
     }
-}
+} */
 
 
 /* ---- Desktop Panels ---- */

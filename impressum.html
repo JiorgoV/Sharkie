@@ -5,13 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png">
     <title>Impressum – Sharkie</title>
     <style>
         body {
-            overflow-y: auto !important;
-            height: auto !important;
-            min-height: 100vh;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .impressum-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .impressum-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .impressum-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 3px;
+        }
+        
+        .impressum-container h1,
+        .impressum-container h2,
+        .impressum-container p,
+        .impressum-container a {
+            font-family: 'Lato', sans-serif;
         }
     </style>
 </head>

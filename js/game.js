@@ -184,19 +184,21 @@ function showHomeUI() {
 /** Opens the settings dialog and applies the stored volume settings. @returns {void} */
 function openSettings() {
     if (!world && !globalMuted) startMenuMusic();
+    if (!world) document.getElementById('game-container').classList.remove('hidden');
     document.getElementById('settings-dialog').classList.remove('hidden');
     document.getElementById('pause-menu').classList.add('hidden');
-    document.getElementById('mobile-controls').style.pointerEvents = 'none'; // ← neu
+    document.getElementById('mobile-controls').style.pointerEvents = 'none';
     let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.5;
     let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
     document.getElementById('music-slider').value = musicVolume;
     document.getElementById('fx-slider').value = fxVolume;
 }
 
-/** Closes the settings dialog and returns to the pause menu when applicable. @returns {void} */
+/** Closes the settings dialog and restores the previous UI state. @returns {void} */
 function closeSettings() {
     document.getElementById('settings-dialog').classList.add('hidden');
-    document.getElementById('mobile-controls').style.pointerEvents = 'all'; // ← neu
+    document.getElementById('mobile-controls').style.pointerEvents = 'all';
+    if (!world) document.getElementById('game-container').classList.add('hidden');
     if (world && world.paused) {
         document.getElementById('pause-menu').classList.remove('hidden');
     }
