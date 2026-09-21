@@ -184,7 +184,8 @@ function showHomeUI() {
 /** Opens the settings dialog and applies the stored volume settings. @returns {void} */
 function openSettings() {
     if (!world && !globalMuted) startMenuMusic();
-    if (!world) document.getElementById('game-container').classList.remove('hidden');
+    const gc = document.getElementById('game-container');
+    if (gc.classList.contains('hidden')) gc.classList.remove('hidden');
     document.getElementById('settings-dialog').classList.remove('hidden');
     document.getElementById('pause-menu').classList.add('hidden');
     document.getElementById('mobile-controls').style.pointerEvents = 'none';
