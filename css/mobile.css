@@ -1,24 +1,18 @@
-/* ---- Touch-Gerät: Controls anzeigen (ohne Orientierung) ---- */
+/* Touch devices <1090px — always fullscreen */
 
-@media (pointer: coarse) {
+@media (pointer: coarse) and (max-width: 1089px) {
     .mobile-controls.show {
         display: flex;
     }
-}
-
-
-/* ---- Touch-Gerät Landscape: Canvas + Layout ---- */
-
-@media (pointer: coarse) and (orientation: landscape) and (max-width: 1089px) {
     .game-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100svh;
-        transform: none;
-        border: none;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100svh !important;
+        transform: none !important;
+        border: none !important;
     }
     canvas {
         position: absolute;
@@ -42,9 +36,7 @@
         right: 50px;
     }
     .btn-fullscreen-ingame {
-        bottom: auto;
-        top: 10px;
-        right: 10px;
+        display: none !important;
     }
     h1 {
         top: 13px;

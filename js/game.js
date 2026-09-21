@@ -73,6 +73,9 @@ function showGameUI() {
         document.getElementById('panel-right').classList.remove('hidden');
     }
     updateControlsPosition();
+    if (isFullscreenTouchActive()) {
+        enterFullscreen(document.getElementById('game-container'));
+    }
 }
 
 /** Creates the active world and applies the stored audio settings. @returns {void} */
@@ -352,23 +355,11 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 68) keyboard.D = false;
 });
 
-/** Adapts the canvas height for portrait or landscape orientation. @returns {void} */
-function checkOrientation() {
-    if (window.matchMedia("(orientation: landscape)").matches) {
-        if (window.innerHeight < 480) {
-            let newHeight = window.innerHeight;
-            document.getElementById('canvas').style.height = `${newHeight}px`;
-        }
-    } else {
-        document.getElementById('canvas').style.height = `100%`;
-    }
-}
+
 
 /** Checks whether the fullscreen touch layout is currently active. @returns {boolean} */
 function isFullscreenTouchActive() {
-    return window.matchMedia(
-        '(pointer: coarse) and (orientation: landscape) and (max-width: 1089px)'
-    ).matches;
+    return window.innerWidth < 1090;
 }
 
 /** Clears all inline positioning styles from the mobile controls element.
@@ -410,10 +401,8 @@ function showTab(tab) {
     event.target.classList.add('active');
 }
 
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
-
 window.addEventListener('resize', () => {
+    updateControlsPosition();
     if (!world) return;
     if (window.innerWidth >= 1090) {
         document.getElementById('panel-left').classList.remove('hidden');
@@ -423,3 +412,15 @@ window.addEventListener('resize', () => {
         document.getElementById('panel-right').classList.add('hidden');
     }
 });
+
+/** Re-enters fullscreen on mobile if it was exited unintentionally (e.g. via ESC). @returns {void} */
+document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) return;
+    if (!isFullscreenTouchActive() || !world || world.paused) return;
+    togglePause();
+    enterFullscreen(document.getElementById('game-container'));
+});
+
+window.addEventListener('orientationchange', () => setTimeout(() => {
+    updateControlsPosition();
+}, 100));
