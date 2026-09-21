@@ -67,6 +67,21 @@
         width: 40px;
         height: 40px;
     }
+    .touch-btn-arrow {
+        background-size: 160px 128px;
+    }
+    .btn-up {
+        background-position: -62px -12px;
+    }
+    .btn-left {
+        background-position: -6px -75px;
+    }
+    .btn-down {
+        background-position: -60px -74px;
+    }
+    .btn-right {
+        background-position: -274px -78px;
+    }
 }
 
 
