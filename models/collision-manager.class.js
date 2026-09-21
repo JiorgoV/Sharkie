@@ -40,6 +40,7 @@ class CollisionManager {
         if (enemy instanceof Endboss) {
             this.world.character.energy -= enemy.isAttacking ? 10 : 5;
             if (this.world.character.energy < 0) this.world.character.energy = 0;
+            this.world.character.lastHit = new Date().getTime();
         } else {
             this.world.character.hit();
         }
