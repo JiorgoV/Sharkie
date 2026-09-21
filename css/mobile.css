@@ -76,6 +76,10 @@
     .rotate-hint {
         display: flex;
     }
+    #btn-mute-ingame,
+    #btn-mute-menu {
+        display: none !important;
+    }
 }
 
 

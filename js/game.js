@@ -130,6 +130,8 @@ function resetGameScreens() {
 /** Ends the current round and displays the main menu. @returns {void} */
 function goHome() {
     stopGameSounds();
+    goingHome = true;
+    if (document.fullscreenElement) document.exitFullscreen();
     hideGameUI();
     showHomeUI();
     startMenuMusic();
@@ -416,6 +418,7 @@ window.addEventListener('resize', () => {
 /** Re-enters fullscreen on mobile if it was exited unintentionally (e.g. via ESC). @returns {void} */
 document.addEventListener('fullscreenchange', () => {
     if (document.fullscreenElement) return;
+    if (goingHome) { goingHome = false; return; }
     if (!isFullscreenTouchActive() || !world || world.paused) return;
     togglePause();
     enterFullscreen(document.getElementById('game-container'));
