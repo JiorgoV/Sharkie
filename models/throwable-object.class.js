@@ -24,6 +24,7 @@ class ThrowableObject extends MovableObject {
      */
     throw (otherDirection) {
         this.setStoppableInterval(() => {
+            if (this.isPaused()) return;
             this.x += otherDirection ? -10 : 10;
         }, 25);
     }
