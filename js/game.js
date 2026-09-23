@@ -12,6 +12,7 @@ let menuFx = new Audio('audio/background-fx.wav');
 menuFx.loop = true;
 
 let globalMuted = localStorage.getItem('muted') === 'true';
+let goingHome = false;
 
 /** Connects the global canvas reference to the DOM element. @returns {void} */
 function init() {
@@ -125,6 +126,7 @@ function resetGameScreens() {
     document.getElementById('gameover-screen').classList.add('hidden');
     document.getElementById('youwin-screen').classList.add('hidden');
     document.getElementById('canvas').classList.remove('hidden');
+    document.getElementById('mobile-controls').classList.add('show')
 }
 
 /** Ends the current round and displays the main menu. @returns {void} */

@@ -151,12 +151,15 @@ class Endboss extends MovableObject {
             return;
         }
         let currentSpeed = this.energy < 30 ? this.speed * 2 : this.speed;
-        if (this.world.character.x < this.x) {
-            this.x -= currentSpeed;
-            this.otherDirection = false;
-        } else {
-            this.x += currentSpeed;
-            this.otherDirection = true;
+        let diff = this.world.character.x - this.x;
+        if (Math.abs(diff) > 30) {
+            if (diff < 0) {
+                this.x -= currentSpeed;
+                this.otherDirection = false;
+            } else {
+                this.x += currentSpeed;
+                this.otherDirection = true;
+            }
         }
     }
 

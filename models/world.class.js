@@ -21,6 +21,7 @@ class World {
     bubbleCount = 0;
     bubbleTimes = []
     bubbleCooldown = false;
+    stopped = false;
 
     /**
      * @param {HTMLCanvasElement} canvas Canvas used for game output.
@@ -54,6 +55,7 @@ class World {
 
     /** Stops all active game loops and animations. @returns {void} */
     stopGame() {
+        this.stopped = true
         this.stopAnimations();
         this.character.stopAnimations();
         this.level.enemies.forEach(enemy => enemy.stopAnimations());
@@ -179,6 +181,7 @@ class World {
 
     /** Draws all game objects and schedules the next animation frame. @returns {void} */
     draw() {
+        if (this.stopped) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
         this.drawFixedUI();
