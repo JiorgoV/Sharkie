@@ -74,7 +74,9 @@ function showGameUI() {
         document.getElementById('panel-right').classList.remove('hidden');
     }
     updateControlsPosition();
-    if (isFullscreenTouchActive()) {
+    const isLargeTouchDevice = window.matchMedia('(pointer: coarse)').matches &&
+        window.innerWidth >= 1090;
+    if (isLargeTouchDevice) {
         enterFullscreen(document.getElementById('game-container'));
     }
 }
@@ -284,7 +286,9 @@ function resumeGameSounds() {
 /** Resumes game from pause menu and re-enters fullscreen on touch devices. @returns {void} */
 function resumeGame() {
     togglePause();
-    if (isFullscreenTouchActive() && !document.fullscreenElement) {
+    const isLargeTouchDevice = window.matchMedia('(pointer: coarse)').matches &&
+        window.innerWidth >= 1090;
+    if (isLargeTouchDevice && !document.fullscreenElement) {
         enterFullscreen(document.getElementById('game-container'));
     }
 }

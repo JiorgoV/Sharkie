@@ -1,11 +1,8 @@
 /* Touch devices <1090px — always fullscreen */
 
 @media (pointer: coarse) and (max-width: 1089px) {
-    .mobile-controls.show {
-        display: flex;
-    }
     .game-container {
-        position: fixed !important;
+        position: fixed;
         top: 0 !important;
         left: 0 !important;
         width: 100vw !important;
@@ -59,6 +56,12 @@
     }
 }
 
+@media (pointer: coarse) {
+    .mobile-controls.show {
+        display: flex;
+    }
+}
+
 
 /* ---- Kleine Phones: kleinere Buttons ---- */
 
@@ -88,7 +91,7 @@
 
 /* ---- Rotate Hint: kleine Phones im Portrait ---- */
 
-@media (pointer: coarse) and (orientation: portrait) and (max-width: 760px) {
+@media (pointer: coarse) and (orientation: portrait) {
     .rotate-hint {
         display: flex;
     }
