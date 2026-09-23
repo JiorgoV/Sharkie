@@ -114,6 +114,7 @@ class World {
             this.character.y + 170,
             isLeft
         );
+        bubble.world = this;
         this.throwableObjects.push(bubble);
         this.lastThrowTime = now;
     }
@@ -149,6 +150,7 @@ class World {
             this.character.y + 170,
             isLeft
         );
+        poisonBubble.world = this;
         this.throwableObjects.push(poisonBubble);
         this.poisonCount = Math.max(this.poisonCount - 1, 0);
         this.lastThrowTime = now;
