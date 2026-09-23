@@ -13,6 +13,7 @@
         height: 100svh !important;
         transform: none !important;
         border: none !important;
+        background-color: #000 !important;
     }
     canvas {
         position: absolute;
