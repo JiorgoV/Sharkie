@@ -258,6 +258,9 @@ function togglePause() {
     pauseMenu.classList.toggle('hidden');
     world.paused = !world.paused;
     world.paused ? pauseGameSounds() : resumeGameSounds();
+    if (!world.paused && isFullscreenTouchActive() && !document.fullscreenElement) {
+        enterFullscreen(document.getElementById('game-container'));
+    }
 }
 
 /** Pauses music and ambiance while the game is paused. @returns {void} */
@@ -426,7 +429,6 @@ document.addEventListener('fullscreenchange', () => {
     if (goingHome) { goingHome = false; return; }
     if (!isFullscreenTouchActive() || !world || world.paused) return;
     togglePause();
-    enterFullscreen(document.getElementById('game-container'));
 });
 
 window.addEventListener('orientationchange', () => setTimeout(() => {
