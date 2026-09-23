@@ -220,7 +220,7 @@ class Character extends MovableObject {
 
     /** Keeps the camera centered on the player position. @returns {void} */
     updateCamera() {
-        this.world.camera_x = -this.x + 40;
+        this.world.camera_x = -Math.round(this.x) + 40;
     }
 
     /** Selects the correct animation depending on the character state and context. @returns {void} */
