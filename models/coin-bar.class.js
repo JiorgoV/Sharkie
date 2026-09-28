@@ -1,4 +1,7 @@
-/** HUD bar for the current coin progress. @extends DrawableObject */
+/** 
+ * HUD bar for the current coin progress. 
+ * @extends DrawableObject 
+ */
 class CoinBar extends DrawableObject {
     IMAGES = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/coinbar_0.png', // 0
@@ -11,7 +14,9 @@ class CoinBar extends DrawableObject {
 
     percentage = 0;
 
-    /** Creates the coin bar and sets its initial value to zero percent. */
+    /** 
+     * Creates the coin bar and sets its initial value to zero percent. 
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);

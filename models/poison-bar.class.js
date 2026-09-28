@@ -1,4 +1,6 @@
-/** HUD bar for poison bubble progress. @extends DrawableObject */
+/** HUD bar for poison bubble progress. 
+ * @extends DrawableObject 
+ */
 class PoisonBar extends DrawableObject {
     IMAGES = [
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/Purple/poisonbar_0.png', // 0
@@ -11,7 +13,9 @@ class PoisonBar extends DrawableObject {
 
     percentage = 0;
 
-    /** Creates the poison bar and sets its initial value to zero percent. */
+    /** 
+     * Creates the poison bar and sets its initial value to zero percent. 
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -34,7 +38,10 @@ class PoisonBar extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
-    /** @returns {number} Image index between 0 and 5. */
+    /** 
+     * Returns the image index corresponding to the current percentage.
+     * @returns {number} Image index between 0 and 5. 
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

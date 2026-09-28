@@ -1,9 +1,12 @@
-/** Poison bubble fired by the player. @extends ThrowableObject */
+/** 
+ * Poison bubble fired by the player. 
+ * @extends ThrowableObject 
+ */
 class PoisonBubble extends ThrowableObject {
 
     /**
-     * @param {number} x Starting position on the x-axis.
-     * @param {number} y Starting position on the y-axis.
+     * @param {number} x 
+     * @param {number} y 
      */
     constructor(x, y, otherDirection) {
         super(x, y, otherDirection);

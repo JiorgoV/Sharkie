@@ -3,15 +3,15 @@
 @media (pointer: coarse) and (max-width: 1089px) {
     .game-container {
         position: fixed;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        height: 100svh !important;
-        transform: none !important;
-        border: none !important;
-        background-color: #000 !important;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100svh;
+        transform: none;
+        background-color: #000;
     }
+
     canvas {
         position: absolute;
         top: 50%;
@@ -23,33 +23,41 @@
         width: auto;
         height: auto;
     }
+
     .mobile-controls {
         position: fixed;
         padding: 0 10px;
         box-sizing: border-box;
     }
+
     .btn-mute-ingame {
         bottom: auto;
         top: 10px;
         right: 50px;
     }
+
     .btn-fullscreen-ingame {
         display: none !important;
     }
+
     h1 {
         top: 13px;
         font-size: 54px;
     }
+
     .start-buttons {
         top: 50%;
     }
+
     .pause-content {
         padding: 15px;
         gap: 10px;
     }
+    
     .pause-content h2 {
         font-size: 20px;
     }
+
     .pause-btn {
         padding: 6px 20px;
         font-size: 16px;
@@ -62,7 +70,6 @@
     }
 }
 
-
 /* ---- Kleine Phones: kleinere Buttons ---- */
 
 @media (pointer: coarse) and (max-width: 760px) and (orientation: landscape) {
@@ -71,23 +78,27 @@
         width: 40px;
         height: 40px;
     }
+
     .touch-btn-arrow {
         background-size: 160px 128px;
     }
+
     .btn-up {
         background-position: -62px -12px;
     }
+
     .btn-left {
         background-position: -6px -75px;
     }
+
     .btn-down {
         background-position: -60px -74px;
     }
+
     .btn-right {
         background-position: -274px -78px;
     }
 }
-
 
 /* ---- Rotate Hint: kleine Phones im Portrait ---- */
 
@@ -95,22 +106,12 @@
     .rotate-hint {
         display: flex;
     }
+
     #btn-mute-ingame,
     #btn-mute-menu {
         display: none !important;
     }
 }
-
-
-/* ---- Impressum Link auf Mobile ---- */
-
-
-/* @media only screen and (max-width: 760px) {
-    .impressum-link {
-        display: none;
-    }
-} */
-
 
 /* ---- Desktop Panels ---- */
 
@@ -131,22 +132,27 @@
         backdrop-filter: blur(4px);
         z-index: 1;
     }
+
     .panel-left {
         left: calc(50% - 360px - 180px);
     }
+    
     .panel-right {
         right: calc(50% - 360px - 180px);
     }
+
     .desktop-panel h2 {
         font-size: 20px;
         text-align: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         padding-bottom: 10px;
     }
+
     .desktop-panel p {
         font-size: 13px;
         line-height: 1.6;
     }
+
     .control-item {
         display: flex;
         flex-direction: column;
@@ -154,15 +160,16 @@
         gap: 5px;
         font-size: 13px;
     }
+
     .control-item img {
         height: 30px;
     }
+
     .sharkie-deco {
         width: 100px;
         margin: 0 auto;
     }
 }
-
 
 /* ---- Kleine Startbuttons ---- */
 
@@ -172,12 +179,15 @@
         gap: 15px;
         padding: 15px;
     }
+
     .start-btn-item img {
         height: 50px;
     }
+
     .start-btn-item span {
         font-size: 16px;
     }
+    
     h1 {
         font-size: 48px;
         top: 20px;

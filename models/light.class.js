@@ -1,4 +1,6 @@
-/** Animated light object for background illumination. @extends MovableObject */
+/** 
+ * Animated light object for background illumination. @extends MovableObject 
+ */
 class Light extends MovableObject {
     width = 480;
     height = 360;
@@ -8,6 +10,7 @@ class Light extends MovableObject {
     angle = 0;
 
     /**
+     * Creates a new light object at the given position.
      * @param {string} imagePath Path to the light graphic.
      * @param {number} x Initial position of the light object.
      */
@@ -21,7 +24,10 @@ class Light extends MovableObject {
 
     }
 
-    /** Starts the sinusoidal movement of the light object. @returns {void} */
+    /** 
+     * Starts the sinusoidal movement of the light object. 
+     * @returns {void} 
+     */
     animate() {
         this.setStoppableInterval(() => {
             this.angle += 0.05;

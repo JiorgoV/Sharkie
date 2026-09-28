@@ -1,10 +1,20 @@
+/**
+ * Manages all collision detection for the game world.
+ */
 class CollisionManager {
 
+    /**
+     * Creates a new CollisionManager for the given world.
+     * @param {World} world - The game world instance.
+     */
     constructor(world) {
         this.world = world;
     }
 
-    /** Processes enemy, coin, poison bubble, and projectile collisions. @returns {void} */
+    /** 
+     * Processes enemy, coin, poison bubble, and projectile collisions. 
+     * @returns {void} 
+     */
     checkCollisions() {
         this.checkEnemyCollisions();
         this.checkCoinCollisions();
@@ -12,7 +22,10 @@ class CollisionManager {
         this.checkBubbleCollisions();
     }
 
-    /** Handles collisions against enemy objects and triggers damage or enemy defeat logic. @returns {void} */
+    /** 
+     * Handles collisions against enemy objects and triggers damage or enemy defeat logic. 
+     * @returns {void} 
+     */
     checkEnemyCollisions() {
         if (this.world.youWin) return;
         if (this.world.character.isDead()) return;
@@ -26,7 +39,11 @@ class CollisionManager {
         });
     }
 
-    /** Applies the result of an enemy collision to the player and plays damage feedback. @param {MovableObject} enemy Enemy that collided with the player. @returns {void} */
+    /** 
+     * Applies the result of an enemy collision to the player and plays damage feedback. 
+     * @param {MovableObject} enemy Enemy that collided with the player. 
+     * @returns {void} 
+     */
     handleEnemyHit(enemy) {
         this.applyEnemyDamage(enemy);
         this.setHurtCause(enemy);
@@ -35,7 +52,11 @@ class CollisionManager {
         }
     }
 
-    /** Reduces the player's health based on the enemy type and attack intensity. @param {MovableObject} enemy Enemy that inflicted the damage. @returns {void} */
+    /** 
+     * Reduces the player's health based on the enemy type and attack intensity. 
+     * @param {MovableObject} enemy Enemy that inflicted the damage.
+     *  @returns {void} 
+     */
     applyEnemyDamage(enemy) {
         if (enemy instanceof Endboss) {
             this.world.character.energy -= enemy.isAttacking ? 10 : 5;
@@ -46,7 +67,11 @@ class CollisionManager {
         }
     }
 
-    /** Stores the correct damage state for the current enemy type. @param {MovableObject} enemy Enemy that caused the hit. @returns {void} */
+    /** 
+     * Stores the correct damage state for the current enemy type. 
+     * @param {MovableObject} enemy Enemy that caused the hit. 
+     * @returns {void} 
+     */
     setHurtCause(enemy) {
         if (enemy instanceof Jellyfish || enemy instanceof DangerousJellyfish) {
             this.world.character.hurtCause = 'electro';
@@ -57,7 +82,11 @@ class CollisionManager {
         }
     }
 
-    /** Triggers the endboss intro when the player reaches the boss trigger zone. @param {MovableObject} enemy Enemy to inspect. @returns {void} */
+    /** 
+     * Triggers the endboss intro when the player reaches the boss trigger zone. 
+     * @param {MovableObject} enemy Enemy to inspect. 
+     * @returns {void} 
+     */
     checkEndbossFirstContact(enemy) {
         if (enemy instanceof Endboss && this.world.character.x > 4500) {
             if (!enemy.hadFirstContact) {
@@ -67,7 +96,10 @@ class CollisionManager {
         }
     }
 
-    /** Switches the music from the normal theme to the boss battle theme. @returns {void} */
+    /** 
+     * Switches the music from the normal theme to the boss battle theme. 
+     * @returns {void} 
+     */
     startEndbossMusic() {
         this.world.soundManager.sounds.startTheme.pause();
         this.world.soundManager.sounds.startTheme.currentTime = 0;
@@ -82,7 +114,10 @@ class CollisionManager {
         }
     }
 
-    /** Collects nearby coins and updates the coin counter. @returns {void} */
+    /** 
+     * Collects nearby coins and updates the coin counter. 
+     * @returns {void} 
+     */
     checkCoinCollisions() {
         this.world.level.coins = this.world.level.coins.filter(coin => {
             if (this.world.character.isColliding(coin)) {
@@ -94,7 +129,10 @@ class CollisionManager {
         });
     }
 
-    /** Collects nearby poison pickups and updates the poison counter. @returns {void} */
+    /** 
+     * Collects nearby poison pickups and updates the poison counter. 
+     * @returns {void} 
+     */
     checkPoisonCollisions() {
         this.world.level.poisons = this.world.level.poisons.filter(poison => {
             if (this.world.character.isColliding(poison)) {
@@ -106,7 +144,10 @@ class CollisionManager {
         });
     }
 
-    /** Resolves projectile hits against enemies and removes defeated targets from the level. @returns {void} */
+    /** 
+     * Resolves projectile hits against enemies and removes defeated targets from the level. 
+     * @returns {void} 
+     */
     checkBubbleCollisions() {
         this.world.throwableObjects = this.world.throwableObjects.filter(bubble => {
             let hit = false;
@@ -121,7 +162,11 @@ class CollisionManager {
         });
     }
 
-    /** Applies the hit effect of a projectile to a specific enemy. @param {MovableObject} enemy Enemy struck by the bubble. @returns {boolean} `true` when the enemy stays in the level, `false` when defeated. */
+    /** 
+     * Applies the hit effect of a projectile to a specific enemy. 
+     * @param {MovableObject} enemy Enemy struck by the bubble. 
+     * @returns {boolean} `true` when the enemy stays in the level, `false` when defeated. 
+     */
     handleBubbleHit(enemy) {
         if (enemy instanceof Endboss) {
             enemy.hit();
@@ -133,7 +178,11 @@ class CollisionManager {
         return false;
     }
 
-    /** Plays the correct death sound based on the type of enemy that was defeated. @param {MovableObject} enemy Defeated enemy. @returns {void} */
+    /** 
+     * Plays the correct death sound based on the type of enemy that was defeated. 
+     * @param {MovableObject} enemy Defeated enemy. 
+     * @param {MovableObject} enemy Defeated enemy. @returns {void} 
+     */
     playEnemyDeathSound(enemy) {
         if (enemy instanceof PufferFish) {
             this.world.soundManager.play('pufferFishHit');
@@ -143,13 +192,4 @@ class CollisionManager {
         this.world.soundManager.play('enemyDead');
     }
 
-
-    /** Checks whether the player jumped onto an enemy from above. @param {MovableObject} enemy Enemy being evaluated. @returns {boolean} `true` when the player stomps the enemy from above. */
-    // isJumpingOn(enemy) {
-    //     return this.world.character.y + this.world.character.height > enemy.y &&
-    //         this.world.character.y < enemy.y &&
-    //         this.world.character.speedY < -8 &&
-    //         !this.world.keyboard.RIGHT &&
-    //         !this.world.keyboard.LEFT;
-    // }
 }

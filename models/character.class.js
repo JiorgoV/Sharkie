@@ -1,4 +1,7 @@
-/** Player-controlled Sharkie with movement and state animations. @extends MovableObject */
+/** 
+ * Player-controlled Sharkie with movement and state animations. 
+ * @extends MovableObject 
+ */
 class Character extends MovableObject {
 
     height = 320;
@@ -132,7 +135,9 @@ class Character extends MovableObject {
     world;
 
 
-    /** Creates Sharkie, loads all animations, and starts gravity and animation. */
+    /** 
+     * Creates Sharkie, loads all animations, and starts gravity and animation. 
+     */
     constructor() {
         super();
         this.loadImage('img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png');
@@ -145,12 +150,14 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD_POISONED);
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
         this.loadImages(this.IMAGES_SLEEP);
-        // this.applyGravity();
         this.animate();
     }
 
 
-    /** Processes input and selects the appropriate Sharkie animation. @returns {void} */
+    /** 
+     * Processes input and selects the appropriate Sharkie animation. 
+     * @returns {void}
+     */
     animate() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
@@ -167,6 +174,7 @@ class Character extends MovableObject {
 
     /**
      * Updates movement: calculates velocity, applies position.
+     * @returns {void}
      */
     handleMovement() {
         this.handleHorizontalMovement();
@@ -175,8 +183,8 @@ class Character extends MovableObject {
     }
 
     /**
-     * Adjusts horizontal speed based on keyboard input.
-     * Accounts for acceleration, max speed and friction.
+     * Adjusts horizontal speed based on keyboard input. Accounts for acceleration, max speed and friction.
+     * @returns {void}
      */
     handleHorizontalMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -193,8 +201,8 @@ class Character extends MovableObject {
     }
 
     /**
-     * Adjusts vertical speed based on keyboard input.
-     * Accounts for acceleration, max speed and friction.
+     * Adjusts vertical speed based on keyboard input. Accounts for acceleration, max speed and friction.
+     * @returns {void}
      */
     handleVerticalMovement() {
         if (this.world.keyboard.UP && this.y > 0) {
@@ -208,9 +216,9 @@ class Character extends MovableObject {
         }
     }
 
-    /**
-     * Applies the current speed to the position
-     * and updates the camera.
+    /** 
+     * Applies the current speed to the position and updates the camera. 
+     * @returns {void}
      */
     updatePosition() {
         this.x += this.speedX;
@@ -218,12 +226,18 @@ class Character extends MovableObject {
         this.updateCamera();
     }
 
-    /** Keeps the camera centered on the player position. @returns {void} */
+    /** 
+     * Keeps the camera centered on the player position. 
+     * @returns {void}
+     */
     updateCamera() {
         this.world.camera_x = -Math.round(this.x) + 40;
     }
 
-    /** Selects the correct animation depending on the character state and context. @returns {void} */
+    /** 
+     * Selects the correct animation depending on the character state and context. 
+     * @returns {void}
+     */
     handleAnimation() {
         if (this.isDead()) {
             this.playDeadAnimation();
@@ -238,7 +252,10 @@ class Character extends MovableObject {
         }
     }
 
-    /** Plays the swim animation and triggers the swimming sound if not already playing. @returns {void} */
+    /** 
+     * Plays the swim animation and triggers the swimming sound if not already playing.
+     * @returns {void}
+     */
     playSwimAnimation() {
         this.stopSnore();
         if (!this.world.soundManager.isPlaying('swimming')) {
@@ -247,7 +264,10 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_SWIM);
     }
 
-    /** Plays the idle animation and stops swimming and snore sounds. @returns {void} */
+    /** 
+     * Plays the idle animation and stops swimming and snore sounds. 
+     * @returns {void}
+     */
     playIdleAnimation() {
         this.stopSnore();
         this.world.soundManager.sounds.swimming.pause();
@@ -255,19 +275,28 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_IDLE);
     }
 
-    /** Plays the death animation matching the current death cause. @returns {void} */
+    /** 
+     * Plays the death animation matching the current death cause. 
+     * @returns {void}
+     */
     playDeadAnimation() {
         let deadImages = this.deadCause === 'electro' ? this.IMAGES_DEAD_ELECTRO : this.IMAGES_DEAD_POISONED;
         this.playAnimation(deadImages);
     }
 
-    /** Plays the hurt animation matching the current damage type. @returns {void} */
+    /** 
+     * Plays the hurt animation matching the current damage type. 
+     * @returns {void}
+     */
     playHurtAnimation() {
         let hurtImages = this.hurtCause === 'electro' ? this.IMAGES_HURT_ELECTRO : this.IMAGES_HURT_POISONED;
         this.playAnimation(hurtImages);
     }
 
-    /** Plays the sleep animation and ensures the snore sound loops only once. @returns {void} */
+    /** 
+     * Plays the sleep animation and ensures the snore sound loops only once. 
+     * @returns {void}
+     */
     playSleepAnimation() {
         this.playAnimation(this.IMAGES_SLEEP);
         if (!this.world.soundManager.isPlaying('snore')) {
@@ -275,7 +304,10 @@ class Character extends MovableObject {
         }
     }
 
-    /** Stops the snore sound effect immediately. @returns {void} */
+    /** 
+     * Stops the snore sound effect immediately. 
+     * @returns {void}
+     */
     stopSnore() {
         this.world.soundManager.sounds.snore.pause();
         this.world.soundManager.sounds.snore.currentTime = 0;
@@ -289,11 +321,4 @@ class Character extends MovableObject {
         let timepassed = new Date().getTime() - this.lastActivity;
         return timepassed > 15000;
     }
-
-    /** Applies a quick upward impulse after defeating an enemy by jumping on it. @returns {void} */
-    // bounce() {
-    //     this.speedY = 15;
-    //     this.lastHit = 0;
-    // }
-
 }

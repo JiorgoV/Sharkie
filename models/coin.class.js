@@ -1,4 +1,7 @@
-/** Collectible animated coin. @extends MovableObject */
+/** 
+ * Collectible animated coin. 
+ * @extends MovableObject 
+ */
 class Coin extends MovableObject {
 
     width = 80;
@@ -11,7 +14,8 @@ class Coin extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/1. Coins/4.png',
     ];
 
-    /** Creates a coin at a given or random position and starts its animation.
+    /** 
+     * Creates a coin at a given or random position and starts its animation.
      * @param {number} [x] - X position. Random if not provided.
      * @param {number} [y] - Y position. Random if not provided.
      */
@@ -24,7 +28,10 @@ class Coin extends MovableObject {
         this.animate();
     }
 
-    /** Starts the coin animation. @returns {void} */
+    /** 
+     * Starts the coin animation. 
+     * @returns {void} 
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES);

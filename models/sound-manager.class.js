@@ -1,4 +1,6 @@
-/** Manages game music, sound effects, volume, and muting. */
+/** 
+ * Manages game music, sound effects, volume, and muting. 
+ */
 class SoundManager {
     muted = false;
 
@@ -23,7 +25,9 @@ class SoundManager {
         swimming: new Audio('audio/fish_swim2.mp3')
     };
 
-    /** Initializes audio loops and loads the stored volume. */
+    /** 
+     * Initializes audio loops and loads the stored volume. 
+     */
     constructor() {
         this.sounds.startTheme.loop = true;
         this.sounds.backgroundFx.loop = true;
@@ -44,7 +48,10 @@ class SoundManager {
         }
     }
 
-    /** Mutes or unmutes all sounds. @returns {void} */
+    /** 
+     * Mutes or unmutes all sounds. 
+     * @returns {void} 
+     */
     toggleMute() {
         this.muted = !this.muted;
         if (this.muted) {
@@ -53,12 +60,16 @@ class SoundManager {
         localStorage.setItem('muted', this.muted);
     }
 
-    /** Loads the mute state from `localStorage`. @returns {void} */
+    /** 
+     * Loads the mute state from `localStorage`.
+     * @returns {void} 
+     */
     loadMuteState() {
         this.muted = localStorage.getItem('muted') === 'true';
     }
 
-    /** Sets the global volume of all sounds.
+    /** 
+     * Sets the global volume of all sounds.
      * @param {number} volume Volume between 0 and 1.
      * @returns {void}
      */
@@ -67,7 +78,10 @@ class SoundManager {
         localStorage.setItem('volume', volume);
     }
 
-    /** Loads the global volume from `localStorage`. @returns {void} */
+    /** 
+     * Loads the global volume from `localStorage`. 
+     * @returns {void} 
+     */
     loadVolume() {
         let musicVolume = localStorage.getItem('musicVolume') !== null ? parseFloat(localStorage.getItem('musicVolume')) : 0.3;
         let fxVolume = localStorage.getItem('fxVolume') !== null ? parseFloat(localStorage.getItem('fxVolume')) : 0.5;
@@ -112,7 +126,11 @@ class SoundManager {
         localStorage.setItem('fxVolume', volume);
     }
 
-    /** Checks whether a sound is currently playing. @param {string} soundName Name of the sound to inspect. @returns {boolean} `true` when the sound is active. */
+    /** 
+     * Checks whether a sound is currently playing. 
+     * @param {string} soundName Name of the sound to inspect.
+     *  @returns {boolean} `true` when the sound is active. 
+     */
     isPlaying(soundName) {
         return !this.sounds[soundName].paused;
     }

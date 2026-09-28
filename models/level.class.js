@@ -1,4 +1,6 @@
-/** Contains all objects and boundaries of a game level. */
+/** 
+ * Contains all objects and boundaries of a game level. 
+ */
 class Level {
     enemies;
     lights;
@@ -8,6 +10,7 @@ class Level {
     level_end_x = 715 * 7;
 
     /**
+     * Creates a new level with the given game objects.
      * @param {MovableObject[]} enemies Level enemies.
      * @param {Light[]} lights Level lighting objects.
      * @param {BackgroundObject[]} backgroundObjects Background layers.

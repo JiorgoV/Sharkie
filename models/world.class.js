@@ -1,4 +1,6 @@
-/** Central game world for rendering, collisions, input, and game state. */
+/** 
+ * Central game world for rendering, collisions, input, and game state. 
+ */
 class World {
     intervallIds = [];
     character = new Character();
@@ -42,18 +44,29 @@ class World {
         this.run();
     }
 
-    /** Starts a recurring game loop that can be stopped later. @param {Function} fn Callback to run repeatedly. @param {number} time Interval in milliseconds. @returns {number} Timeout identifier. */
+    /** 
+     * Starts a recurring game loop that can be stopped later. 
+     * @param {Function} fn Callback to run repeatedly. 
+     * @param {number} time Interval in milliseconds. 
+     * @returns {number} Timeout identifier. 
+     */
     setStoppableInterval(fn, time) {
         let id = setInterval(fn, time);
         this.intervallIds.push(id);
     }
 
-    /** Stops every interval created for the world. @returns {void} */
+    /** 
+     * Stops every interval created for the world. 
+     * @returns {void} 
+     */
     stopAnimations() {
         this.intervallIds.forEach(clearInterval);
     }
 
-    /** Stops all active game loops and animations. @returns {void} */
+    /** 
+     * Stops all active game loops and animations. 
+     * @returns {void} 
+     */
     stopGame() {
         this.stopped = true
         this.stopAnimations();
@@ -63,13 +76,19 @@ class World {
         this.level.lights.forEach(light => light.stopAnimations());
     }
 
-    /** Links the player and enemies to this world. @returns {void} */
+    /** 
+     * Links the player and enemies to this world. 
+     * @returns {void} 
+     */
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => enemy.world = this);
     }
 
-    /** Starts the recurring game and collision checks. @returns {void} */
+    /** 
+     * Starts the recurring game and collision checks. 
+     * @returns {void} 
+     */
     run() {
         this.runInterval = this.setStoppableInterval(() => {
             if (!this.paused) {
@@ -81,11 +100,18 @@ class World {
         }, 200);
     }
 
+    /**
+    * Delegates collision detection to the collision manager.
+    * @returns {void}
+    */
     checkCollisions() {
         this.collisionManager.checkCollisions();
     }
 
-    /** Creates attack bubbles from input with a cooldown. @returns {void} */
+    /** 
+     * Creates attack bubbles from input with a cooldown. 
+     * @returns {void} 
+     * */
     checkThrowObjects() {
         let now = new Date().getTime();
         let isLeft = this.character.otherDirection;
@@ -96,7 +122,13 @@ class World {
         this.removeFarBubbles();
     }
 
-    /** Fires a standard bubble when the player presses the attack key and cooldown rules allow it. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    /** 
+     * Fires a standard bubble when the player presses the attack key and cooldown rules allow it. 
+     * @param {number} now Current timestamp in milliseconds. 
+     * @param {boolean} isLeft Whether the player is facing left. 
+     * @param {number} offsetX Horizontal spawn offset from the character. 
+     * @returns {void} 
+     */
     checkNormalBubble(now, isLeft, offsetX) {
         if (this.bubbleCooldown) return;
         if (this.keyboard.D && now - this.lastThrowTime > 200) {
@@ -105,7 +137,13 @@ class World {
         }
     }
 
-    /** Spawns a normal projectile in the current facing direction. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    /** 
+     * Spawns a normal projectile in the current facing direction. 
+     * @param {number} now Current timestamp in milliseconds. 
+     * @param {boolean} isLeft Whether the player is facing left. 
+     * @param {number} offsetX Horizontal spawn offset from the character. 
+     * @returns {void} 
+     */
     throwNormalBubble(now, isLeft, offsetX) {
         this.character.lastActivity = new Date().getTime();
         this.soundManager.play('bubbleShot');
@@ -119,7 +157,11 @@ class World {
         this.lastThrowTime = now;
     }
 
-    /** Tracks recent bubble throws and temporarily disables rapid-fire attacks after repeated shots. @param {number} now Current timestamp in milliseconds. @returns {void} */
+    /** 
+     * Tracks recent bubble throws and temporarily disables rapid-fire attacks after repeated shots. 
+     * @param {number} now Current timestamp in milliseconds. 
+     * @returns {void} 
+     */
     updateBubbleCooldown(now) {
         this.bubbleTimes.push(now);
         this.bubbleTimes = this.bubbleTimes.filter(t => now - t < 2000);
@@ -132,7 +174,13 @@ class World {
         }
     }
 
-    /** Fires a poison bubble when the player has charges and the attack cooldown is clear. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    /** 
+     * Fires a poison bubble when the player has charges and the attack cooldown is clear. 
+     * @param {number} now Current timestamp in milliseconds. 
+     * @param {boolean} isLeft Whether the player is facing left. 
+     * @param {number} offsetX Horizontal spawn offset from the character. 
+     * @returns {void} 
+     */
     checkPoisonBubble(now, isLeft, offsetX) {
         if (this.bubbleCooldown) return;
         if (this.keyboard.SPACE && now - this.lastThrowTime > 200 && this.poisonCount > 0) {
@@ -141,7 +189,13 @@ class World {
         }
     }
 
-    /** Spawns a stronger poison projectile and consumes one charge. @param {number} now Current timestamp in milliseconds. @param {boolean} isLeft Whether the player is facing left. @param {number} offsetX Horizontal spawn offset from the character. @returns {void} */
+    /** 
+     * Spawns a stronger poison projectile and consumes one charge. 
+     * @param {number} now Current timestamp in milliseconds. 
+     * @param {boolean} isLeft Whether the player is facing left. 
+     * @param {number} offsetX Horizontal spawn offset from the character.
+     * @returns {void} 
+     */
     throwPoisonBubble(now, isLeft, offsetX) {
         this.character.lastActivity = new Date().getTime();
         this.soundManager.play('bubbleShot');
@@ -156,32 +210,38 @@ class World {
         this.lastThrowTime = now;
     }
 
-    /** Removes projectiles that travelled too far from their origin. @returns {void} */
+    /** 
+     * Removes projectiles that travelled too far from their origin. 
+     * @returns {void} 
+     */
     removeFarBubbles() {
         this.throwableObjects = this.throwableObjects.filter(bubble => {
             return Math.abs(bubble.x - bubble.startX) < 300;
         });
     }
 
-    /** Draws health, coin, and poison bubble counters in the fixed HUD layer. @returns {void} */
+    /** 
+     * Draws health, coin, and poison bubble counters in the fixed HUD layer. 
+     * @returns {void} 
+     */
     drawStatusIcons() {
         this.ctx.font = 'bold 24px Arial';
         this.ctx.fillStyle = 'white';
 
-        // Herz
         this.ctx.drawImage(this.heartIcon, 20, 20, 40, 40);
         this.ctx.fillText(`x ${this.character.energy}`, 65, 48);
 
-        // Coin
         this.ctx.drawImage(this.coinIcon, 160, 20, 40, 40);
         this.ctx.fillText(`x ${this.coinCount}`, 205, 48);
 
-        // Poison
         this.ctx.drawImage(this.poisonIcon, 260, 20, 40, 40);
         this.ctx.fillText(`x ${this.poisonCount}`, 300, 48);
     }
 
-    /** Draws all game objects and schedules the next animation frame. @returns {void} */
+    /** 
+     * Draws all game objects and schedules the next animation frame. 
+     * @returns {void} 
+     */
     draw() {
         if (this.stopped) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -191,14 +251,20 @@ class World {
         requestAnimationFrame(() => this.draw());
     }
 
-    /** Draws the background layers with the current camera offset. @returns {void} */
+    /** 
+     * Draws the background layers with the current camera offset. 
+     * @returns {void} 
+     */
     drawBackground() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
     }
 
-    /** Draws the fixed HUD and reveals the endboss bar when the boss stage starts. @returns {void} */
+    /** 
+     * Draws the fixed HUD and reveals the endboss bar when the boss stage starts. 
+     * @returns {void} 
+     */
     drawFixedUI() {
         this.drawStatusIcons();
         if (this.character.x > 4500) {
@@ -209,7 +275,10 @@ class World {
         }
     }
 
-    /** Draws the moving world objects, including enemies, pickups, and projectiles. @returns {void} */
+    /** 
+     * Draws the moving world objects, including enemies, pickups, and projectiles. 
+     * @returns {void} 
+     */
     drawGameObjects() {
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
@@ -221,7 +290,8 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
-    /** Adds a list of objects to the rendered map.
+    /** 
+     * Adds a list of objects to the rendered map.
      * @param {DrawableObject[]} objects Objects to draw.
      * @returns {void}
      */
@@ -231,7 +301,8 @@ class World {
         });
     }
 
-    /** Draws an object while respecting its facing direction.
+    /** 
+     * Draws an object while respecting its facing direction.
      * @param {DrawableObject} mo Object to draw.
      * @returns {void}
      */
@@ -247,7 +318,8 @@ class World {
         }
     }
 
-    /** Enables horizontal mirroring for an object.
+    /** 
+     * Enables horizontal mirroring for an object.
      * @param {DrawableObject} mo Object to mirror.
      * @returns {void}
      */
@@ -257,12 +329,18 @@ class World {
         this.ctx.scale(-1, 1);
     }
 
-    /** Restores the previous canvas state after mirroring. @returns {void} */
+    /** 
+     * Restores the previous canvas state after mirroring. 
+     * @returns {void} 
+     */
     flipImageBack() {
         this.ctx.restore();
     }
 
-    /** Triggers the game-over flow when the player's health is exhausted. @returns {void} */
+    /** 
+     * Triggers the game-over flow when the player's health is exhausted. 
+     * @returns {void} 
+     */
     checkGameOver() {
         if (this.character.isDead() && !this.gameOver) {
             this.gameOver = true;
@@ -272,7 +350,10 @@ class World {
         }
     }
 
-    /** Stops aggressive gameplay sounds before the game-over screen is shown. @returns {void} */
+    /** 
+     * Stops aggressive gameplay sounds before the game-over screen is shown. 
+     * @returns {void} 
+     */
     stopGameSounds() {
         this.soundManager.sounds.snore.pause();
         this.soundManager.sounds.snore.currentTime = 0;
@@ -285,14 +366,20 @@ class World {
         this.soundManager.sounds.backgroundFx.pause();
     }
 
-    /** Shows the defeat screen and hides the active canvas. @returns {void} */
+    /** 
+     * Shows the defeat screen and hides the active canvas. 
+     * @returns {void} 
+     */
     showGameOverScreen() {
         document.getElementById('canvas').classList.add('hidden');
         document.getElementById('gameover-screen').classList.remove('hidden');
         document.getElementById('mobile-controls').classList.remove('show');
     }
 
-    /** Displays the win screen after defeating the final enemy. @returns {void} */
+    /** 
+     * Displays the win screen after defeating the final enemy. 
+     * @returns {void} 
+     */
     checkYouWin() {
         let endboss = this.level.enemies.find(e => e instanceof Endboss);
         if (endboss && endboss.isDead() && !this.youWin) {

@@ -1,4 +1,6 @@
-/** Stores the current state of the game keys. */
+/** 
+ * Stores the current state of the game keys. 
+ */
 class Keyboard {
     LEFT = false;
     RIGHT = false;

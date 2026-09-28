@@ -26,19 +26,30 @@ class MovableObject extends DrawableObject {
     intervallIds = [];
 
 
-    /** Starts a timed callback that can be stopped later. @param {Function} fn Callback to run repeatedly. @param {number} time Interval in milliseconds. @returns {void} */
+    /** 
+     * Starts a timed callback that can be stopped later. 
+     * @param {Function} fn Callback to run repeatedly.
+     *  @param {number} time Interval in milliseconds. 
+     * @returns {void} 
+     */
     setStoppableInterval(fn, time) {
         let id = setInterval(fn, time);
         this.intervallIds.push(id);
     }
 
-    /** Stops every active interval registered on this object. @returns {void} */
+    /** 
+     * Stops every active interval registered on this object. 
+     * @returns {void} 
+     */
     stopAnimations() {
         this.intervallIds.forEach(clearInterval);
     }
 
 
-    /** Starts the repeated gravity calculation. @returns {void} */
+    /** 
+     * Starts the repeated gravity calculation. 
+     * @returns {void} 
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -72,7 +83,10 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
-    /** Reduces health by five points and updates the hit timestamp. @returns {void} */
+    /** 
+     * Reduces health by five points and updates the hit timestamp. 
+     * @returns {void} 
+     */
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -82,12 +96,18 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    /** @returns {boolean} `true` when no health remains. */
+    /** 
+     * Checks whether the object has no health remaining.
+     * @returns {boolean} `true` when no health remains. 
+     */
     isDead() {
         return this.energy == 0;
     }
 
-    /** @returns {boolean} `true` when the last hit occurred less than 0.5 seconds ago. */
+    /** 
+     * Checks whether the object was hit recently
+     * @returns {boolean} `true` when the last hit occurred less than 0.5 seconds ago. 
+     */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Differnce in s
@@ -107,13 +127,19 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    /** Moves the object one step to the right. @returns {void} */
+    /** 
+     * Moves the object one step to the right. 
+     * @returns {void} 
+     */
     moveRight() {
         this.x += this.speed;
 
     }
 
-    /** Starts continuous movement to the left. @returns {void} */
+    /** 
+     * Starts continuous movement to the left. 
+     * @returns {void} 
+     */
     moveLeft() {
         this.moveLeftInterval = setInterval(() => {
             if (this.isPaused()) return;
@@ -121,13 +147,19 @@ class MovableObject extends DrawableObject {
         }, 1000 / 60);
     }
 
-    /** Sets the vertical velocity for a jump. @returns {void} */
+    /** 
+     * Sets the vertical velocity for a jump. 
+     * @returns {void} 
+     */
     jump() {
         this.speedY = 20;
         this.world.soundManager.play('jump');
     }
 
-    /** Returns whether the owning world is currently paused. @returns {boolean|undefined} Pause state when a world is assigned. */
+    /** 
+     * Returns whether the owning world is currently paused. 
+     * @returns {boolean|undefined} Pause state when a world is assigned. 
+     */
     isPaused() {
         return this.world && this.world.paused;
     }

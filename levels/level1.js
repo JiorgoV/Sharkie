@@ -1,4 +1,6 @@
-/** @type {Level} Currently initialized level. */
+/** 
+ * @type {Level} Currently initialized level. 
+ */
 let level1;
 
 /**

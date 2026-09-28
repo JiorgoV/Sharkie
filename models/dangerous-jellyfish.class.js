@@ -1,4 +1,7 @@
-/** Fast jellyfish enemy that causes electric damage. @extends Jellyfish */
+/** 
+ * Fast jellyfish enemy that causes electric damage. 
+ * @extends Jellyfish 
+ */
 class DangerousJellyfish extends Jellyfish {
 
     IMAGES_SWIM_GREEN = [
@@ -16,7 +19,9 @@ class DangerousJellyfish extends Jellyfish {
     ];
 
 
-    /** Creates a dangerous jellyfish and overrides its speed. */
+    /** 
+     * Creates a dangerous jellyfish at a random position with a random speed. 
+     */
     constructor() {
         super();
         this.loadImage(this.IMAGES_SWIM[0]);
@@ -25,7 +30,10 @@ class DangerousJellyfish extends Jellyfish {
         this.speed = 0.3 + Math.random() * 0.3;
     }
 
-    /** Starts the dangerous jellyfish movement and swimming animation. @returns {void} */
+    /** 
+     * Starts the dangerous jellyfish movement and swimming animation. 
+     * @returns {void} 
+     */
     animate() {
         this.moveLeft();
         this.setStoppableInterval(() => {

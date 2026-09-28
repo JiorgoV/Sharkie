@@ -1,10 +1,14 @@
-/** Collectible poison bubble. @extends MovableObject */
+/** 
+ * Collectible poison bubble. 
+ * @extends MovableObject 
+ */
 class Poison extends MovableObject {
 
     width = 80;
     height = 80;
 
-    /** Creates a poison bubble at a given or random position.
+    /** 
+     * Creates a poison bubble at a given or random position.
      * @param {number} [x] - X position. Random if not provided.
      * @param {number} [y] - Y position. Random if not provided.
      */

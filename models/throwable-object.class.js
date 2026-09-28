@@ -1,10 +1,14 @@
-/** Movable bubble fired by the player. @extends MovableObject */
+/** 
+ * Movable bubble fired by the player. 
+ * @extends MovableObject 
+ */
 class ThrowableObject extends MovableObject {
 
     /**
-     * @param {number} x Starting position on the x-axis.
-     * @param {number} y Starting position on the y-axis.
-     * @param {boolean} otherDirection Whether the bubble flies to the left.
+     * Creates a normal bubble and launches it in the given direction.
+     * @param {number} x 
+     * @param {number} y 
+     * @param {boolean} otherDirection 
      */
     constructor(x, y, otherDirection) {
         super();

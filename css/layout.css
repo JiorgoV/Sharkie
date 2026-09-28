@@ -12,7 +12,6 @@
 }
 
 .game-container.active {
-    border: 4px solid #0a3d6b;
     pointer-events: all;
 }
 
@@ -38,7 +37,6 @@
     justify-content: center;
 }
 
-
 /* ---- Footer ---- */
 
 .footer {
@@ -47,7 +45,6 @@
     justify-content: center;
 }
 
-
 /* ---- Canvas ---- */
 
 canvas {
@@ -55,7 +52,6 @@ canvas {
     display: block;
     touch-action: none;
 }
-
 
 /* ---- Start Buttons ---- */
 
@@ -109,7 +105,6 @@ canvas {
     transform: scale(1.1);
     opacity: 0.9;
 }
-
 
 /* ---- Titel ---- */
 

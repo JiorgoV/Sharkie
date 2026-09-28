@@ -1,4 +1,7 @@
-/** Animated jellyfish enemy with a randomly selected color. @extends MovableObject */
+/** 
+ * Animated jellyfish enemy with a randomly selected color. 
+ * @extends MovableObject 
+ */
 class Jellyfish extends MovableObject {
 
     width = 100;
@@ -19,7 +22,9 @@ class Jellyfish extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
     ];
 
-    /** Creates a jellyfish with a random color, position, and speed. */
+    /** 
+     * Creates a jellyfish with a random color, position, and speed. 
+     */
     constructor() {
         super();
         this.IMAGES_SWIM = Math.random() < 0.5 ? this.IMAGES_SWIM_YELLOW : this.IMAGES_SWIM_PURPLE;
@@ -30,7 +35,10 @@ class Jellyfish extends MovableObject {
         this.animate();
     }
 
-    /** Starts the jellyfish movement and swimming animation. @returns {void} */
+    /** 
+     * Starts the jellyfish movement and swimming animation. 
+     * @returns {void} 
+     */
     animate() {
         this.moveLeft();
         this.setStoppableInterval(() => {

@@ -1,3 +1,7 @@
+/**
+ * The final boss enemy that chases and attacks the player.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
 
     height = 400;
@@ -64,7 +68,9 @@ class Endboss extends MovableObject {
         'img/Alternative_Grafiken-Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
     ];
 
-    /** Creates the final enemy, loads its animations, and starts the animation cycle. */
+    /** 
+     * Creates the final enemy, loads its animations, and starts the animation cycle. 
+     */
     constructor() {
         super();
         this.loadImage(this.IMAGES_INTRODUCE[0]);
@@ -80,7 +86,10 @@ class Endboss extends MovableObject {
         this.swimUpDown();
     }
 
-    /** Controls the final enemy animation cycle based on its state. @returns {void} */
+    /** 
+     * Controls the final enemy animation cycle based on its state. 
+     * @returns {void}
+     */
     animate() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
@@ -88,7 +97,10 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
-    /** Selects the correct animation for the boss depending on its state. @returns {void} */
+    /** 
+     * Selects the correct animation for the boss depending on its state. 
+     * @returns {void}
+     */
     handleAnimation() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
@@ -101,7 +113,10 @@ class Endboss extends MovableObject {
         }
     }
 
-    /** Advances the introduction sequence until the boss enters combat mode. @returns {void} */
+    /** 
+     * Advances the introduction sequence until the boss enters combat mode. 
+     * @returns {void}
+     */
     playIntroAnimation() {
         this.img = this.imageCache[this.IMAGES_INTRODUCE[this.introFrame]];
         if (this.introFrame < this.IMAGES_INTRODUCE.length - 1) {
@@ -111,7 +126,10 @@ class Endboss extends MovableObject {
         }
     }
 
-    /** Switches between moving and attacking animations during battle. @returns {void} */
+    /** 
+     * Switches between moving and attacking animations during battle. 
+     * @returns {void}
+     */
     playBattleAnimation() {
         if (this.isAttacking) {
             this.playAnimation(this.IMAGES_ATTACK);
@@ -127,7 +145,10 @@ class Endboss extends MovableObject {
         }
     }
 
-    /** Runs the enemy's motion update loop for the boss phase. @returns {void} */
+    /** 
+     * Runs the enemy's motion update loop for the boss phase. 
+     * @returns {void}
+     */
     move() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
@@ -138,13 +159,19 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
     }
 
-    /** Determines whether the boss is close enough to attack the player. @returns {void} */
+    /** 
+     * Determines whether the boss is close enough to attack the player. 
+     * @returns {void}
+     */
     updateAttackState() {
         let distanceToCharacter = Math.abs(this.x - this.world.character.x);
         this.isAttacking = distanceToCharacter < 400;
     }
 
-    /** Moves the boss toward the player while respecting the defeat state. @returns {void} */
+    /** 
+     * Moves the boss toward the player while respecting the defeat state. 
+     * @returns {void}
+     */
     moveTowardsCharacter() {
         if (this.isDead()) {
             this.y += 2;
@@ -163,7 +190,10 @@ class Endboss extends MovableObject {
         }
     }
 
-    /** Adds a gentle vertical bobbing motion while the boss is active in the arena. @returns {void} */
+    /** 
+     * Adds a gentle vertical bobbing motion while the boss is active in the arena. 
+     * @returns {void}
+     */
     swimUpDown() {
         this.setStoppableInterval(() => {
             if (this.isPaused()) return;
