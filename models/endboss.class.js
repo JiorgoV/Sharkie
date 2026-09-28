@@ -202,4 +202,14 @@ class Endboss extends MovableObject {
             this.angle += 0.05;
         }, 1000 / 60);
     }
+
+    /**
+     * Reduces endboss health by 20 points per hit.
+     * @returns {void}
+     */
+    hit() {
+        this.energy -= 20;
+        if (this.energy < 0) this.energy = 0;
+        this.lastHit = new Date().getTime();
+    }
 }
